@@ -8,7 +8,6 @@ import AppBarButton from "react-uwp/AppBarButton";
 import PasswordBox from "react-uwp/PasswordBox";
 import CheckBox from "react-uwp/CheckBox";
 
-
 export default class SignIn extends React.Component {
 
   constructor(props) {
@@ -140,7 +139,10 @@ export default class SignIn extends React.Component {
             <CheckBox
               defaultChecked={false}
               label="Keep me signed in"
+<<<<<<< HEAD
               onCheck={(event) => this.setState({remember : true})}
+=======
+>>>>>>> 5cdae00f5a4cf9ee909d784843db76958f1e4d9f
             />
             <br />
             <br />
