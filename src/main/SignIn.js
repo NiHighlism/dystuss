@@ -8,9 +8,30 @@ import axios from 'axios'
 
 
 export default class SignIn extends React.Component {
+  
+  constructor(props) {
+    super(props)
+    this.state = { username: '' , password: ''}
+    this.handleChange = this.handleChange.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
+  }
+
+  handleChange(event) {
+    console.log("dekh be")
+    this.setState({
+        [event.target.name]: event.target.value
+    });
+    console.log(this.state)
+  }
+
+  handleSubmit(event) {
+    console.log(this.state.password)
+    console.log(this.state)
+  }
+
   static contextTypes = { theme: PropTypes.object };
   context: { theme: ReactUWP.ThemeType };
-
+  
   render() {
     const { theme } = this.context;
 
@@ -63,15 +84,22 @@ export default class SignIn extends React.Component {
             <div style={{ fontSize: 22 }}>Username: </div>
             <br />
             <TextBox
+              name="username"
               style={textStyle}
               placeholder="Username"
+              onChange={this.handleChange}
             />
             <br />
             <div style={{ fontSize: 22 }}>Password: </div>
             <br />
             <PasswordBox
+              name="password"
               style={textStyle}
               placeholder="Password"
+              onChange={ e => {
+                this.setState({username: e.target.value})
+                console.log(e);
+              }}
             />
             <br />
             <br />
@@ -80,6 +108,7 @@ export default class SignIn extends React.Component {
               icon={<span className="sdl2asset">&#xF286;</span>}
               label="Sign In"
               labelPosition="right"
+              onClick={this.handleSubmit}
             />
           </div>
         </div>
