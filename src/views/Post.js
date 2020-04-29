@@ -2,7 +2,7 @@ import * as React from "react";
 import * as PropTypes from "prop-types";
 import CommandBar from "react-uwp/CommandBar";
 import AppBarButton from "react-uwp/AppBarButton";
-import MarkdownRender from "react-uwp/MarkdownRender";
+//import MarkdownRender from "react-uwp/MarkdownRender";
 
 export default class Post extends React.Component {
   static contextTypes = { theme: PropTypes.object };
@@ -11,7 +11,8 @@ export default class Post extends React.Component {
   render() {
     const { theme } = this.context;
 
-    const sampletext = `# This is a Mardown Render Test
+    /* const sampletext = `
+    \n# This is a Markdown Render Test
 
     \n## Existence
 
@@ -26,7 +27,7 @@ export default class Post extends React.Component {
     \nThen there are these conceptions about the notions of the ‘good’ and the ‘bad’. We have made certain criteria of what is to be expected from a good person, and what differentiates him/her from a bad person. Of course are different perceptions about what's good and what's bad, because they're practically subjective terms. Still, there are some *universal* goods and *universal* bads. Philanthropy, dedicating one's life to the service of people are the highest of what humans can achieve. On the flip side, terrorism, oppression are the lowest bars below which a person cannot fall. These were just a few of the examples.
 
     \nThis certainly begs the question: *If death is the end of all stories no matter how glorious or ordinary then what is the purpose of all our strivings? If after all we're just a tiny insignificant speck in this infinite universe, do our deeds, whether good or bad, really make any difference?* This is the essence of the existential crisis-ish questions that were stated in the beginning. To be blunt, life or human existence has no real meaning or purpose because human existence occurred out of a random chance in nature, and anything that exists by chance has no intended purpose. But we still try and make sense of the world around us. The idea is to leave the world as a better place than we found it, however temporary or short-lived our existence might be. The idea is to leave a mark, to matter, to count, to stand for something, to have made some difference that we lived at all. And I think this offers enough objective directionality in life in terms of good that needs to be achieved and bad avoided.
-    `
+    ` */
 
     const itemStyle: React.CSSProperties = {
       fontWeight: "lighter",
@@ -56,8 +57,8 @@ export default class Post extends React.Component {
           <p style={{ fontSize: 15, float: "right" }}><span className="sdl2asset">&#xEFD3;</span>&nbsp; Rashil Gandhi</p>
           <div style={{ clear: "both" }}></div>
         </div>
-        <div {...classes.acrylic60} style={{ boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)', marginTop: "20px" }}>
-          {/* <div className="about">
+        <div {...classes.acrylic60} style={{ fontSize: "18px", boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)', marginTop: "20px" }}>
+          <div className="about">
             <p>
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt et, non nostrum accusantium ullam debitis officiis maiores voluptas totam? Voluptates expedita et voluptas sunt corporis esse aliquam nisi perspiciatis dolor.
             </p>
@@ -68,8 +69,8 @@ export default class Post extends React.Component {
             <p>
               Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eius necessitatibus nisi ad quas eveniet quis optio? Illo porro sequi explicabo voluptatem facere hic aliquid error nisi laborum, repudiandae cupiditate deleniti. Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut rerum rem tenetur animi neque mollitia necessitatibus eveniet quisquam totam eaque consequuntur architecto fugiat nisi repellendus culpa alias maxime, voluptatem soluta?
             </p>
-          </div> */}
-          <MarkdownRender text={sampletext} />
+          </div>
+          {/* <MarkdownRender text={sampletext} /> */}
         </div>
         <div {...classes.acrylic80} style={{ fontSize: 16, boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)' }}>
           <div>

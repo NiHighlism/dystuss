@@ -49,12 +49,12 @@ export default class Search extends React.Component {
             <TextBox
               style={textStyle}
               placeholder="Type title, name, genre, language etc..."
-              rightNode={<span className="sdl2asset" style={{ marginRight: "10px" }}>&#xE773;</span>}
+              rightNode={<span className="sdl2asset" style={{ marginRight: "10px" }}>&#xE721;</span>}
             />
             <br />
             <AppBarButton
               style={buttonStyle}
-              icon={<span className="sdl2asset">&#xE721;</span>}
+              icon={<span className="sdl2asset">&#xE773;</span>}
               label="Go"
               labelPosition="right"
             />
