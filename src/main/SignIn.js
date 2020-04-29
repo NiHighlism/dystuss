@@ -17,17 +17,28 @@ export default class SignIn extends React.Component {
   }
 
   handleChange(event) {
-    console.log("dekh be")
     this.setState({
         [event.target.name]: event.target.value
     });
-    console.log(this.state)
   }
 
   handleSubmit(event) {
-    console.log(this.state.password)
-    console.log(this.state)
-  }
+    
+    const axiosOptions = {
+      'method' : 'POST',
+      'url' : 'http://localhost:5000/auth/login',
+      'data' : {
+        'username' : this.state.username,
+        'password' : this.state.password,
+        'remember' : 'false'
+      }
+    }
+
+    axios(axiosOptions)
+    .then(response => console.log(response))
+    .catch(err => console.log(err))
+
+}
 
   static contextTypes = { theme: PropTypes.object };
   context: { theme: ReactUWP.ThemeType };
@@ -87,7 +98,10 @@ export default class SignIn extends React.Component {
               name="username"
               style={textStyle}
               placeholder="Username"
-              onChange={this.handleChange}
+              onChange={ e => {
+                this.setState({username: e.target.value})
+                console.log(e);
+              }}
             />
             <br />
             <div style={{ fontSize: 22 }}>Password: </div>
@@ -96,20 +110,17 @@ export default class SignIn extends React.Component {
               name="password"
               style={textStyle}
               placeholder="Password"
-              onChange={ e => {
-                this.setState({username: e.target.value})
-                console.log(e);
-              }}
+              onChangeValue={(event) => this.setState({password: event})}
             />
             <br />
             <br />
+            <span onClick={this.handleSubmit}>
             <AppBarButton
               style={{ margin: "10px auto", ...buttonStyle }}
               icon={<span className="sdl2asset">&#xF286;</span>}
               label="Sign In"
               labelPosition="right"
-              onClick={this.handleSubmit}
-            />
+            /></span>
           </div>
         </div>
       </div>
