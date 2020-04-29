@@ -76,6 +76,20 @@ img {
   text-align: center;
 }
 
+.movie-details {
+  width: 66%;
+  margin-top: 40px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.movie-meta {
+  width: 30%;
+  font-size: 16px;
+  margin-top: 40px;
+  margin-right: 40px;
+  text-align: center;
+}
+
 
 @media screen and (max-width: 1354px) {
   .postlist-item {
@@ -85,6 +99,12 @@ img {
     width: 60%;
   }
   .profile-meta {
+    width: 30%;
+  }
+  .movie-details {
+    width: 60%;
+  }
+  .movie-meta {
     width: 30%;
   }
 }
@@ -106,5 +126,12 @@ img {
   }
   .profile-meta {
     width: 99%;
+  }
+  .movie-details {
+    width: 99%;
+  }
+  .movie-meta {
+    width: 99%;
+    margin-right: 0px;
   }
 }

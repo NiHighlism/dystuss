@@ -10,6 +10,7 @@ import Search from "./views/Search";
 import CreatePost from "./views/CreatePost";
 import Profile from "./views/Profile";
 import About from "./views/About";
+import Movie from "./views/Movie";
 
 export default class App extends React.Component {
   render() {
@@ -59,6 +60,7 @@ export default class App extends React.Component {
               <Route path="/signin" component={SignIn} />
               <Route path="/signup" component={SignUp} />
               <Route path="/search" component={Search} />
+              <Route path="/movie/:id" component={Movie} />
               <Route path="/create" component={CreatePost} />
               <Route path="/profile" component={Profile} />
               <Route path="/about" component={About} />

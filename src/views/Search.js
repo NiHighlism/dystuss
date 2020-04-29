@@ -19,7 +19,7 @@ export default class Search extends React.Component {
       fontWeight: "lighter",
       width: '100%',
       padding: '20px',
-      textAlign: "center"
+      //textAlign: "center"
     };
     const styles = {
       root: theme.prefixStyle({
@@ -46,9 +46,10 @@ export default class Search extends React.Component {
         </div>
         <div {...classes.root} style={{ boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)', marginTop: "30px" }}>
           <div {...classes.acrylic60}>
+            <p style={{ fontSize: "20px", margin: "0px 10px 20px 10px" }}>Search prevoius posts: </p>
             <TextBox
               style={textStyle}
-              placeholder="Type title, name, genre, language etc..."
+              placeholder="Type title, genre, cast, crew etc..."
               rightNode={<span className="sdl2asset" style={{ marginRight: "10px" }}>&#xE721;</span>}
             />
             <br />
@@ -59,7 +60,23 @@ export default class Search extends React.Component {
               labelPosition="right"
             />
           </div>
+
         </div>
+        <div {...classes.acrylic60} style={{ boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)', marginTop: "20px" }}>
+            <p style={{ fontSize: "20px", margin: "0px 10px 20px 10px" }}>Or search the Internet Movie Database (IMDb): </p>
+            <TextBox
+              style={textStyle}
+              placeholder="Type title, genre, cast, crew etc..."
+              rightNode={<span className="sdl2asset" style={{ marginRight: "10px" }}>&#xE721;</span>}
+            />
+            <br />
+            <AppBarButton
+              style={buttonStyle}
+              icon={<span className="sdl2asset">&#xF3F1;</span>}
+              label="Go"
+              labelPosition="right"
+            />
+          </div>
       </div>
     );
   }
