@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
 import { NavLink } from "react-router-dom";
-import axios from 'axios'
+import axios from 'axios';
 
 import TextBox from "react-uwp/TextBox";
 import AppBarButton from "react-uwp/AppBarButton";
@@ -13,7 +13,7 @@ export default class SignIn extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { username: '' , password: '', errMessage : '', errHref : ''};
+    this.state = { username: '' , password: '', errMessage : '', errHref : '', remember: false};
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -28,11 +28,11 @@ export default class SignIn extends React.Component {
     
     const axiosOptions = {
       'method' : 'POST',
-      'url' : 'http://localhost:5000/auth/login',
+      'url' : 'http://localhost:5000/auth/login', //TODO: Server URL instead of localhost
       'data' : {
         'username' : this.state.username,
         'password' : this.state.password,
-        'remember' : 'false'
+        'remember' : this.state.remember
       }
     }
 
@@ -140,6 +140,7 @@ export default class SignIn extends React.Component {
             <CheckBox
               defaultChecked={false}
               label="Keep me signed in"
+              onCheck={(event) => this.setState({remember : true})}
             />
             <br />
             <br />
@@ -150,7 +151,8 @@ export default class SignIn extends React.Component {
               icon={<span className="sdl2asset">&#xF286;</span>}
               label="Sign In"
               labelPosition="right"
-            /></span>
+            />
+            </span>
           </div>
         </div>
       </div>

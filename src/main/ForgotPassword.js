@@ -1,12 +1,50 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
 import { NavLink } from "react-router-dom";
+import axios from 'axios';
+
 import TextBox from "react-uwp/TextBox";
 import AppBarButton from "react-uwp/AppBarButton";
 import Button from "react-uwp/Button";
 
 
 export default class ForgotPassword extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = { email: '', errMessage : ''};
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleSubmit(event) {
+
+    const axiosOptions = {
+      'method' : 'POST',
+      'url' : 'http://localhost:5000/auth/reset/request', //TODO: Change URL
+      'data' : {
+        'email' : this.state.email,
+      } 
+    }
+
+    axios(axiosOptions)
+    .then(response => {
+      this.setState({errMessage: "Ah, Dementia. Verification mail sent!"});
+    })
+    .catch(error => {
+      let status = error.response.status
+
+      if (status === 401){
+        this.setState({
+          errMessage : "User is not registered. Please sign up first.", 
+          errHref : "/signup"
+          });    
+      }
+      else{
+        this.setState({errMessage: "It's not you, it's us. Try again later."})
+      }
+    })
+  }
+
   static contextTypes = { theme: PropTypes.object };
   context: { theme: ReactUWP.ThemeType };
 
@@ -62,11 +100,23 @@ export default class ForgotPassword extends React.Component {
             <div style={{ fontSize: 22 }}>Email: </div>
             <br />
             <TextBox
+              name="email"
               style={textStyle}
               placeholder="Email"
+              onChange={ e => {
+                this.setState({email: e.target.value})
+              }}
             />
             <br />
-            <Button style={{ margin: "10px auto", ...buttonStyle }}>Send</Button>
+            <span onClick={this.handleSubmit}>
+            <a href={this.state.errHref}><span>{this.state.errMessage}</span></a>
+            <AppBarButton
+              style={{ margin: "10px auto", ...buttonStyle }}
+              icon={<span className="sdl2asset">&#xE8FA;</span>}
+              label="Send Mail!"
+              labelPosition="right"
+            />
+            </span>
           </div>
         </div>
       </div>

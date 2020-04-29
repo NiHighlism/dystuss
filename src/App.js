@@ -66,8 +66,8 @@ export default class App extends React.Component {
               <Route path="/create" component={CreatePost} />
               <Route path="/profile" component={Profile} />
               <Route path="/about" component={About} />
-              <Route path="/forgotpassword" component={ForgotPassword} />
-              <Route path="/resendemail" component={ResendEmail} />
+              <Route path="/forgotPassword" component={ForgotPassword} />
+              <Route path="/resendVerification" component={ResendEmail} />
             </Switch>
             <Navigation />
           </UWPThemeProvider>

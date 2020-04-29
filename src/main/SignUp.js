@@ -1,5 +1,7 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
+import axios from 'axios';
+
 import { NavLink } from "react-router-dom";
 import TextBox from "react-uwp/TextBox";
 import AppBarButton from "react-uwp/AppBarButton";
@@ -7,6 +9,58 @@ import PasswordBox from "react-uwp/PasswordBox";
 
 
 export default class SignUp extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = { email: '', username: '', password: '', confPassword : '', errMessage : '', errHref : ''};
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleChange(event) {
+    this.setState({
+        [event.target.name]: event.target.value
+    });
+  }
+
+  handleSubmit(event) {
+
+    if (this.state.confPassword !== this.state.password){
+      this.setState({errMessage: "Passwords don't match"})
+    }
+    else{
+      const axiosOptions = {
+        'method' : 'POST',
+        'url' : 'http://localhost:5000/auth/signup', //TODO: Change URL
+        'data' : {
+          'email' : this.state.email,
+          'username' : this.state.username,
+          'password' : this.state.password,
+        } 
+      }
+
+      axios(axiosOptions)
+      .then(response => {
+        this.setState({errMessage: "Signed Up! Please verify your email!"});
+      })
+      .catch(error => {
+        let status = error.response.status
+        console.log(error.response);
+
+        if (status === 402){
+          this.setState({errMessage : "Username is taken"});
+        }
+    
+        else if (status === 401){
+          this.setState({errMessage : "This email is registered with another account."});
+        }
+        else{
+          this.setState({errMessage: "It's not you, it's us. Try again later."})
+        }
+      })
+    }
+  }
+
   static contextTypes = { theme: PropTypes.object };
   context: { theme: ReactUWP.ThemeType };
 
@@ -62,38 +116,53 @@ export default class SignUp extends React.Component {
             <div style={{ fontSize: 22 }}>Username: </div>
             <br />
             <TextBox
+              name="username"
               style={textStyle}
               placeholder="Username"
+              onChange={ e => {
+                this.setState({username: e.target.value})
+              }}
             />
             <br />
             <div style={{ fontSize: 22 }}>Email: </div>
             <br />
             <TextBox
+              name="email"
               style={textStyle}
               placeholder="Email"
+              onChange={ e => {
+                this.setState({email: e.target.value})
+              }}
             />
             <br />
             <div style={{ fontSize: 22 }}>Password: </div>
             <br />
             <PasswordBox
+              name="password"
               style={textStyle}
               placeholder="Password"
+              onChangeValue={(event) => this.setState({password: event})}
             />
             <br />
             <div style={{ fontSize: 22 }}>Confirm Password: </div>
             <br />
             <PasswordBox
+              name="confPassword"
               style={textStyle}
               placeholder="Password"
+              onChangeValue={(event) => this.setState({confPassword: event})}
             />
             <br />
             <br />
+            <span onClick={this.handleSubmit}>
+            <a href={this.state.errHref}><span>{this.state.errMessage}</span></a>
             <AppBarButton
               style={{ margin: "10px auto", ...buttonStyle }}
               icon={<span className="sdl2asset">&#xE8FA;</span>}
               label="Sign Up"
               labelPosition="right"
             />
+            </span>
           </div>
         </div>
       </div>
