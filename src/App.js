@@ -2,14 +2,17 @@ import * as React from "react";
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { Theme as UWPThemeProvider, getTheme } from "react-uwp/Theme";
 import Navigation from "./main/Navigation";
-import Feed from "./views/Feed";
-import Post from "./views/Post";
 import SignIn from "./main/SignIn";
 import SignUp from "./main/SignUp";
+import ForgotPassword from "./main/ForgotPassword";
+import ResendEmail from "./main/ResendEmail";
+import Feed from "./views/Feed";
+import Post from "./views/Post";
 import Search from "./views/Search";
 import CreatePost from "./views/CreatePost";
 import Profile from "./views/Profile";
 import About from "./views/About";
+import Movie from "./views/Movie";
 
 export default class App extends React.Component {
   render() {
@@ -59,9 +62,12 @@ export default class App extends React.Component {
               <Route path="/signin" component={SignIn} />
               <Route path="/signup" component={SignUp} />
               <Route path="/search" component={Search} />
+              <Route path="/movie/:id" component={Movie} />
               <Route path="/create" component={CreatePost} />
               <Route path="/profile" component={Profile} />
               <Route path="/about" component={About} />
+              <Route path="/forgotpassword" component={ForgotPassword} />
+              <Route path="/resendemail" component={ResendEmail} />
             </Switch>
             <Navigation />
           </UWPThemeProvider>

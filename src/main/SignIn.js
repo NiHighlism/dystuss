@@ -6,6 +6,7 @@ import axios from 'axios'
 import TextBox from "react-uwp/TextBox";
 import AppBarButton from "react-uwp/AppBarButton";
 import PasswordBox from "react-uwp/PasswordBox";
+import CheckBox from "react-uwp/CheckBox";
 
 
 export default class SignIn extends React.Component {
@@ -134,6 +135,11 @@ export default class SignIn extends React.Component {
               style={textStyle}
               placeholder="Password"
               onChangeValue={(event) => this.setState({password: event})}
+            />
+            <br />
+            <CheckBox
+              defaultChecked={false}
+              label="Keep me signed in"
             />
             <br />
             <br />
