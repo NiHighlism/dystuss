@@ -1,3 +1,8 @@
+@font-face {
+  font-family: 'FabricMDL2Icons';
+  src: url('/assets/fabric-mdl2-icons.woff')
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -10,4 +15,96 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+a {
+  color: inherit;
+    text-decoration: inherit;
+}
+
+img {
+  max-width: 100%;
+  height: auto
+}
+
+.about p {
+  white-space: pre-line;
+  text-align: justify;
+}
+
+.sdl2asset {
+  font-family: 'FabricMDL2Icons';
+}
+
+.content {
+  margin: 1%;
+  margin-left: 320px;
+  padding: 10px;
+}
+
+.postlist-item {
+  width: 48%;
+  margin-top: 40px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.postlist-item:nth-child(odd) {
+  margin-right: 40px;
+}
+
+.postlist-title {
+  font-size: 20px;
+  text-transform: capitalize;
+}
+
+.postlist-details {
+  padding-top: 20px;
+  font-size: 15px;
+}
+
+.profile-details {
+  width: 66%;
+  margin-top: 40px;
+  margin-right: 40px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.profile-meta {
+  width: 30%;
+  font-size: 16px;
+  margin-top: 40px;
+  text-align: center;
+}
+
+
+@media screen and (max-width: 1354px) {
+  .postlist-item {
+    width: 40%;
+  }
+  .profile-details {
+    width: 60%;
+  }
+  .profile-meta {
+    width: 30%;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .content {
+    margin-left: 50px;
+  }
+  .postlist-item {
+    width: 99%;
+    margin-top: 20px;
+  }
+  .postlist-item:nth-child(odd) {
+    margin-right: 0px;
+  }
+  .profile-details {
+    width: 99%;
+    margin-right: 0px;
+  }
+  .profile-meta {
+    width: 99%;
+  }
 }
