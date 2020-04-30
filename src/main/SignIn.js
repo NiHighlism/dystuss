@@ -12,57 +12,61 @@ export default class SignIn extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { username: '' , password: '', errMessage : '', errHref : '', remember: false};
+    this.state = { username: '', password: '', errMessage: '', errHref: '', remember: false };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleChange(event) {
     this.setState({
-        [event.target.name]: event.target.value
+      [event.target.name]: event.target.value
     });
   }
 
   handleSubmit(event) {
 
     const axiosOptions = {
-      'method' : 'POST',
-      'url' : 'http://minerva.metamehta.me/auth/login', //TODO: Server URL instead of localhost
-      'data' : {
-        'username' : this.state.username,
-        'password' : this.state.password,
-        'remember' : this.state.remember
+      'method': 'POST',
+      'url': 'http://minerva.rashil2000.me/auth/login',
+      'data': {
+        'username': this.state.username,
+        'password': this.state.password,
+        'remember': this.state.remember
       }
     }
 
     axios(axiosOptions)
-    .then(response => {
-      localStorage.setItem('access_token', response.data.access_token);
-      localStorage.setItem('refresh_token', response.data.refresh_token);
-      localStorage.setItem('userID', response.data.id);
-      localStorage.setItem('username', response.data.username);
-      window.location.pathname = "/profile";
-    })
-    .catch(error => {
-      let status = error.response.status;
-      if (status === 401){
-        this.setState({errMessage : "Couldn't verify. Please check credentials!"});
-      }
+      .then(response => {
+        localStorage.setItem('access_token', response.data.access_token);
+        localStorage.setItem('refresh_token', response.data.refresh_token);
+        localStorage.setItem('userID', response.data.id);
+        localStorage.setItem('username', response.data.username);
+        window.location.pathname = "/profile";
+      })
+      .catch(error => {
+        let status = error.response.status;
+        if (status === 401) {
+          this.setState({ errMessage: "Couldn't verify. Please check credentials!" });
+        }
 
-      if (status === 402){
-        this.setState({errMessage : "Please verify your email before signing in. ", errHref: "/resendVerification"});
-      }
+        if (status === 402) {
+          this.setState({ errMessage: "Please verify your email before signing in. ", errHref: "/resendVerification" });
+        }
 
-      if (status === 403){
-        this.setState({errMessage : "Account to bana le pehle. ", errHref: "/signup"});
-      }
+        if (status === 403) {
+          this.setState({ errMessage: "Account to bana le pehle. ", errHref: "/signup" });
+        }
 
-      else{
-        this.setState({errMessage : "It's not you, it's us. Try later!"});
-      }
-    })
+        else {
+          this.setState({ errMessage: "It's not you, it's us. Try later!" });
+        }
+      })
 
-}
+  }
+
+  componentDidMount() {
+    document.title = "Sign In - DYSTuss"
+  }
 
   static contextTypes = { theme: PropTypes.object };
   context: { theme: ReactUWP.ThemeType };
@@ -122,8 +126,8 @@ export default class SignIn extends React.Component {
               name="username"
               style={textStyle}
               placeholder="Username"
-              onChange={ e => {
-                this.setState({username: e.target.value})
+              onChange={e => {
+                this.setState({ username: e.target.value })
               }}
             />
             <br />
@@ -133,24 +137,24 @@ export default class SignIn extends React.Component {
               name="password"
               style={textStyle}
               placeholder="Password"
-              onChangeValue={(event) => this.setState({password: event})}
+              onChangeValue={(event) => this.setState({ password: event })}
             />
             <br />
             <CheckBox
               defaultChecked={false}
               label="Keep me signed in"
-              onCheck={(event) => this.setState({remember : true})}
+              onCheck={(event) => this.setState({ remember: true })}
             />
             <br />
             <br />
             <a href={this.state.errHref}><span>{this.state.errMessage}</span></a>
             <span onClick={this.handleSubmit}>
-            <AppBarButton
-              style={{ margin: "10px auto", ...buttonStyle }}
-              icon={<span className="sdl2asset">&#xF286;</span>}
-              label="Sign In"
-              labelPosition="right"
-            />
+              <AppBarButton
+                style={{ margin: "10px auto", ...buttonStyle }}
+                icon={<span className="sdl2asset">&#xF286;</span>}
+                label="Sign In"
+                labelPosition="right"
+              />
             </span>
           </div>
         </div>

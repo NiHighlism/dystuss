@@ -12,53 +12,57 @@ export default class SignUp extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { email: '', username: '', password: '', confPassword : '', errMessage : '', errHref : ''};
+    this.state = { email: '', username: '', password: '', confPassword: '', errMessage: '', errHref: '' };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleChange(event) {
     this.setState({
-        [event.target.name]: event.target.value
+      [event.target.name]: event.target.value
     });
   }
 
   handleSubmit(event) {
 
-    if (this.state.confPassword !== this.state.password){
-      this.setState({errMessage: "Passwords don't match"})
+    if (this.state.confPassword !== this.state.password) {
+      this.setState({ errMessage: "Passwords don't match" })
     }
-    else{
+    else {
       const axiosOptions = {
-        'method' : 'POST',
-        'url' : 'http://minerva.metamehta.me/auth/signup', //TODO: Change URL
-        'data' : {
-          'email' : this.state.email,
-          'username' : this.state.username,
-          'password' : this.state.password,
+        'method': 'POST',
+        'url': 'http://minerva.rashil2000.me/auth/signup',
+        'data': {
+          'email': this.state.email,
+          'username': this.state.username,
+          'password': this.state.password,
         }
       }
 
       axios(axiosOptions)
-      .then(response => {
-        this.setState({errMessage: "Signed Up! Please verify your email!"});
-      })
-      .catch(error => {
-        let status = error.response.status
-        console.log(error.response);
+        .then(response => {
+          this.setState({ errMessage: "Signed Up! Please verify your email!" });
+        })
+        .catch(error => {
+          let status = error.response.status
+          console.log(error.response);
 
-        if (status === 402){
-          this.setState({errMessage : "Username is taken"});
-        }
+          if (status === 402) {
+            this.setState({ errMessage: "Username is taken" });
+          }
 
-        else if (status === 401){
-          this.setState({errMessage : "This email is registered with another account."});
-        }
-        else{
-          this.setState({errMessage: "It's not you, it's us. Try again later."})
-        }
-      })
+          else if (status === 401) {
+            this.setState({ errMessage: "This email is registered with another account." });
+          }
+          else {
+            this.setState({ errMessage: "It's not you, it's us. Try again later." })
+          }
+        })
     }
+  }
+
+  componentDidMount() {
+    document.title = "Sign Up - DYSTuss"
   }
 
   static contextTypes = { theme: PropTypes.object };
@@ -119,8 +123,8 @@ export default class SignUp extends React.Component {
               name="username"
               style={textStyle}
               placeholder="Username"
-              onChange={ e => {
-                this.setState({username: e.target.value})
+              onChange={e => {
+                this.setState({ username: e.target.value })
               }}
             />
             <br />
@@ -130,8 +134,8 @@ export default class SignUp extends React.Component {
               name="email"
               style={textStyle}
               placeholder="Email"
-              onChange={ e => {
-                this.setState({email: e.target.value})
+              onChange={e => {
+                this.setState({ email: e.target.value })
               }}
             />
             <br />
@@ -141,7 +145,7 @@ export default class SignUp extends React.Component {
               name="password"
               style={textStyle}
               placeholder="Password"
-              onChangeValue={(event) => this.setState({password: event})}
+              onChangeValue={(event) => this.setState({ password: event })}
             />
             <br />
             <div style={{ fontSize: 22 }}>Confirm Password: </div>
@@ -150,18 +154,18 @@ export default class SignUp extends React.Component {
               name="confPassword"
               style={textStyle}
               placeholder="Password"
-              onChangeValue={(event) => this.setState({confPassword: event})}
+              onChangeValue={(event) => this.setState({ confPassword: event })}
             />
             <br />
             <br />
             <span onClick={this.handleSubmit}>
-            <a href={this.state.errHref}><span>{this.state.errMessage}</span></a>
-            <AppBarButton
-              style={{ margin: "10px auto", ...buttonStyle }}
-              icon={<span className="sdl2asset">&#xE8FA;</span>}
-              label="Sign Up"
-              labelPosition="right"
-            />
+              <a href={this.state.errHref}><span>{this.state.errMessage}</span></a>
+              <AppBarButton
+                style={{ margin: "10px auto", ...buttonStyle }}
+                icon={<span className="sdl2asset">&#xE8FA;</span>}
+                label="Sign Up"
+                labelPosition="right"
+              />
             </span>
           </div>
         </div>

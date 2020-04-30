@@ -5,6 +5,11 @@ import TextBox from "react-uwp/TextBox";
 import AppBarButton from "react-uwp/AppBarButton";
 
 export default class Search extends React.Component {
+
+  componentDidMount(){
+    document.title = `Search - DYSTuss`;
+  }
+
   static contextTypes = { theme: PropTypes.object };
   context: { theme: ReactUWP.ThemeType };
 

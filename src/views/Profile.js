@@ -4,6 +4,11 @@ import AppBarButton from "react-uwp/AppBarButton";
 
 
 export default class Profile extends React.Component {
+
+  componentWillReceiveProps(){
+    document.title = `Username - DYSTuss`; // TODO: Change this to state.username
+  }
+
   static contextTypes = { theme: PropTypes.object };
   context: { theme: ReactUWP.ThemeType };
 
