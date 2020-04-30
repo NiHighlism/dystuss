@@ -12,7 +12,7 @@ export default class SignIn extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { username: '' , password: '', errMessage : '', errHref : '', remember: false};
+    this.state = { username: '' , password: '', errMessage : '', errHref : '', remember: 'false'};
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -24,16 +24,18 @@ export default class SignIn extends React.Component {
   }
 
   handleSubmit(event) {
-
+    
     const axiosOptions = {
       'method' : 'POST',
-      'url' : 'http://minerva.metamehta.me/auth/login', //TODO: Server URL instead of localhost
+      'url' : 'http://localhost:5000/auth/login', //TODO: Server URL instead of localhost
       'data' : {
         'username' : this.state.username,
         'password' : this.state.password,
         'remember' : this.state.remember
       }
     }
+
+    console.log(axiosOptions.data)
 
     axios(axiosOptions)
     .then(response => {
@@ -44,6 +46,8 @@ export default class SignIn extends React.Component {
       window.location.pathname = "/profile";
     })
     .catch(error => {
+      console.log(error.response)
+      console.log(error)
       let status = error.response.status;
       if (status === 401){
         this.setState({errMessage : "Couldn't verify. Please check credentials!"});
@@ -66,7 +70,7 @@ export default class SignIn extends React.Component {
 
   static contextTypes = { theme: PropTypes.object };
   context: { theme: ReactUWP.ThemeType };
-
+  
   render() {
     const { theme } = this.context;
 
@@ -139,7 +143,7 @@ export default class SignIn extends React.Component {
             <CheckBox
               defaultChecked={false}
               label="Keep me signed in"
-              onCheck={(event) => this.setState({remember : true})}
+              onCheck={(event) => this.setState({remember : 'true'})}
             />
             <br />
             <br />

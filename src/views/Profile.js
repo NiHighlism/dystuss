@@ -1,9 +1,47 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
+import axios from 'axios'
+
 import AppBarButton from "react-uwp/AppBarButton";
 
 
 export default class Profile extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      "username": "",
+      "first_name": "",
+      "last_name": "",
+      "email": "",
+    };
+
+    this.getData = this.getData.bind(this);
+  }
+
+  getData(){
+    let username = localStorage.getItem("username");
+    let url = 'http://minerva.metamehta.me/user/' + username;
+    const axiosOptions = {
+      'method' : 'GET',
+      'url' : url,
+      headers :{
+        'Authorization' : localStorage.getItem("access_token")
+      }
+    }
+
+    axios(axiosOptions)
+    .then(response => {
+      this.setState({
+        username: response.data.username,
+        first_name: response.data.first_name,
+        last_name: response.data.last_name,
+        email: response.data.email
+      })
+    })
+    .catch(error => { console.log(error)})
+  }
+
   static contextTypes = { theme: PropTypes.object };
   context: { theme: ReactUWP.ThemeType };
 
@@ -114,7 +152,7 @@ export default class Profile extends React.Component {
             <div {...classes.acrylic80}>
               <div className="sdl2asset" style={{ fontSize: 50 }}>&#xEBF7;</div>
               <br />
-              <p style={{ fontSize: 18 }}>Rashil Gandhi</p>
+              <p style={{ fontSize: 18 }}>{this.state.first_name + " " + this.state.last_name}</p>
               <br /><hr /><br />
               <p><span className="sdl2asset">&#xE8F3;</span>&nbsp; 4 Posts</p>
               <br />

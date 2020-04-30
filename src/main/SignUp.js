@@ -31,7 +31,7 @@ export default class SignUp extends React.Component {
     else{
       const axiosOptions = {
         'method' : 'POST',
-        'url' : 'http://minerva.metamehta.me/auth/signup', //TODO: Change URL
+        'url' : 'http://localhost:5000/auth/signup', //TODO: Change URL
         'data' : {
           'email' : this.state.email,
           'username' : this.state.username,
