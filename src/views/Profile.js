@@ -1,7 +1,6 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
 import AppBarButton from "react-uwp/AppBarButton";
-import Button from "react-uwp/Button";
 
 
 export default class Profile extends React.Component {
@@ -37,7 +36,8 @@ export default class Profile extends React.Component {
       "Syriana (2006)",
       "American Sniper (2014)",
       "The Good, The bad and the Ugly (1969)",
-      "Titanic (1997)", "Dallas Buyers Club (2014)",
+      "Titanic (1997)",
+      "Dallas Buyers Club (2014)",
       "Up in the air (2011)",
       "L.A. Confidential (1997)",
       "Flight (2012)",
@@ -86,71 +86,25 @@ export default class Profile extends React.Component {
             <div {...classes.acrylic60}>
               <div style={{ fontSize: 24 }}>Dashboard</div>
               <br />
-              <p style={{ fontSize: 18, float: "left" }}><span className="sdl2asset">&#xE73A;</span>&nbsp; Stuff already seen: </p>
-              <p style={{ fontSize: 15, float: "right" }}>
-                <Button
-                  style={{
-                    border: `${theme.borderWidth}px solid ${theme.listLow}`,
-                    padding: "3px 6px",
-                    margin: "0px",
-                    ...buttonStyle
-                  }}
-                  background="none"
-                  activeStyle={{
-                    background: "none",
-                    width: 320
-                  }}
-                >
-                  <span className="sdl2asset">&#xE70F;</span>
-                </Button>
-              </p>
-              <div style={{ clear: "both" }}></div>
+              <p style={{ fontSize: 18 }}><span className="sdl2asset">&#xE73A;</span>&nbsp; Stuff already seen: </p>
               <ul style={{ margin: "20px", listStyleType: "disc" }}>
-                {seenList.map(item => (<li style={{ marginBottom: "10px" }}>{item}</li>))}
+                {seenList.map(item => (<li style={{ marginBottom: "10px" }}>
+                  <p style={{ float: "left" }}>{item}</p>
+                  <p style={{ float: "right" }}><span className="sdl2asset">&#xE711;</span></p>
+                  <div style={{ clear: "both" }}></div>
+                </li>))}
               </ul>
               <br />
-              <p style={{ fontSize: 18, float: "left" }}><span className="sdl2asset">&#xECDE;</span>&nbsp; Stuff to be seen: </p>
-              <p style={{ fontSize: 15, float: "right" }}>
-                <Button
-                  style={{
-                    border: `${theme.borderWidth}px solid ${theme.listLow}`,
-                    padding: "3px 6px",
-                    margin: "0px",
-                    ...buttonStyle
-                  }}
-                  background="none"
-                  activeStyle={{
-                    background: "none",
-                    width: 320
-                  }}
-                >
-                  <span className="sdl2asset">&#xE70F;</span>
-                </Button>
-              </p>
-              <div style={{ clear: "both" }}></div>
+              <p style={{ fontSize: 18 }}><span className="sdl2asset">&#xECDE;</span>&nbsp; Stuff to be seen: </p>
               <ul style={{ margin: "20px", listStyleType: "disc" }}>
-                {bucketList.map(item => (<li style={{ marginBottom: "10px" }}>{item}</li>))}
+                {bucketList.map(item => (<li style={{ marginBottom: "10px" }}>
+                  <p style={{ float: "left" }}>{item}</p>
+                  <p style={{ float: "right" }}><span className="sdl2asset">&#xE711;</span></p>
+                  <div style={{ clear: "both" }}></div>
+                </li>))}
               </ul>
               <br />
-              <p style={{ fontSize: 18, float: "left" }}><span className="sdl2asset">&#xE3B8;</span>&nbsp; Recommendations: </p>
-              <p style={{ fontSize: 15, float: "right" }}>
-                <Button
-                  style={{
-                    border: `${theme.borderWidth}px solid ${theme.listLow}`,
-                    padding: "3px 6px",
-                    margin: "0px",
-                    ...buttonStyle
-                  }}
-                  background="none"
-                  activeStyle={{
-                    background: "none",
-                    width: 320
-                  }}
-                >
-                  <span className="sdl2asset">&#xE70F;</span>
-                </Button>
-              </p>
-              <div style={{ clear: "both" }}></div>
+              <p style={{ fontSize: 18 }}><span className="sdl2asset">&#xE3B8;</span>&nbsp; Recommendations: </p>
               <ul style={{ margin: "20px", listStyleType: "disc" }}>
                 {recommendedList.map(item => (<li style={{ marginBottom: "10px" }}>{item}</li>))}
               </ul>
