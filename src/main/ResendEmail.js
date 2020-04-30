@@ -5,7 +5,6 @@ import axios from 'axios'
 import { NavLink } from "react-router-dom";
 import TextBox from "react-uwp/TextBox";
 import AppBarButton from "react-uwp/AppBarButton";
-import Button from "react-uwp/Button";
 
 
 export default class ResendEmail extends React.Component {

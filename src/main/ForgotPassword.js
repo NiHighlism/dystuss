@@ -5,7 +5,6 @@ import axios from 'axios';
 
 import TextBox from "react-uwp/TextBox";
 import AppBarButton from "react-uwp/AppBarButton";
-import Button from "react-uwp/Button";
 
 
 export default class ForgotPassword extends React.Component {

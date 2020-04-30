@@ -58,11 +58,11 @@ export default class App extends React.Component {
           >
             <Switch>
               <Route exact path="/" component={Feed} />
-              <Route path="/post/:id" component={Post} />
+              <Route path="/post/:imdb_id" component={Post} />
               <Route path="/signin" component={SignIn} />
               <Route path="/signup" component={SignUp} />
               <Route path="/search" component={Search} />
-              <Route path="/movie/:id" component={Movie} />
+              <Route path="/movie/:imdb_id" component={Movie} />
               <Route path="/create" component={CreatePost} />
               <Route path="/profile" component={Profile} />
               <Route path="/about" component={About} />
