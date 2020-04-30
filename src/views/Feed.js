@@ -3,6 +3,11 @@ import * as PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
 export default class Feed extends React.Component {
+
+  componentDidMount() {
+    document.title = "DYSTuss"
+  }
+
   static contextTypes = { theme: PropTypes.object };
   context: { theme: ReactUWP.ThemeType };
 

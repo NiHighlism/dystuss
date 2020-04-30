@@ -10,7 +10,7 @@ export default class Movie extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      imdb_ID: '',
+      imdb_id: '',
       title: '',
       actorsList: [],
       genreList: [],
@@ -35,19 +35,16 @@ export default class Movie extends React.Component {
 
   getData(){
     let imdb_id = window.location.pathname.split("/")[2];
-    let url = 'http://minerva.metamehta.me/movie/' + imdb_id;
+    let url = 'http://minerva.rashil2000.me/movie/' + imdb_id;
     const axiosOptions = {
       'method' : 'GET',
-      'url' : url,
-      headers :{
-        'Authorization' : localStorage.getItem("access_token")
-      }
+      'url' : url
     }
 
     axios(axiosOptions)
     .then(response => {
       this.setState({
-        imdb_ID : response.data.imdb_ID,
+        imdb_id : response.data.imdb_id,
         title: response.data.title,
         actorsList: response.data.actors.actorsList,
         genreList : response.data.genre.genreList,
@@ -71,6 +68,10 @@ export default class Movie extends React.Component {
   componentDidMount(){
     this.setState({imdb_id: window.location.pathname.split("/")[2]})
     this.getData();
+  }
+
+  componentWillReceiveProps(){
+    document.title = `Movie - ${this.state.title} - DYSTuss`;
   }
 
   static contextTypes = { theme: PropTypes.object};
@@ -107,7 +108,7 @@ export default class Movie extends React.Component {
         <div {...classes.acrylic40} style={{ boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)' }}>
           <p style={{ fontSize: 30, float: "left" }}>{this.state.title} ({this.state.year})</p>
           <p style={{ fontSize: 15, float: "right" }}>
-            <a href={`https://imdb.com/title/${this.state.imdb_ID}`} target="__blank">
+            <a href={`https://imdb.com/title/${this.state.imdb_id}`} target="__blank">
               <AppBarButton
                 style={buttonStyle}
                 icon={<span className="sdl2asset">&#xF35F;</span>}

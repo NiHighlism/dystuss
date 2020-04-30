@@ -19,7 +19,7 @@ export default class ResendEmail extends React.Component {
 
     const axiosOptions = {
       'method' : 'POST',
-      'url' : 'http://minerva.metamehta.me/auth/resendVerificationEmail', //TODO: Change URL
+      'url' : 'http://minerva.rashil2000.me/auth/resendVerificationEmail',
       'data' : {
         'email' : this.state.email,
       }
@@ -42,6 +42,10 @@ export default class ResendEmail extends React.Component {
         this.setState({errMessage: "It's not you, it's us. Try again later."})
       }
     })
+  }
+
+  componentDidMount() {
+    document.title = "Resend Email - DYSTuss"
   }
 
   static contextTypes = { theme: PropTypes.object };
@@ -82,11 +86,11 @@ export default class ResendEmail extends React.Component {
         <div {...classes.acrylic40} style={{ boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)' }}>
           <p style={{ fontSize: 30, float: "left" }}>Verification Mail</p>
           <p style={{ fontSize: 15, float: "right" }}>
-            <NavLink to="/signup">
+            <NavLink to="/signin">
               <AppBarButton
                 style={buttonStyle}
-                icon={<span className="sdl2asset">&#xE8FA;</span>}
-                label="Sign Up"
+                icon={<span className="sdl2asset">&#xF286;</span>}
+                label="Sign In"
                 labelPosition="right"
               />
             </NavLink>
