@@ -14,6 +14,8 @@ import Profile from "./views/Profile";
 import About from "./views/About";
 import Movie from "./views/Movie";
 
+import PrivateRoute from './main/PrivateRoute.js'
+
 export default class App extends React.Component {
   render() {
 
@@ -63,11 +65,11 @@ export default class App extends React.Component {
               <Route path="/signup" component={SignUp} />
               <Route path="/search" component={Search} />
               <Route path="/movie/:imdb_id" component={Movie} />
-              <Route path="/create" component={CreatePost} />
-              <Route path="/profile" component={Profile} />
               <Route path="/about" component={About} />
               <Route path="/forgotPassword" component={ForgotPassword} />
               <Route path="/resendVerification" component={ResendEmail} />
+              <PrivateRoute path="/create" component={CreatePost} />
+              <PrivateRoute path="/profile" component={Profile} />
             </Switch>
             <Navigation />
           </UWPThemeProvider>
