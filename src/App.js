@@ -1,6 +1,6 @@
 import * as React from "react";
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import { Theme as UWPThemeProvider, getTheme } from "react-uwp/Theme";
+import { Theme, getTheme } from "react-uwp/Theme";
 import Navigation from "./main/Navigation";
 import SignIn from "./main/SignIn";
 import SignUp from "./main/SignUp";
@@ -50,7 +50,7 @@ export default class App extends React.Component {
     return (
       <BrowserRouter>
         <div className="App">
-          <UWPThemeProvider
+          <Theme
             theme={getTheme({
               themeName: name,
               accent: color,
@@ -72,7 +72,7 @@ export default class App extends React.Component {
               <PrivateRoute path="/profile" component={Profile} />
             </Switch>
             <Navigation />
-          </UWPThemeProvider>
+          </Theme>
         </div>
       </BrowserRouter>
     )

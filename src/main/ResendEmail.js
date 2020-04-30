@@ -19,10 +19,10 @@ export default class ResendEmail extends React.Component {
 
     const axiosOptions = {
       'method' : 'POST',
-      'url' : 'http://localhost:5000/auth/resendVerificationEmail', //TODO: Change URL
+      'url' : 'http://minerva.metamehta.me/auth/resendVerificationEmail', //TODO: Change URL
       'data' : {
         'email' : this.state.email,
-      } 
+      }
     }
 
     axios(axiosOptions)
@@ -34,9 +34,9 @@ export default class ResendEmail extends React.Component {
 
       if (status === 401){
         this.setState({
-          errMessage : "User is not registered. Please sign up first.", 
+          errMessage : "User is not registered. Please sign up first.",
           errHref : "/signup"
-          });    
+          });
       }
       else{
         this.setState({errMessage: "It's not you, it's us. Try again later."})

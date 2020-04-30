@@ -31,12 +31,12 @@ export default class SignUp extends React.Component {
     else{
       const axiosOptions = {
         'method' : 'POST',
-        'url' : 'http://localhost:5000/auth/signup', //TODO: Change URL
+        'url' : 'http://minerva.metamehta.me/auth/signup', //TODO: Change URL
         'data' : {
           'email' : this.state.email,
           'username' : this.state.username,
           'password' : this.state.password,
-        } 
+        }
       }
 
       axios(axiosOptions)
@@ -50,7 +50,7 @@ export default class SignUp extends React.Component {
         if (status === 402){
           this.setState({errMessage : "Username is taken"});
         }
-    
+
         else if (status === 401){
           this.setState({errMessage : "This email is registered with another account."});
         }

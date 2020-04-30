@@ -1,7 +1,6 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
 import { NavLink, withRouter } from "react-router-dom";
-
 import NavigationView from "react-uwp/NavigationView";
 import SplitViewCommand from "react-uwp/SplitViewCommand";
 

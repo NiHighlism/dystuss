@@ -24,10 +24,10 @@ export default class SignIn extends React.Component {
   }
 
   handleSubmit(event) {
-    
+
     const axiosOptions = {
       'method' : 'POST',
-      'url' : 'http://localhost:5000/auth/login', //TODO: Server URL instead of localhost
+      'url' : 'http://minerva.metamehta.me/auth/login', //TODO: Server URL instead of localhost
       'data' : {
         'username' : this.state.username,
         'password' : this.state.password,
@@ -66,7 +66,7 @@ export default class SignIn extends React.Component {
 
   static contextTypes = { theme: PropTypes.object };
   context: { theme: ReactUWP.ThemeType };
-  
+
   render() {
     const { theme } = this.context;
 

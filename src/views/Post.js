@@ -12,7 +12,7 @@ export default class Post extends React.Component {
     const { theme } = this.context;
 
     const sampletext = `
-    \n# Markdown Render Sample Text
+    \n# Markdown Sample
 
     \n## Existence
 
@@ -89,105 +89,77 @@ export default class Post extends React.Component {
         <div {...classes.root}>
           <div {...classes.acrylic100} style={{ fontSize: 14, boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)', marginTop: "10px", width: "100%" }}>
             <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Neque velit minus dignissimos, possimus, deleniti quaerat asperiores placeat distinctio mollitia in, minima aut? Eum qui aspernatur eius. Deleniti expedita accusantium nam!</p>
-            <div style={{ marginTop: "5px" }}>
-              <div style={{ display: 'inline-block', marginRight: "20px" }}><span className="sdl2asset">&#xF70F;</span>&nbsp; 0 Replies</div>
-              <div style={{ display: 'inline-block' }}><span className="sdl2asset">&#xE3AF;</span>&nbsp; Appeal 4</div>
-            </div>
             <CommandBar
               background="transparent"
+              content={<span className="sdl2asset">&#xE3AF;&nbsp;&nbsp; 4</span>}
               primaryCommands={[
                 <AppBarButton icon={<span className="sdl2asset">&#xE8E1;</span>} label="Agree" />,
-                <AppBarButton icon={<span className="sdl2asset">&#xE97A;</span>} label="Reply" />,
                 <AppBarButton icon={<span className="sdl2asset">&#xE8E0;</span>} label="Disagree" />,
               ]}
             />
           </div>
           <div {...classes.acrylic100} style={{ fontSize: 14, boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)', marginTop: "10px", width: "100%" }}>
             <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Neque velit minus dignissimos, possimus, deleniti quaerat asperiores placeat distinctio mollitia in, minima aut? Eum qui aspernatur eius. Deleniti expedita accusantium nam!</p>
-            <div style={{ marginTop: "5px" }}>
-              <div style={{ display: 'inline-block', marginRight: "20px" }}><span className="sdl2asset">&#xF70F;</span>&nbsp; 2 Replies</div>
-              <div style={{ display: 'inline-block' }}><span className="sdl2asset">&#xE3AF;</span>&nbsp; Appeal 4</div>
-            </div>
             <CommandBar
               background="transparent"
+              content={<span className="sdl2asset">&#xE3AF;&nbsp;&nbsp; 4</span>}
               primaryCommands={[
                 <AppBarButton icon={<span className="sdl2asset">&#xE8E1;</span>} label="Agree" />,
-                <AppBarButton icon={<span className="sdl2asset">&#xE97A;</span>} label="Reply" />,
-                <AppBarButton icon={<span className="sdl2asset">&#xE8E0;</span>} label="Disagree" />,
-              ]}
-            />
-          </div>
-          <div {...classes.acrylic100} style={{ fontSize: 14, boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)', marginTop: "10px", width: "98%" }}>
-            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Neque velit minus dignissimos, possimus, deleniti quaerat asperiores placeat distinctio mollitia in, minima aut? Eum qui aspernatur eius. Deleniti expedita accusantium nam!</p>
-            <div style={{ marginTop: "5px" }}>
-              <div style={{ display: 'inline-block', marginRight: "20px" }}><span className="sdl2asset">&#xF70F;</span>&nbsp; 1 Reply</div>
-              <div style={{ display: 'inline-block' }}><span className="sdl2asset">&#xE3AF;</span>&nbsp; Appeal 4</div>
-            </div>
-            <CommandBar
-              background="transparent"
-              primaryCommands={[
-                <AppBarButton icon={<span className="sdl2asset">&#xE8E1;</span>} label="Agree" />,
-                <AppBarButton icon={<span className="sdl2asset">&#xE97A;</span>} label="Reply" />,
-                <AppBarButton icon={<span className="sdl2asset">&#xE8E0;</span>} label="Disagree" />,
-              ]}
-            />
-          </div>
-          <div {...classes.acrylic100} style={{ fontSize: 14, boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)', marginTop: "10px", width: "96%" }}>
-            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Neque velit minus dignissimos, possimus, deleniti quaerat asperiores placeat distinctio mollitia in, minima aut? Eum qui aspernatur eius. Deleniti expedita accusantium nam!</p>
-            <div style={{ marginTop: "5px" }}>
-              <div style={{ display: 'inline-block', marginRight: "20px" }}><span className="sdl2asset">&#xF70F;</span>&nbsp; 0 Replies</div>
-              <div style={{ display: 'inline-block' }}><span className="sdl2asset">&#xE3AF;</span>&nbsp; Appeal 4</div>
-            </div>
-            <CommandBar
-              background="transparent"
-              primaryCommands={[
-                <AppBarButton icon={<span className="sdl2asset">&#xE8E1;</span>} label="Agree" />,
-                <AppBarButton icon={<span className="sdl2asset">&#xE97A;</span>} label="Reply" />,
                 <AppBarButton icon={<span className="sdl2asset">&#xE8E0;</span>} label="Disagree" />,
               ]}
             />
           </div>
           <div {...classes.acrylic100} style={{ fontSize: 14, boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)', marginTop: "10px", width: "100%" }}>
             <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Neque velit minus dignissimos, possimus, deleniti quaerat asperiores placeat distinctio mollitia in, minima aut? Eum qui aspernatur eius. Deleniti expedita accusantium nam!</p>
-            <div style={{ marginTop: "5px" }}>
-              <div style={{ display: 'inline-block', marginRight: "20px" }}><span className="sdl2asset">&#xF70F;</span>&nbsp; 1 Reply</div>
-              <div style={{ display: 'inline-block' }}><span className="sdl2asset">&#xE3AF;</span>&nbsp; Appeal 4</div>
-            </div>
             <CommandBar
               background="transparent"
+              content={<span className="sdl2asset">&#xE3AF;&nbsp;&nbsp; 4</span>}
               primaryCommands={[
                 <AppBarButton icon={<span className="sdl2asset">&#xE8E1;</span>} label="Agree" />,
-                <AppBarButton icon={<span className="sdl2asset">&#xE97A;</span>} label="Reply" />,
-                <AppBarButton icon={<span className="sdl2asset">&#xE8E0;</span>} label="Disagree" />,
-              ]}
-            />
-          </div>
-          <div {...classes.acrylic100} style={{ fontSize: 14, boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)', marginTop: "10px", width: "98%" }}>
-            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Neque velit minus dignissimos, possimus, deleniti quaerat asperiores placeat distinctio mollitia in, minima aut? Eum qui aspernatur eius. Deleniti expedita accusantium nam!</p>
-            <div style={{ marginTop: "5px" }}>
-              <div style={{ display: 'inline-block', marginRight: "20px" }}><span className="sdl2asset">&#xF70F;</span>&nbsp; 0 Replies</div>
-              <div style={{ display: 'inline-block' }}><span className="sdl2asset">&#xE3AF;</span>&nbsp; Appeal 4</div>
-            </div>
-            <CommandBar
-              background="transparent"
-              primaryCommands={[
-                <AppBarButton icon={<span className="sdl2asset">&#xE8E1;</span>} label="Agree" />,
-                <AppBarButton icon={<span className="sdl2asset">&#xE97A;</span>} label="Reply" />,
                 <AppBarButton icon={<span className="sdl2asset">&#xE8E0;</span>} label="Disagree" />,
               ]}
             />
           </div>
           <div {...classes.acrylic100} style={{ fontSize: 14, boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)', marginTop: "10px", width: "100%" }}>
             <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Neque velit minus dignissimos, possimus, deleniti quaerat asperiores placeat distinctio mollitia in, minima aut? Eum qui aspernatur eius. Deleniti expedita accusantium nam!</p>
-            <div style={{ marginTop: "5px" }}>
-              <div style={{ display: 'inline-block', marginRight: "20px" }}><span className="sdl2asset">&#xF70F;</span>&nbsp; 0 Replies</div>
-              <div style={{ display: 'inline-block' }}><span className="sdl2asset">&#xE3AF;</span>&nbsp; Appeal 4</div>
-            </div>
             <CommandBar
               background="transparent"
+              content={<span className="sdl2asset">&#xE3AF;&nbsp;&nbsp; 4</span>}
               primaryCommands={[
                 <AppBarButton icon={<span className="sdl2asset">&#xE8E1;</span>} label="Agree" />,
-                <AppBarButton icon={<span className="sdl2asset">&#xE97A;</span>} label="Reply" />,
+                <AppBarButton icon={<span className="sdl2asset">&#xE8E0;</span>} label="Disagree" />,
+              ]}
+            />
+          </div>
+          <div {...classes.acrylic100} style={{ fontSize: 14, boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)', marginTop: "10px", width: "100%" }}>
+            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Neque velit minus dignissimos, possimus, deleniti quaerat asperiores placeat distinctio mollitia in, minima aut? Eum qui aspernatur eius. Deleniti expedita accusantium nam!</p>
+            <CommandBar
+              background="transparent"
+              content={<span className="sdl2asset">&#xE3AF;&nbsp;&nbsp; 4</span>}
+              primaryCommands={[
+                <AppBarButton icon={<span className="sdl2asset">&#xE8E1;</span>} label="Agree" />,
+                <AppBarButton icon={<span className="sdl2asset">&#xE8E0;</span>} label="Disagree" />,
+              ]}
+            />
+          </div>
+          <div {...classes.acrylic100} style={{ fontSize: 14, boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)', marginTop: "10px", width: "100%" }}>
+            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Neque velit minus dignissimos, possimus, deleniti quaerat asperiores placeat distinctio mollitia in, minima aut? Eum qui aspernatur eius. Deleniti expedita accusantium nam!</p>
+            <CommandBar
+              background="transparent"
+              content={<span className="sdl2asset">&#xE3AF;&nbsp;&nbsp; 4</span>}
+              primaryCommands={[
+                <AppBarButton icon={<span className="sdl2asset">&#xE8E1;</span>} label="Agree" />,
+                <AppBarButton icon={<span className="sdl2asset">&#xE8E0;</span>} label="Disagree" />,
+              ]}
+            />
+          </div>
+          <div {...classes.acrylic100} style={{ fontSize: 14, boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)', marginTop: "10px", width: "100%" }}>
+            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Neque velit minus dignissimos, possimus, deleniti quaerat asperiores placeat distinctio mollitia in, minima aut? Eum qui aspernatur eius. Deleniti expedita accusantium nam!</p>
+            <CommandBar
+              background="transparent"
+              content={<span className="sdl2asset">&#xE3AF;&nbsp;&nbsp; 4</span>}
+              primaryCommands={[
+                <AppBarButton icon={<span className="sdl2asset">&#xE8E1;</span>} label="Agree" />,
                 <AppBarButton icon={<span className="sdl2asset">&#xE8E0;</span>} label="Disagree" />,
               ]}
             />

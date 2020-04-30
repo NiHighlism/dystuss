@@ -86,7 +86,7 @@ export default class Profile extends React.Component {
             <div {...classes.acrylic60}>
               <div style={{ fontSize: 24 }}>Dashboard</div>
               <br />
-              <p style={{ fontSize: 18, float: "left" }}>Stuff already seen: </p>
+              <p style={{ fontSize: 18, float: "left" }}><span className="sdl2asset">&#xE73A;</span>&nbsp; Stuff already seen: </p>
               <p style={{ fontSize: 15, float: "right" }}>
                 <Button
                   style={{
@@ -109,7 +109,7 @@ export default class Profile extends React.Component {
                 {seenList.map(item => (<li style={{ marginBottom: "10px" }}>{item}</li>))}
               </ul>
               <br />
-              <p style={{ fontSize: 18, float: "left" }}>Stuff to be seen: </p>
+              <p style={{ fontSize: 18, float: "left" }}><span className="sdl2asset">&#xECDE;</span>&nbsp; Stuff to be seen: </p>
               <p style={{ fontSize: 15, float: "right" }}>
                 <Button
                   style={{
@@ -132,7 +132,7 @@ export default class Profile extends React.Component {
                 {bucketList.map(item => (<li style={{ marginBottom: "10px" }}>{item}</li>))}
               </ul>
               <br />
-              <p style={{ fontSize: 18, float: "left" }}>Recommendations: </p>
+              <p style={{ fontSize: 18, float: "left" }}><span className="sdl2asset">&#xE3B8;</span>&nbsp; Recommendations: </p>
               <p style={{ fontSize: 15, float: "right" }}>
                 <Button
                   style={{
@@ -168,7 +168,7 @@ export default class Profile extends React.Component {
               <br />
               <p><span className="sdl2asset">&#xE8FD;</span>&nbsp; {bucketList.length} Bucket Items</p>
               <br />
-              <p><span className="sdl2asset">&#xE3B8;</span>&nbsp; {recommendedList.length} Recommendations</p>
+              <p><span className="sdl2asset">&#xEF74;</span>&nbsp; {recommendedList.length} Recommendations</p>
               <br /><hr /><br />
               <p><span className="sdl2asset">&#xE787;</span>&nbsp; Joined 13th July</p>
             </div>

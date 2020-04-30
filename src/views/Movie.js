@@ -3,14 +3,15 @@ import * as PropTypes from "prop-types";
 import axios from 'axios';
 
 import AppBarButton from "react-uwp/AppBarButton";
+import Button from "react-uwp/Button";
 
 export default class Movie extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { 
-      imdb_ID: '', 
-      title: '', 
+    this.state = {
+      imdb_ID: '',
+      title: '',
       actorsList: [],
       genreList: [],
       directorList: [],
@@ -25,7 +26,7 @@ export default class Movie extends React.Component {
       awards: '',
       rotten_tomatoes: '',
       metascore: '',
-      
+
       errMessage : ''
     };
 
@@ -34,7 +35,7 @@ export default class Movie extends React.Component {
 
   getData(){
     let imdb_id = window.location.pathname.split("/")[2];
-    let url = 'http://localhost:5000/movie/' + imdb_id;
+    let url = 'http://minerva.metamehta.me/movie/' + imdb_id;
     const axiosOptions = {
       'method' : 'GET',
       'url' : url,
@@ -100,7 +101,7 @@ export default class Movie extends React.Component {
       acrylic100: { ...itemStyle, ...theme.acrylicTexture100.style }
     };
     const classes = theme.prepareStyles({ styles });
-      
+
     return (
       <div className="content">
         <div {...classes.acrylic40} style={{ boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)' }}>
@@ -141,7 +142,7 @@ export default class Movie extends React.Component {
           </div>
           <div className="movie-details">
             <div {...classes.acrylic60}>
-              <div style={{ fontSize: 20 }}>{this.state.plot}</div>
+              <div style={{ fontSize: 20, marginTop: "15px" }}>{this.state.plot}</div>
               <br />
               <div style={{ fontSize: 18 }}>Awards: {this.state.awards}</div>
               <br />
@@ -159,6 +160,9 @@ export default class Movie extends React.Component {
               <ul style={{ margin: "20px", listStyleType: "disc" }}>
                 {this.state.genreList.map(item => (<li style={{ margin: "10px", display: "inline-block" }}>> {item}</li>))}
               </ul>
+              <br />
+              <Button style={{margin: "10px", ...buttonStyle}} icon={<span className="sdl2asset">&#xE73A;&nbsp;</span>}> Add to Seen List</Button>
+              <Button style={{margin: "10px", ...buttonStyle}} icon={<span className="sdl2asset">&#xECDE;&nbsp;</span>}> Add to Bucket List</Button>
             </div>
           </div>
         </div>
