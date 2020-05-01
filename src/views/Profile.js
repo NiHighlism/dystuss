@@ -22,11 +22,15 @@ export default class Profile extends React.Component {
     };
 
     this.getData = this.getData.bind(this);
+    this.getSeenData = this.getSeenData.bind(this);
+    this.getBucketData = this.getBucketData.bind(this);
+    this.getRecommendData = this.getRecommendData.bind(this);
+    this.handleLogOut = this.handleLogOut.bind(this);
   }
 
   getData() {
     let username = localStorage.getItem("username");
-    let url = 'http://minerva.rashil2000.me/user/' + username;
+    let url = 'http://localhost:5000/user/' + username;
     const axiosOptions = {
       'method': 'GET',
       'url': url,
@@ -52,7 +56,7 @@ export default class Profile extends React.Component {
 
   getSeenData() {
     let username = localStorage.getItem("username");
-    let url = 'http://minerva.rashil2000.me/user/' + username + '/getSeenList';
+    let url = 'http://localhost:5000/user/' + username + '/getSeenList';
     const axiosOptions = {
       'method': 'GET',
       'url': url,
@@ -75,7 +79,7 @@ export default class Profile extends React.Component {
 
   getBucketData() {
     let username = localStorage.getItem("username");
-    let url = 'http://minerva.rashil2000.me/user/' + username + '/getBucketList';
+    let url = 'http://localhost:5000/user/' + username + '/getBucketList';
     const axiosOptions = {
       'method': 'GET',
       'url': url,
@@ -98,7 +102,7 @@ export default class Profile extends React.Component {
 
   getRecommendData() {
     let username = localStorage.getItem("username");
-    let url = 'http://minerva.rashil2000.me/user/' + username + '/getRecommendList';
+    let url = 'http://localhost:5000/user/' + username + '/getRecommendList';
     const axiosOptions = {
       'method': 'GET',
       'url': url,
@@ -117,6 +121,28 @@ export default class Profile extends React.Component {
         })
       })
       .catch(error => { console.log(error) })
+  }
+
+  handleLogOut(){
+    const axiosOptions = {
+      'method' : 'POST',
+      'url' : 'http://localhost:5000/auth/logout',
+      headers : {
+        'Authorization' : localStorage.getItem("access_token")
+      }
+    }
+
+    axios(axiosOptions)
+    .then(response => {
+      console.log(response.data);
+      localStorage.removeItem("username");
+      localStorage.removeItem("userID");
+      localStorage.removeItem("access_token");
+      localStorage.removeItem("refresh_token");
+      localStorage.clear();
+      window.location.pathname = "/";
+    })
+    .catch(error => console.log(error))
   }
 
   componentDidMount() {
@@ -168,6 +194,7 @@ export default class Profile extends React.Component {
               icon={<span className="sdl2asset">&#xF3B1;</span>}
               label="Sign Out"
               labelPosition="right"
+              onClick={this.handleLogOut}
             />
           </p>
           <div style={{ clear: "both" }}></div>

@@ -45,6 +45,7 @@ export default class Movie extends React.Component {
 
     axios(axiosOptions)
     .then(response => {
+      console.log(response.data)
       this.setState({
         imdb_id : response.data.imdb_id,
         title: response.data.title,

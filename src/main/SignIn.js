@@ -17,6 +17,10 @@ export default class SignIn extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  isLoggedIn() {
+    return localStorage.getItem("access_token")!==null && localStorage.getItem("access_token")!=="undefined";
+  }
+
   handleChange(event) {
     this.setState({
       [event.target.name]: event.target.value
@@ -70,6 +74,14 @@ export default class SignIn extends React.Component {
   context: { theme: ReactUWP.ThemeType };
 
   render() {
+    
+    const auth = this.isLoggedIn();
+    if (auth){
+      window.location.pathname = "/profile";
+    }
+
+
+
     const { theme } = this.context;
 
     const buttonStyle: React.CSSProperties = { background: theme.useFluentDesign ? theme.listLow : theme.chromeLow };
