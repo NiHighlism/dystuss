@@ -89,7 +89,7 @@ export default class Movie extends React.Component {
 
       const axiosOptions = {
         'method' : 'POST',
-        'url' : 'http://localhost:5000/user/add/seenList',
+        'url' : 'http://minerva.rashil2000.me/user/add/seenList',
         headers : {
           'Authorization' : localStorage.getItem("access_token")
         },
@@ -106,7 +106,7 @@ export default class Movie extends React.Component {
         })
       })
       .catch(error => console.log(error.response))
-    
+
     }
   }
 
@@ -118,7 +118,7 @@ export default class Movie extends React.Component {
 
       const axiosOptions = {
         'method' : 'POST',
-        'url' : 'http://localhost:5000/user/add/bucketList',
+        'url' : 'http://minerva.rashil2000.me/user/add/bucketList',
         headers : {
           'Authorization' : localStorage.getItem("access_token")
         },
@@ -135,7 +135,7 @@ export default class Movie extends React.Component {
         })
       })
       .catch(error => console.log(error.response))
-    
+
     }
   }
 

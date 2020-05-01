@@ -1,9 +1,67 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
+import { Redirect } from "react-router-dom";
 import TextBox from "react-uwp/TextBox";
 import AppBarButton from "react-uwp/AppBarButton";
+import axios from "axios";
 
 export default class CreatePost extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = { title: '', content: '', meta: '', tags: '', errMessage: '', errHref: '' };
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleChange(event) {
+    this.setState({
+      [event.target.name]: event.target.value
+    });
+  }
+
+  handleSubmit(event) {
+
+    if (this.state.title.trim() === "" || this.state.content.trim() === "") {
+      this.setState({ errMessage: "Specify non-empty title and content." })
+    }
+    else {
+      const axiosOptions = {
+        'method': 'POST',
+        'url': 'http://minerva.rashil2000.me/post/create', //TODO: Change URL
+        'data': {
+          'title': this.state.title,
+          'body': this.state.content,
+          'post_movie': this.state.meta,
+          'tags': {
+            'tagList': this.state.tags.split(",")
+          }
+        },
+        headers: {
+          'Authorization': localStorage.getItem("access_token")
+        }
+      }
+
+      axios(axiosOptions)
+        .then(response => {
+          window.location.pathname = `/post/${response.data.id}`;
+        })
+        .catch(error => {
+          let status = error.response.status
+          console.log(error.response);
+
+          if (status === 401) {
+            this.setState({ errMessage: "This title already exists." });
+          }
+          else if (status === 403) {
+            this.setState({ errMessage: "Post already exists." });
+          }
+          else {
+            this.setState({ errMessage: "It's not you, it's us. Try again later." })
+          }
+        })
+    }
+  }
 
   componentDidMount() {
     document.title = "Create Post - DYSTuss"
@@ -54,38 +112,49 @@ export default class CreatePost extends React.Component {
             <div style={{ fontSize: 24 }}>Give a short and crisp title: </div>
             <br />
             <TextBox
+              name="title"
               style={textStyle}
               placeholder="Title"
+              onChange={e => { this.setState({ title: e.target.value }) }}
             />
             <br />
             <div style={{ fontSize: 22 }}>Write out what you feel: </div>
             <br />
             <TextBox
+              name="content"
               style={{ height: "200px", ...textStyle }}
               placeholder="Content"
+              onChange={e => { this.setState({ content: e.target.value }) }}
             />
             <br />
             <div style={{ fontSize: 20 }}>If applicable, mention name of movie/show/series: </div>
             <br />
             <TextBox
+              name="meta"
               style={textStyle}
               placeholder="Meta"
+              onChange={e => { this.setState({ meta: e.target.value }) }}
             />
             <br />
             <div style={{ fontSize: 18 }}>Give a comma-separated list of associated tags: </div>
             <br />
             <TextBox
+              name="tags"
               style={textStyle}
               placeholder="Tags"
+              onChange={e => { this.setState({ tags: e.target.value }) }}
             />
             <br />
             <br />
-            <AppBarButton
-              style={buttonStyle}
-              icon={<span className="sdl2asset">&#xE898;</span>}
-              label="Post"
-              labelPosition="right"
-            />
+            <span onClick={this.handleSubmit}>
+              <a href={this.state.errHref}><span>{this.state.errMessage}</span></a>
+              <AppBarButton
+                style={buttonStyle}
+                icon={<span className="sdl2asset">&#xE898;</span>}
+                label="Post"
+                labelPosition="right"
+              />
+            </span>
           </div>
         </div>
       </div>

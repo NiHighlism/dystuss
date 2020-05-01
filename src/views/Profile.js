@@ -30,7 +30,7 @@ export default class Profile extends React.Component {
 
   getData() {
     let username = localStorage.getItem("username");
-    let url = 'http://localhost:5000/user/' + username;
+    let url = 'http://minerva.rashil2000.me/user/' + username;
     const axiosOptions = {
       'method': 'GET',
       'url': url,
@@ -56,7 +56,7 @@ export default class Profile extends React.Component {
 
   getSeenData() {
     let username = localStorage.getItem("username");
-    let url = 'http://localhost:5000/user/' + username + '/getSeenList';
+    let url = 'http://minerva.rashil2000.me/user/' + username + '/getSeenList';
     const axiosOptions = {
       'method': 'GET',
       'url': url,
@@ -79,7 +79,7 @@ export default class Profile extends React.Component {
 
   getBucketData() {
     let username = localStorage.getItem("username");
-    let url = 'http://localhost:5000/user/' + username + '/getBucketList';
+    let url = 'http://minerva.rashil2000.me/user/' + username + '/getBucketList';
     const axiosOptions = {
       'method': 'GET',
       'url': url,
@@ -102,7 +102,7 @@ export default class Profile extends React.Component {
 
   getRecommendData() {
     let username = localStorage.getItem("username");
-    let url = 'http://localhost:5000/user/' + username + '/getRecommendList';
+    let url = 'http:/minerva.rashil2000.me/user/' + username + '/getRecommendList';
     const axiosOptions = {
       'method': 'GET',
       'url': url,
@@ -126,7 +126,7 @@ export default class Profile extends React.Component {
   handleLogOut(){
     const axiosOptions = {
       'method' : 'POST',
-      'url' : 'http://localhost:5000/auth/logout',
+      'url' : 'http://minerva.rashil2000.me/auth/logout',
       headers : {
         'Authorization' : localStorage.getItem("access_token")
       }

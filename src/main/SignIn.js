@@ -31,7 +31,7 @@ export default class SignIn extends React.Component {
 
     const axiosOptions = {
       'method' : 'POST',
-      'url' : 'http://localhost:5000/auth/login', //TODO: Server URL instead of localhost
+      'url' : 'http://minerva.rashil2000.me/auth/login', //TODO: Server URL instead of localhost
       'data' : {
         'username' : this.state.username,
         'password' : this.state.password,
@@ -74,7 +74,7 @@ export default class SignIn extends React.Component {
   context: { theme: ReactUWP.ThemeType };
 
   render() {
-    
+
     const auth = this.isLoggedIn();
     if (auth){
       window.location.pathname = "/profile";
