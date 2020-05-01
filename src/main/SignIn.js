@@ -58,10 +58,6 @@ export default class SignIn extends React.Component {
         if (status === 403) {
           this.setState({ errMessage: "Account to bana le pehle. ", errHref: "/signup" });
         }
-
-        else {
-          this.setState({ errMessage: "It's not you, it's us. Try later!" });
-        }
       })
 
   }
