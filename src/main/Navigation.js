@@ -19,6 +19,11 @@ class Navigation extends React.Component {
 
     let matchUrl = this.props.location.pathname;
 
+    let authNav =
+      (localStorage.getItem("access_token") !== null && localStorage.getItem("access_token") !== "undefined") ?
+      <NavLink to="/profile"><SplitViewCommand label="Profile" icon={<span className="sdl2asset">&#xE779;</span>} visited={matchUrl === `/profile`} /></NavLink> :
+      <NavLink to="/signin"><SplitViewCommand label="Sign In" icon={<span className="sdl2asset">&#xF400;</span>} visited={matchUrl === `/signin`} /></NavLink>;
+
     const navigationTopNodes = [
       <NavLink to="/"><SplitViewCommand label="Feed" icon={<span className="sdl2asset">&#xE428;</span>} visited={matchUrl === `/`} /></NavLink>,
       <NavLink to="/search"><SplitViewCommand label="Search" icon={<span className="sdl2asset">&#xF4E9;</span>} visited={matchUrl === `/search`} /></NavLink>,
@@ -26,7 +31,7 @@ class Navigation extends React.Component {
     ];
 
     const navigationBottomNode = [
-      <NavLink to="/profile"><SplitViewCommand label="Profile" icon={<span className="sdl2asset">&#xE779;</span>} visited={matchUrl === `/profile`} /></NavLink>,
+      authNav,
       <NavLink to="/about"><SplitViewCommand label="About" icon={<span className="sdl2asset">&#xF8B6;</span>} visited={matchUrl === `/about`} /></NavLink>
     ];
 
@@ -38,7 +43,7 @@ class Navigation extends React.Component {
         isControlled={resp}
         defaultExpanded={resp}
         style={baseStyle}
-        pageTitle={<span style={{color: theme.accent}}>DYSTuss</span>}
+        pageTitle={<span style={{ color: theme.accent }}>DYSTuss</span>}
         displayMode="overlay"
         autoResize={false}
         background={theme.listLow}

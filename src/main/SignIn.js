@@ -24,7 +24,7 @@ export default class SignIn extends React.Component {
   }
 
   handleSubmit(event) {
-    
+
     const axiosOptions = {
       'method' : 'POST',
       'url' : 'http://localhost:5000/auth/login', //TODO: Server URL instead of localhost
@@ -56,7 +56,7 @@ export default class SignIn extends React.Component {
         }
 
         if (status === 403) {
-          this.setState({ errMessage: "Account to bana le pehle. ", errHref: "/signup" });
+          this.setState({ errMessage: "Account not found. ", errHref: "/signup" });
         }
       })
 
@@ -68,7 +68,7 @@ export default class SignIn extends React.Component {
 
   static contextTypes = { theme: PropTypes.object };
   context: { theme: ReactUWP.ThemeType };
-  
+
   render() {
     const { theme } = this.context;
 
