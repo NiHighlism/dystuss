@@ -31,6 +31,8 @@ export default class Movie extends React.Component {
     };
 
     this.getData = this.getData.bind(this);
+    this.handleAddSeen = this.handleAddSeen.bind(this);
+    this.handleAddBucket = this.handleAddBucket.bind(this);
   }
 
   getData(){
@@ -70,8 +72,70 @@ export default class Movie extends React.Component {
     this.getData();
   }
 
+  isLoggedIn() {
+    return localStorage.getItem("access_token")!==null && localStorage.getItem("access_token")!=="undefined";
+  }
+
   componentWillReceiveProps(){
     document.title = `Movie - ${this.state.title} - DYSTuss`;
+  }
+
+  handleAddSeen(){
+    if(!this.isLoggedIn()){
+      window.location.pathname = "/signin";
+    }
+    else{
+
+      const axiosOptions = {
+        'method' : 'POST',
+        'url' : 'http://localhost:5000/user/add/seenList',
+        headers : {
+          'Authorization' : localStorage.getItem("access_token")
+        },
+        'data' : {
+          'imdb_ID_list' : window.location.pathname.split("/")[2],
+          'title' : this.state.title
+        }
+      }
+
+      axios(axiosOptions)
+      .then(response => {
+        this.setState({
+          'errMessage' : "Added Successfully!"
+        })
+      })
+      .catch(error => console.log(error.response))
+    
+    }
+  }
+
+  handleAddBucket(){
+    if(!this.isLoggedIn()){
+      window.location.pathname = "/signin";
+    }
+    else{
+
+      const axiosOptions = {
+        'method' : 'POST',
+        'url' : 'http://localhost:5000/user/add/bucketList',
+        headers : {
+          'Authorization' : localStorage.getItem("access_token")
+        },
+        'data' : {
+          'imdb_ID_list' : window.location.pathname.split("/")[2],
+          'title' : this.state.title
+        }
+      }
+
+      axios(axiosOptions)
+      .then(response => {
+        this.setState({
+          'errMessage' : "Added Successfully!"
+        })
+      })
+      .catch(error => console.log(error.response))
+    
+    }
   }
 
   static contextTypes = { theme: PropTypes.object};
@@ -162,8 +226,10 @@ export default class Movie extends React.Component {
                 {this.state.genreList.map(item => (<li style={{ margin: "10px", display: "inline-block" }}>> {item}</li>))}
               </ul>
               <br />
-              <Button style={{margin: "10px", ...buttonStyle}} icon={<span className="sdl2asset">&#xE73A;&nbsp;</span>}> Add to Seen List</Button>
-              <Button style={{margin: "10px", ...buttonStyle}} icon={<span className="sdl2asset">&#xECDE;&nbsp;</span>}> Add to Bucket List</Button>
+              <Button style={{margin: "10px", ...buttonStyle}} icon={<span className="sdl2asset">&#xE73A;&nbsp;</span>} onClick={this.handleAddSeen}> Add to Seen List</Button>
+              <Button style={{margin: "10px", ...buttonStyle}} icon={<span className="sdl2asset">&#xECDE;&nbsp;</span>} onClick={this.handleAddBucket}> Add to Bucket List</Button>
+            <br />
+            <span>{this.state.errMessage}</span>
             </div>
           </div>
         </div>
