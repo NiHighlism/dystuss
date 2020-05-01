@@ -12,7 +12,7 @@ export default class SignUp extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { email: '', username: '', password: '', confPassword: '', errMessage: '', errHref: '' };
+    this.state = { email: '', username: '', bio: '', password: '', confPassword: '', errMessage: '', errHref: '' };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -30,12 +30,13 @@ export default class SignUp extends React.Component {
     }
     else {
       const axiosOptions = {
-        'method' : 'POST',
-        'url' : 'http://localhost:5000/auth/signup', //TODO: Change URL
-        'data' : {
-          'email' : this.state.email,
-          'username' : this.state.username,
-          'password' : this.state.password,
+        'method': 'POST',
+        'url': 'http://localhost:5000/auth/signup', //TODO: Change URL
+        'data': {
+          'email': this.state.email,
+          'username': this.state.username,
+          'password': this.state.password,
+          'bio': this.state.bio
         }
       }
 
@@ -136,6 +137,17 @@ export default class SignUp extends React.Component {
               placeholder="Email"
               onChange={e => {
                 this.setState({ email: e.target.value })
+              }}
+            />
+            <br />
+            <div style={{ fontSize: 22 }}>Bio: </div>
+            <br />
+            <TextBox
+              name="bio"
+              style={{ height: "100px", ...textStyle }}
+              placeholder="About you"
+              onChange={e => {
+                this.setState({ bio: e.target.value })
               }}
             />
             <br />

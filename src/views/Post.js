@@ -89,7 +89,7 @@ export default class Post extends React.Component {
     const classes = theme.prepareStyles({ styles });
 
     const clickComment = () => {
-      // Add function to post comment
+      // TODO: Add function to post comment
     }
 
     return (
