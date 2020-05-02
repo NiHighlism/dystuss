@@ -18,7 +18,7 @@ export default class SignUp extends React.Component {
   }
 
   isLoggedIn() {
-    return localStorage.getItem("access_token")!==null && localStorage.getItem("access_token")!=="undefined";
+    return localStorage.getItem("access_token") !== null && localStorage.getItem("access_token") !== "undefined";
   }
 
   handleChange(event) {
@@ -35,7 +35,7 @@ export default class SignUp extends React.Component {
     else {
       const axiosOptions = {
         'method': 'POST',
-        'url': 'http://minerva.rashil2000.me/auth/signup', //TODO: Change URL
+        'url': 'http://minerva.rashil2000.me/auth/signup',
         'data': {
           'email': this.state.email,
           'username': this.state.username,
@@ -76,15 +76,18 @@ export default class SignUp extends React.Component {
   render() {
 
     const auth = this.isLoggedIn();
-    if (auth){
+    if (auth) {
       window.location.pathname = "/profile";
     }
 
     const { theme } = this.context;
 
+    const resp = (window.innerWidth >= 600) ? "400px" : "auto";
+
     const buttonStyle: React.CSSProperties = { background: theme.useFluentDesign ? theme.listLow : theme.chromeLow };
     const textStyle: React.CSSProperties = {
-      margin: "10px auto"
+      margin: "10px auto",
+      width: resp
     };
     const itemStyle: React.CSSProperties = {
       fontWeight: "lighter",

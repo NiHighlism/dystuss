@@ -27,7 +27,7 @@ export default class CreatePost extends React.Component {
     else {
       const axiosOptions = {
         'method': 'POST',
-        'url': 'http://minerva.rashil2000.me/post/create', //TODO: Change URL
+        'url': 'http://minerva.rashil2000.me/post/create',
         'data': {
           'title': this.state.title,
           'body': this.state.content,

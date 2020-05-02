@@ -89,7 +89,7 @@ export default class Post extends React.Component {
     axios(axiosOptions)
     .then(response => {
       this.setState({
-        appeal : this.state.appeal + 1 
+        appeal : this.state.appeal + 1
       });
 
     })
@@ -115,7 +115,7 @@ export default class Post extends React.Component {
     axios(axiosOptions)
     .then(response => {
       this.setState({
-        appeal : this.state.appeal - 1   
+        appeal : this.state.appeal - 1
       });
 
     })
@@ -166,7 +166,7 @@ export default class Post extends React.Component {
     axios(axiosOptions)
     .then(response => {
       this.setState({
-        appeal : this.state.appeal - 1   
+        appeal : this.state.appeal - 1
       });
 
     })
@@ -190,7 +190,7 @@ export default class Post extends React.Component {
     axios(axiosOptions)
     .then(response => {
       this.setState({
-        appeal : this.state.appeal - 1   
+        appeal : this.state.appeal - 1
       });
 
     })
@@ -240,10 +240,6 @@ export default class Post extends React.Component {
     };
     const classes = theme.prepareStyles({ styles });
 
-    // const clickComment = () => {
-    //   // TODO: Add function to post comment
-    // }
-
     return (
       <div className="content">
         <div {...classes.acrylic40} style={{ boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)' }}>
@@ -278,7 +274,8 @@ export default class Post extends React.Component {
         <div {...classes.root}>
           {this.state.comments.map(comment =>
             <div key={comment.id} {...classes.acrylic100} style={{ fontSize: 14, boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)', marginTop: "10px", width: "100%" }}>
-              <p style={{fontSize: 15}}>{comment.author_username}</p>
+              <p style={{ fontSize: 15 }}>{comment.author_username}</p>
+              <br/>
               <p>{comment.body}</p>
               <p style={{ float: "left", paddingTop: "15px" }}><span className="sdl2asset">&#xE3AF;</span>&nbsp; {comment.upvotes - comment.downvotes}</p>
               <p style={{ float: "right" }}>

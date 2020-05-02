@@ -31,7 +31,7 @@ export default class SignIn extends React.Component {
 
     const axiosOptions = {
       'method' : 'POST',
-      'url' : 'http://minerva.rashil2000.me/auth/login', //TODO: Server URL instead of localhost
+      'url' : 'http://minerva.rashil2000.me/auth/login',
       'data' : {
         'username' : this.state.username,
         'password' : this.state.password,
@@ -80,13 +80,14 @@ export default class SignIn extends React.Component {
       window.location.pathname = "/profile";
     }
 
-
-
     const { theme } = this.context;
+
+    const resp = (window.innerWidth >= 600) ? "400px" : "auto";
 
     const buttonStyle: React.CSSProperties = { background: theme.useFluentDesign ? theme.listLow : theme.chromeLow };
     const textStyle: React.CSSProperties = {
-      margin: "10px auto"
+      margin: "10px auto",
+      width: resp
     };
     const itemStyle: React.CSSProperties = {
       fontWeight: "lighter",

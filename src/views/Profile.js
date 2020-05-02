@@ -257,7 +257,7 @@ export default class Profile extends React.Component {
               <br />
               <p style={{ fontSize: 16 }}>{this.state.bio}</p>
               <br /><hr /><br />
-              <p><span className="sdl2asset">&#xE8F3;</span>&nbsp; 4 Posts</p>
+              <p><span className="sdl2asset">&#xE8F3;</span>&nbsp; {this.state.postList.length} Posts</p>
               <br />
               <p><span className="sdl2asset">&#xE9D5;</span>&nbsp; {this.state.seenList.length} Seen Items</p>
               <br />
