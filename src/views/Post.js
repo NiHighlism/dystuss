@@ -21,11 +21,17 @@ export default class Post extends React.Component {
       last_edit_time: '',
       commentCount: '',
       comments: [],
-
+      createCommentBody: '',
       errMessage: ''
     };
 
     this.getData = this.getData.bind(this);
+    this.getComments = this.getComments.bind(this);
+    this.handlePostUpvote = this.handlePostUpvote.bind(this);
+    this.handlePostDownvote = this.handlePostUpvote.bind(this);
+    this.handleCreateComment = this.handleCreateComment.bind(this);
+    this.handleCommentUpvote = this.handleCommentUpvote.bind(this);
+    this.handleCommentDownvote = this.handleCommentDownvote.bind(this);
   }
 
   getData() {
@@ -53,9 +59,153 @@ export default class Post extends React.Component {
       .catch(error => { console.log(error) })
   }
 
+  getComments() {
+    let post_id = window.location.pathname.split("/")[2];
+    let url = 'http://minerva.rashil2000.me/post/' + post_id + '/comments';
+    const axiosOptions = {
+      'method': 'GET',
+      'url': url
+    }
+
+    axios(axiosOptions)
+      .then(response => {
+        this.setState({
+          comments: response.data
+        })
+      })
+      .catch(error => { console.log(error) })
+  }
+
+  handlePostUpvote(){
+    let post_id = window.location.pathname.split("/")[2];
+    const axiosOptions = {
+      'method' : 'POST',
+      'url' : 'http://minerva.rashil2000.me/post/' + post_id + '/upvote',
+      'headers' : {
+        'Authorization' : localStorage.getItem("access_token")
+      }
+    }
+
+    axios(axiosOptions)
+    .then(response => {
+      this.setState({
+        appeal : this.state.appeal + 1 
+      });
+
+    })
+    .catch(error => {
+      this.setState({
+        errMessage : "You've already reacted to this post. "
+      });
+      console.log(error.response)
+    })
+
+  }
+
+  handlePostDownvote(){
+    let post_id = window.location.pathname.split("/")[2];
+    const axiosOptions = {
+      'method' : 'POST',
+      'url' : 'http://minerva.metamehta.me/post' + post_id + '/downvote',
+      'headers' : {
+        'Authorization' : localStorage.getItem("access_token")
+      }
+    }
+
+    axios(axiosOptions)
+    .then(response => {
+      this.setState({
+        appeal : this.state.appeal - 1   
+      });
+
+    })
+    .catch(error => {
+      this.setState({
+        errMessage : "You've already reacted to this post. "
+      });
+    })
+
+  }
+
+  handleCreateComment(){
+    let post_id = window.location.pathname.split("/")[2];
+    const axiosOptions = {
+      'method' : 'POST',
+      'url' : 'http://minerva.metamehta.me/comment/create/' + post_id,
+      'headers' : {
+        'Authorization' : localStorage.getItem("access_token")
+      },
+      'data' : {
+        'body' : this.state.createCommentBody
+      }
+    }
+    console.log(axiosOptions);
+
+    axios(axiosOptions)
+    .then(response => {
+      console.log(response);
+      console.log(response.data);
+    })
+    .catch(error => {
+      console.log(error);
+      console.log(error.response);
+    })
+
+  }
+
+  handleCommentUpvote(value){
+    console.log(value);
+    const axiosOptions = {
+      'method' : 'POST',
+      'url' : 'http://minerva.metamehta.me/post' + value + '/downvote',
+      'headers' : {
+        'Authorization' : localStorage.getItem("access_token")
+      }
+    }
+
+    axios(axiosOptions)
+    .then(response => {
+      this.setState({
+        appeal : this.state.appeal - 1   
+      });
+
+    })
+    .catch(error => {
+      this.setState({
+        errMessage : "You've already reacted to this post. "
+      });
+    })
+
+  }
+
+  handleCommentDownvote(value){
+    const axiosOptions = {
+      'method' : 'POST',
+      'url' : 'http://minerva.metamehta.me/comment' + value + '/downvote',
+      'headers' : {
+        'Authorization' : localStorage.getItem("access_token")
+      }
+    }
+
+    axios(axiosOptions)
+    .then(response => {
+      this.setState({
+        appeal : this.state.appeal - 1   
+      });
+
+    })
+    .catch(error => {
+      this.setState({
+        errMessage : "You've already reacted to this post. "
+      });
+    })
+
+  }
+
   componentDidMount() {
     this.setState({ imdb_id: window.location.pathname.split("/")[2] })
     this.getData();
+    this.getComments();
   }
 
   componentWillReceiveProps(){
@@ -90,9 +240,9 @@ export default class Post extends React.Component {
     };
     const classes = theme.prepareStyles({ styles });
 
-    const clickComment = () => {
-      // TODO: Add function to post comment
-    }
+    // const clickComment = () => {
+    //   // TODO: Add function to post comment
+    // }
 
     return (
       <div className="content">
@@ -107,8 +257,9 @@ export default class Post extends React.Component {
         <div {...classes.acrylic80} style={{ fontSize: 16, boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)' }}>
           <p style={{ float: "left", paddingTop: "15px" }}><span className="sdl2asset">&#xF70F;</span>&nbsp; {this.state.commentCount} &nbsp;&nbsp;<span className="sdl2asset">&#xE3AF;</span>&nbsp; {this.state.appeal}</p>
           <p style={{ float: "right" }}>
-            <AppBarButton style={{ display: "inline-block" }} labelPosition="collapsed" icon={<span className="sdl2asset">&#xE8E1;</span>} />
-            <AppBarButton style={{ display: "inline-block" }} labelPosition="collapsed" icon={<span className="sdl2asset">&#xE8E0;</span>} />
+            <AppBarButton style={{ display: "inline-block" }} labelPosition="collapsed" icon={<span className="sdl2asset">&#xE8E1;</span>} onClick={this.handlePostUpvote} />
+            <AppBarButton style={{ display: "inline-block" }} labelPosition="collapsed" icon={<span className="sdl2asset">&#xE8E0;</span>} onClick={this.handlePostDownvote}/>
+            <p>{this.state.errMessage}</p>
           </p>
           <div style={{ clear: "both" }}></div>
         </div>
@@ -119,15 +270,17 @@ export default class Post extends React.Component {
               style={{ margin: "10px auto", width: "100%" }}
               background="none"
               placeholder="Click on the icon when done..."
-              rightNode={<span className="sdl2asset" onClick={clickComment}>&#xF2B3;&nbsp;&nbsp;</span>}
+              onChange={e => this.setState({ createCommentBody: e.target.value })}
+              rightNode={<span className="sdl2asset" onClick={this.handleCreateComment}>&#xF2B3;&nbsp;&nbsp;</span>}
             />
           </div>
         </div>
         <div {...classes.root}>
           {this.state.comments.map(comment =>
             <div key={comment.id} {...classes.acrylic100} style={{ fontSize: 14, boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)', marginTop: "10px", width: "100%" }}>
-              <p>{comment.content}</p>
-              <p style={{ float: "left", paddingTop: "15px" }}><span className="sdl2asset">&#xE3AF;</span>&nbsp; {comment.appeal}</p>
+              <p style={{fontSize: 15}}>{comment.author_username}</p>
+              <p>{comment.body}</p>
+              <p style={{ float: "left", paddingTop: "15px" }}><span className="sdl2asset">&#xE3AF;</span>&nbsp; {comment.upvotes - comment.downvotes}</p>
               <p style={{ float: "right" }}>
                 <AppBarButton style={{ display: "inline-block" }} labelPosition="collapsed" icon={<span className="sdl2asset">&#xE8E1;</span>} />
                 <AppBarButton style={{ display: "inline-block" }} labelPosition="collapsed" icon={<span className="sdl2asset">&#xE8E0;</span>} />
