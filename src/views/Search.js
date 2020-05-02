@@ -3,10 +3,80 @@ import * as PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import TextBox from "react-uwp/TextBox";
 import AppBarButton from "react-uwp/AppBarButton";
+import axios from "axios";
 
 export default class Search extends React.Component {
 
-  componentDidMount(){
+  constructor(props) {
+    super(props);
+    this.state = {
+      postSearchQuery: '',
+      postSearchResults: [],
+      movieSearchQuery: '',
+      movieSearchResults: [],
+
+      errMessagePost: '',
+      errHrefPost: '',
+      errMessageMovie: '',
+      errHrefMovie: ''
+    };
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmitPost = this.handleSubmitPost.bind(this);
+    this.handleSubmitMovie = this.handleSubmitMovie.bind(this);
+  }
+
+  handleChange(event) {
+    this.setState({
+      [event.target.name]: event.target.value
+    });
+  }
+
+  handleSubmitPost(event) {
+
+    if (this.state.postSearchQuery.trim() === "") {
+      this.setState({ errMessagePost: "Specify non-empty query." })
+    }
+    else {
+      const axiosOptions = {
+        'method': 'GET',
+        'url': 'http://minerva.rashil2000.me/post/getAll',
+      }
+
+      axios(axiosOptions)
+        .then(response => {
+          this.setState({ postSearchResults: response.data });
+        })
+        .catch(error => {
+          this.setState({ errMessagePost: "Not found." })
+        })
+    }
+  }
+
+  handleSubmitMovie(event) {
+
+    if (this.state.movieSearchQuery.trim() === "") {
+      this.setState({ errMessageMovie: "Specify non-empty query." })
+    }
+    else {
+      const axiosOptions = {
+        'method': 'GET',
+        'url': 'http://minerva.rashil2000.me/movie/search',
+        'params': {
+          'q': this.state.movieSearchQuery
+        }
+      }
+
+      axios(axiosOptions)
+        .then(response => {
+          this.setState({ movieSearchResults: response.data });
+        })
+        .catch(error => {
+          this.setState({ errMessageMovie: "Not found." });
+        })
+    }
+  }
+
+  componentDidMount() {
     document.title = `Search - DYSTuss`;
   }
 
@@ -43,19 +113,6 @@ export default class Search extends React.Component {
     };
     const classes = theme.prepareStyles({ styles });
 
-    const postResults = [
-      { id: 9, title: "Ben-Hur versus Titanic: The tale of the 11 oscars", author: 'Pratim Majumdar', commentcount: 25, appeal: 321 },
-      { id: 1, title: '[Review] Parasite (2019)', author: 'Kanishka Gandhi', commentcount: 3, appeal: -9 },
-      { id: 6, title: "Omar Sharif : From Zenith to Nadir", author: 'Pratim Majumdar', commentcount: 25, appeal: 321 }
-    ];
-
-    const imdbResults = [
-      { id: 9, title: "Ben-Hur versus Titanic: The tale of the 11 oscars", author: 'Pratim Majumdar', commentcount: 25, appeal: 321 },
-      { id: 1, title: '[Review] Parasite (2019)', author: 'Kanishka Gandhi', commentcount: 3, appeal: -9 },
-      { id: 6, title: "Omar Sharif : From Zenith to Nadir", author: 'Pratim Majumdar', commentcount: 25, appeal: 321 },
-      { id: 2, title: "Schindler's List - After 25 Years", author: 'Rashil Gandhi', commentcount: 5, appeal: 20 }
-    ];
-
     return (
       <div className="content">
         <div {...classes.acrylic40} style={{ boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)' }}>
@@ -66,26 +123,36 @@ export default class Search extends React.Component {
           <div {...classes.acrylic60}>
             <p style={{ fontSize: "20px", margin: "0px 10px 20px 10px" }}>Search previous posts: </p>
             <TextBox
+              name="postSearchQuery"
               style={textStyle}
               placeholder="Type title, genre, cast, crew etc..."
               rightNode={<span className="sdl2asset" style={{ marginRight: "10px" }}>&#xE721;</span>}
+              onChange={e => { this.setState({ postSearchQuery: e.target.value }) }}
             />
             <br />
-            <AppBarButton
-              style={buttonStyle}
-              icon={<span className="sdl2asset">&#xE773;</span>}
-              label="Go"
-              labelPosition="right"
-            />
+            <span onClick={this.handleSubmitPost}>
+              <a href={this.state.errHrefPost}><span>{this.state.errMessagePost}</span></a>
+              <AppBarButton
+                style={buttonStyle}
+                icon={<span className="sdl2asset">&#xE773;</span>}
+                label="Go"
+                labelPosition="right"
+              />
+            </span>
           </div>
         </div>
         <div {...classes.root}>
-          {postResults.map(post => {
+          {this.state.postSearchResults.map(post => {
             return (
               <div className="postlist-item" key={post.id}>
                 <Link to={'/post/' + post.id}>
                   <div {...classes.acrylic60}>
-                    <div className="postlist-title" style={{ fontSize: "16px" }}>{post.title}</div>
+                    <div className="postlist-title">{post.title}</div>
+                    <div className="postlist-details">
+                      <div style={{ display: 'inline-block', marginRight: "20px" }}><span className="sdl2asset">&#xEFD3;</span>&nbsp; {post.author_username}</div>
+                      <div style={{ display: 'inline-block', marginRight: "20px" }}><span className="sdl2asset">&#xF70F;</span>&nbsp; {post.numComments}</div>
+                      <div style={{ display: 'inline-block' }}><span className="sdl2asset">&#xE3AF;</span>&nbsp; {post.upvotes - post.downvotes}</div>
+                    </div>
                   </div>
                 </Link>
               </div>
@@ -95,25 +162,30 @@ export default class Search extends React.Component {
         <div {...classes.acrylic60} style={{ boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)', marginTop: "20px" }}>
           <p style={{ fontSize: "20px", margin: "0px 10px 20px 10px" }}>Or search the Internet Movie Database (IMDb): </p>
           <TextBox
+            name="movieSearchQuery"
             style={textStyle}
             placeholder="Type title, genre, cast, crew etc..."
             rightNode={<span className="sdl2asset" style={{ marginRight: "10px" }}>&#xE721;</span>}
+            onChange={e => { this.setState({ movieSearchQuery: e.target.value }) }}
           />
           <br />
-          <AppBarButton
-            style={buttonStyle}
-            icon={<span className="sdl2asset">&#xF3F1;</span>}
-            label="Go"
-            labelPosition="right"
-          />
+          <span onClick={this.handleSubmitMovie}>
+            <a href={this.state.errHrefMovie}><span>{this.state.errMessageMovie}</span></a>
+            <AppBarButton
+              style={buttonStyle}
+              icon={<span className="sdl2asset">&#xF3F1;</span>}
+              label="Go"
+              labelPosition="right"
+            />
+          </span>
         </div>
         <div {...classes.root}>
-          {imdbResults.map(post => {
+          {this.state.movieSearchResults.map(movie => {
             return (
-              <div className="postlist-item" key={post.id}>
-                <Link to={'/post/' + post.id}>
+              <div className="postlist-item" key={movie.imdb_ID}>
+                <Link to={'/movie/' + movie.imdb_ID}>
                   <div {...classes.acrylic60}>
-                    <div className="postlist-title" style={{ fontSize: "16px" }}>{post.title}</div>
+                    <div className="postlist-title" style={{ fontSize: "16px" }}>{movie.title} ({movie.year})</div>
                   </div>
                 </Link>
               </div>
