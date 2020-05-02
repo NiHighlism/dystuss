@@ -119,9 +119,20 @@ export default class CreatePost extends React.Component {
             <br />
             <div style={{ fontSize: 22 }}>Write out what you feel: </div>
             <br />
-            <TextBox
+            <textarea
+              required
+              wrap="soft"
               name="content"
-              style={{ height: "200px", ...textStyle }}
+              style={{
+                ...textStyle,
+                height: "200px",
+                width: "100%",
+                fontFamily: "Segoe UI",
+                padding: "8px",
+                fontSize: "15px",
+                backgroundColor: "transparent",
+                color: (theme.themeName === "dark") ? "white" : "black"
+              }}
               placeholder="Content"
               onChange={e => { this.setState({ content: e.target.value }) }}
             />

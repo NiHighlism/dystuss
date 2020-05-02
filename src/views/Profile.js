@@ -105,7 +105,7 @@ export default class Profile extends React.Component {
 
   getRecommendData() {
     let username = localStorage.getItem("username");
-    let url = 'http:/minerva.rashil2000.me/user/' + username + '/getRecommendList';
+    let url = 'http://minerva.rashil2000.me/user/' + username + '/getRecommendList';
     const axiosOptions = {
       'method': 'GET',
       'url': url,
@@ -128,7 +128,7 @@ export default class Profile extends React.Component {
 
   getPostList() {
     let username = localStorage.getItem("username");
-    let url = 'http:/minerva.rashil2000.me/user/' + username + '/posts';
+    let url = 'http://minerva.rashil2000.me/user/' + username + '/posts';
     const axiosOptions = {
       'method': 'GET',
       'url': url
@@ -136,7 +136,6 @@ export default class Profile extends React.Component {
 
     axios(axiosOptions)
       .then(response => {
-        console.log(response.data);
         this.setState({
           postList: response.data
         })
