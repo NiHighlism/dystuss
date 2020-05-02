@@ -1,5 +1,6 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 import axios from 'axios'
 
 import AppBarButton from "react-uwp/AppBarButton";
@@ -18,13 +19,15 @@ export default class Profile extends React.Component {
       "bio": "",
       "seenList": [],
       "bucketList": [],
-      "recommendList": []
+      "recommendList": [],
+      "postList": []
     };
 
     this.getData = this.getData.bind(this);
     this.getSeenData = this.getSeenData.bind(this);
     this.getBucketData = this.getBucketData.bind(this);
     this.getRecommendData = this.getRecommendData.bind(this);
+    this.getPostList = this.getPostList.bind(this);
     this.handleLogOut = this.handleLogOut.bind(this);
   }
 
@@ -41,7 +44,7 @@ export default class Profile extends React.Component {
 
     axios(axiosOptions)
       .then(response => {
-        console.log(response.data);
+        //console.log(response.data);
         this.setState({
           username: response.data.username,
           first_name: response.data.first_name,
@@ -123,26 +126,44 @@ export default class Profile extends React.Component {
       .catch(error => { console.log(error) })
   }
 
-  handleLogOut(){
+  getPostList() {
+    let username = localStorage.getItem("username");
+    let url = 'http:/minerva.rashil2000.me/user/' + username + '/posts';
     const axiosOptions = {
-      'method' : 'POST',
-      'url' : 'http://minerva.rashil2000.me/auth/logout',
-      headers : {
-        'Authorization' : localStorage.getItem("access_token")
+      'method': 'GET',
+      'url': url
+    }
+
+    axios(axiosOptions)
+      .then(response => {
+        console.log(response.data);
+        this.setState({
+          postList: response.data
+        })
+      })
+      .catch(error => { console.log(error) })
+  }
+
+  handleLogOut() {
+    const axiosOptions = {
+      'method': 'POST',
+      'url': 'http://minerva.rashil2000.me/auth/logout',
+      headers: {
+        'Authorization': localStorage.getItem("access_token")
       }
     }
 
     axios(axiosOptions)
-    .then(response => {
-      console.log(response.data);
-      localStorage.removeItem("username");
-      localStorage.removeItem("userID");
-      localStorage.removeItem("access_token");
-      localStorage.removeItem("refresh_token");
-      localStorage.clear();
-      window.location.pathname = "/";
-    })
-    .catch(error => console.log(error))
+      .then(response => {
+        //console.log(response.data);
+        localStorage.removeItem("username");
+        localStorage.removeItem("userID");
+        localStorage.removeItem("access_token");
+        localStorage.removeItem("refresh_token");
+        localStorage.clear();
+        window.location.pathname = "/";
+      })
+      .catch(error => console.log(error))
   }
 
   componentDidMount() {
@@ -150,6 +171,7 @@ export default class Profile extends React.Component {
     this.getSeenData();
     this.getBucketData();
     this.getRecommendData();
+    this.getPostList();
   }
 
   componentWillReceiveProps() {
@@ -247,6 +269,24 @@ export default class Profile extends React.Component {
               <p><span className="sdl2asset">&#xE787;</span>&nbsp; Joined {this.state.create_date}</p>
             </div>
           </div>
+        </div>
+        <div {...classes.root}>
+          {this.state.postList.map(post => {
+            return (
+              <div className="postlist-item" key={post.id}>
+                <Link to={'/post/' + post.id}>
+                  <div {...classes.acrylic60}>
+                    <div className="postlist-title">{post.title}</div>
+                    <div className="postlist-details">
+                      <div style={{ display: 'inline-block', marginRight: "20px" }}><span className="sdl2asset">&#xEFD3;</span>&nbsp; {post.author_username}</div>
+                      <div style={{ display: 'inline-block', marginRight: "20px" }}><span className="sdl2asset">&#xF70F;</span>&nbsp; 0 {/* TODO Commentcount */} </div>
+                      <div style={{ display: 'inline-block' }}><span className="sdl2asset">&#xE3AF;</span>&nbsp; {post.upvotes - post.downvotes}</div>
+                    </div>
+                  </div>
+                </Link>
+              </div>
+            );
+          })}
         </div>
       </div>
     );

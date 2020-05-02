@@ -57,7 +57,7 @@ export default class Post extends React.Component {
   }
 
   componentWillReceiveProps(){
-    document.title = `Post - ${this.state.title} - DYSTuss`;
+    document.title = `${this.state.title} - DYSTuss`;
   }
 
   static contextTypes = { theme: PropTypes.object };

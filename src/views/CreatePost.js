@@ -1,6 +1,5 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
-import { Redirect } from "react-router-dom";
 import TextBox from "react-uwp/TextBox";
 import AppBarButton from "react-uwp/AppBarButton";
 import axios from "axios";
