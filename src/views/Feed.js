@@ -80,7 +80,7 @@ export default class Feed extends React.Component {
                     <div className="postlist-title">{post.title}</div>
                     <div className="postlist-details">
                       <div style={{ display: 'inline-block', marginRight: "20px" }}><span className="sdl2asset">&#xEFD3;</span>&nbsp; {post.author_username}</div>
-                      <div style={{ display: 'inline-block', marginRight: "20px" }}><span className="sdl2asset">&#xF70F;</span>&nbsp; 0 {/* TODO Commentcount */} </div>
+                      <div style={{ display: 'inline-block', marginRight: "20px" }}><span className="sdl2asset">&#xF70F;</span>&nbsp; {post.numComments}</div>
                       <div style={{ display: 'inline-block' }}><span className="sdl2asset">&#xE3AF;</span>&nbsp; {post.upvotes - post.downvotes}</div>
                     </div>
                   </div>

@@ -269,6 +269,20 @@ export default class Profile extends React.Component {
             </div>
           </div>
         </div>
+        <div {...classes.acrylic40} style={{ boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)', marginTop: "40px" }}>
+          <p style={{ fontSize: 30, float: "left" }}>Posts</p>
+          <p style={{ fontSize: 15, float: "right" }}>
+            <Link to="/">
+              <AppBarButton
+                style={buttonStyle}
+                icon={<span className="sdl2asset">&#xE428;</span>}
+                label="Feed"
+                labelPosition="right"
+              />
+            </Link>
+          </p>
+          <div style={{ clear: "both" }}></div>
+        </div>
         <div {...classes.root}>
           {this.state.postList.map(post => {
             return (
@@ -277,8 +291,7 @@ export default class Profile extends React.Component {
                   <div {...classes.acrylic60}>
                     <div className="postlist-title">{post.title}</div>
                     <div className="postlist-details">
-                      <div style={{ display: 'inline-block', marginRight: "20px" }}><span className="sdl2asset">&#xEFD3;</span>&nbsp; {post.author_username}</div>
-                      <div style={{ display: 'inline-block', marginRight: "20px" }}><span className="sdl2asset">&#xF70F;</span>&nbsp; 0 {/* TODO Commentcount */} </div>
+                      <div style={{ display: 'inline-block', marginRight: "20px" }}><span className="sdl2asset">&#xF70F;</span>&nbsp; {post.numComments} </div>
                       <div style={{ display: 'inline-block' }}><span className="sdl2asset">&#xE3AF;</span>&nbsp; {post.upvotes - post.downvotes}</div>
                     </div>
                   </div>

@@ -19,6 +19,7 @@ export default class Post extends React.Component {
       post_movie: '',
       appeal: '',
       last_edit_time: '',
+      commentCount: '',
       comments: [],
       createCommentBody: '',
       errMessage: ''
@@ -51,7 +52,8 @@ export default class Post extends React.Component {
           body: response.data.body,
           post_movie: response.data.post_movie,
           appeal: response.data.upvotes - response.data.downvotes,
-          last_edit_time: response.data.last_edit_time
+          last_edit_time: response.data.last_edit_time,
+          commentCount: response.data.numComments
         })
       })
       .catch(error => { console.log(error) })
@@ -253,7 +255,7 @@ export default class Post extends React.Component {
           <MarkdownRender text={this.state.body} />
         </div>
         <div {...classes.acrylic80} style={{ fontSize: 16, boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)' }}>
-          <p style={{ float: "left", paddingTop: "15px" }}><span className="sdl2asset">&#xF70F;</span>&nbsp; {this.state.comments.length} &nbsp;&nbsp;<span className="sdl2asset">&#xE3AF;</span>&nbsp; {this.state.appeal}</p>
+          <p style={{ float: "left", paddingTop: "15px" }}><span className="sdl2asset">&#xF70F;</span>&nbsp; {this.state.commentCount} &nbsp;&nbsp;<span className="sdl2asset">&#xE3AF;</span>&nbsp; {this.state.appeal}</p>
           <p style={{ float: "right" }}>
             <AppBarButton style={{ display: "inline-block" }} labelPosition="collapsed" icon={<span className="sdl2asset">&#xE8E1;</span>} onClick={this.handlePostUpvote} />
             <AppBarButton style={{ display: "inline-block" }} labelPosition="collapsed" icon={<span className="sdl2asset">&#xE8E0;</span>} onClick={this.handlePostDownvote}/>
