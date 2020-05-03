@@ -2,7 +2,6 @@ import * as React from "react";
 import * as PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import TextBox from "react-uwp/TextBox";
-import AppBarButton from "react-uwp/AppBarButton";
 import axios from "axios";
 
 export default class Search extends React.Component {
@@ -20,18 +19,12 @@ export default class Search extends React.Component {
       errMessageMovie: '',
       errHrefMovie: ''
     };
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmitPost = this.handleSubmitPost.bind(this);
-    this.handleSubmitMovie = this.handleSubmitMovie.bind(this);
+    this.handlePostSearch = this.handlePostSearch.bind(this);
+    this.handleMovieSearch = this.handleMovieSearch.bind(this);
   }
 
-  handleChange(event) {
-    this.setState({
-      [event.target.name]: event.target.value
-    });
-  }
-
-  handleSubmitPost(event) {
+  handlePostSearch(event) {
+    this.setState({ postSearchQuery: event.target.value });
 
     if (this.state.postSearchQuery.trim() === "") {
       this.setState({ errMessagePost: "Specify non-empty query." })
@@ -52,10 +45,11 @@ export default class Search extends React.Component {
     }
   }
 
-  handleSubmitMovie(event) {
+  handleMovieSearch(event) {
+    this.setState({ movieSearchQuery: event.target.value });
 
     if (this.state.movieSearchQuery.trim() === "") {
-      this.setState({ errMessageMovie: "Specify non-empty query." })
+      this.setState({ errMessageMovie: "Insert a space after query." })
     }
     else {
       const axiosOptions = {
@@ -86,7 +80,6 @@ export default class Search extends React.Component {
   render() {
     const { theme } = this.context;
 
-    const buttonStyle: React.CSSProperties = { background: theme.useFluentDesign ? theme.listLow : theme.chromeLow, margin: "10px auto" };
     const textStyle: React.CSSProperties = {
       margin: "10px",
       width: "auto"
@@ -126,19 +119,11 @@ export default class Search extends React.Component {
               name="postSearchQuery"
               style={textStyle}
               placeholder="Type title, genre, cast, crew etc..."
-              rightNode={<span className="sdl2asset" style={{ marginRight: "10px" }}>&#xE721;</span>}
-              onChange={e => { this.setState({ postSearchQuery: e.target.value }) }}
+              rightNode={<span className="sdl2asset" style={{ marginRight: "10px" }}>&#xE773;</span>}
+              onChange={this.handlePostSearch}
             />
             <br />
-            <span onClick={this.handleSubmitPost}>
-              <a href={this.state.errHrefPost}><span>{this.state.errMessagePost}</span></a>
-              <AppBarButton
-                style={buttonStyle}
-                icon={<span className="sdl2asset">&#xE773;</span>}
-                label="Go"
-                labelPosition="right"
-              />
-            </span>
+            <span>{this.state.errMessagePost}</span>
           </div>
         </div>
         <div {...classes.root}>
@@ -165,19 +150,11 @@ export default class Search extends React.Component {
             name="movieSearchQuery"
             style={textStyle}
             placeholder="Type title, genre, cast, crew etc..."
-            rightNode={<span className="sdl2asset" style={{ marginRight: "10px" }}>&#xE721;</span>}
-            onChange={e => { this.setState({ movieSearchQuery: e.target.value }) }}
+            rightNode={<span className="sdl2asset" style={{ marginRight: "10px" }}>&#xF3F1;</span>}
+            onChange={this.handleMovieSearch}
           />
           <br />
-          <span onClick={this.handleSubmitMovie}>
-            <a href={this.state.errHrefMovie}><span>{this.state.errMessageMovie}</span></a>
-            <AppBarButton
-              style={buttonStyle}
-              icon={<span className="sdl2asset">&#xF3F1;</span>}
-              label="Go"
-              labelPosition="right"
-            />
-          </span>
+          <span>{this.state.errMessageMovie}</span>
         </div>
         <div {...classes.root}>
           {this.state.movieSearchResults.map(movie => {
