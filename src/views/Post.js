@@ -36,7 +36,7 @@ export default class Post extends React.Component {
 
   getData() {
     let post_id = window.location.pathname.split("/")[2];
-    let url = 'http://minerva.rashil2000.me/post/' + post_id;
+    let url = 'https://vidura.rashil2000.me/post/' + post_id;
     const axiosOptions = {
       'method': 'GET',
       'url': url
@@ -61,7 +61,7 @@ export default class Post extends React.Component {
 
   getComments() {
     let post_id = window.location.pathname.split("/")[2];
-    let url = 'http://minerva.rashil2000.me/post/' + post_id + '/comments';
+    let url = 'https://vidura.rashil2000.me/post/' + post_id + '/comments';
     const axiosOptions = {
       'method': 'GET',
       'url': url
@@ -80,7 +80,7 @@ export default class Post extends React.Component {
     let post_id = window.location.pathname.split("/")[2];
     const axiosOptions = {
       'method' : 'POST',
-      'url' : 'http://minerva.rashil2000.me/post/' + post_id + '/upvote',
+      'url' : 'https://vidura.rashil2000.me/post/' + post_id + '/upvote',
       'headers' : {
         'Authorization' : localStorage.getItem("access_token")
       }
@@ -106,7 +106,7 @@ export default class Post extends React.Component {
     let post_id = window.location.pathname.split("/")[2];
     const axiosOptions = {
       'method' : 'POST',
-      'url' : 'http://minerva.metamehta.me/post' + post_id + '/downvote',
+      'url' : 'https://vidura.rashil2000.me/post' + post_id + '/downvote',
       'headers' : {
         'Authorization' : localStorage.getItem("access_token")
       }
@@ -131,7 +131,7 @@ export default class Post extends React.Component {
     let post_id = window.location.pathname.split("/")[2];
     const axiosOptions = {
       'method' : 'POST',
-      'url' : 'http://minerva.metamehta.me/comment/create/' + post_id,
+      'url' : 'https://vidura.rashil2000.me/comment/create/' + post_id,
       'headers' : {
         'Authorization' : localStorage.getItem("access_token")
       },
@@ -157,7 +157,7 @@ export default class Post extends React.Component {
     console.log(value);
     const axiosOptions = {
       'method' : 'POST',
-      'url' : 'http://minerva.metamehta.me/post' + value + '/downvote',
+      'url' : 'https://vidura.rashil2000.me/post' + value + '/downvote',
       'headers' : {
         'Authorization' : localStorage.getItem("access_token")
       }
@@ -181,7 +181,7 @@ export default class Post extends React.Component {
   handleCommentDownvote(value){
     const axiosOptions = {
       'method' : 'POST',
-      'url' : 'http://minerva.metamehta.me/comment' + value + '/downvote',
+      'url' : 'https://vidura.rashil2000.me/comment' + value + '/downvote',
       'headers' : {
         'Authorization' : localStorage.getItem("access_token")
       }

@@ -32,7 +32,7 @@ export default class Search extends React.Component {
     else {
       const axiosOptions = {
         'method': 'GET',
-        'url': 'http://minerva.rashil2000.me/post/getAll',
+        'url': 'https://vidura.rashil2000.me/post/getAll',
       }
 
       axios(axiosOptions)
@@ -54,7 +54,7 @@ export default class Search extends React.Component {
     else {
       const axiosOptions = {
         'method': 'GET',
-        'url': 'http://minerva.rashil2000.me/movie/search',
+        'url': 'https://vidura.rashil2000.me/movie/search',
         'params': {
           'q': this.state.movieSearchQuery
         }

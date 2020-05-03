@@ -17,7 +17,7 @@ export default class Feed extends React.Component {
   }
 
   getData() {
-    let url = 'http://minerva.rashil2000.me/post/getAll';
+    let url = 'https://vidura.rashil2000.me/post/getAll';
     const axiosOptions = {
       'method': 'GET',
       'url': url

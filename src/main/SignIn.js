@@ -31,7 +31,7 @@ export default class SignIn extends React.Component {
 
     const axiosOptions = {
       'method' : 'POST',
-      'url' : 'http://minerva.rashil2000.me/auth/login',
+      'url' : 'https://vidura.rashil2000.me/auth/login',
       'data' : {
         'username' : this.state.username,
         'password' : this.state.password,
