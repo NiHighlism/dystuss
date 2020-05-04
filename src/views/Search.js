@@ -118,7 +118,7 @@ export default class Search extends React.Component {
             <TextBox
               name="postSearchQuery"
               style={textStyle}
-              placeholder="Type title, genre, cast, crew etc..."
+              placeholder="Type title, cast, crew, tags etc..."
               rightNode={<span className="sdl2asset" style={{ marginRight: "10px" }}>&#xE773;</span>}
               onChange={this.handlePostSearch}
             />
@@ -162,7 +162,8 @@ export default class Search extends React.Component {
               <div className="postlist-item" key={movie.imdb_ID}>
                 <Link to={'/movie/' + movie.imdb_ID}>
                   <div {...classes.acrylic60}>
-                    <div className="postlist-title" style={{ fontSize: "16px" }}>{movie.title} ({movie.year})</div>
+                    <div className="postlist-title" style={{ fontSize: "16px" }}>{movie.title}</div>
+                    <div className="postlist-title" style={{ fontSize: "14px" }}>{movie.year}</div>
                   </div>
                 </Link>
               </div>

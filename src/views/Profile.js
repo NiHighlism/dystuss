@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import axios from 'axios'
 
 import AppBarButton from "react-uwp/AppBarButton";
+import Button from "react-uwp/Button";
+import ContentDialog from "react-uwp/ContentDialog";
 
 
 export default class Profile extends React.Component {
@@ -20,7 +22,9 @@ export default class Profile extends React.Component {
       "seenList": [],
       "bucketList": [],
       "recommendList": [],
-      "postList": []
+      "postList": [],
+
+      "showDeleteDialog": false
     };
 
     this.getData = this.getData.bind(this);
@@ -28,6 +32,8 @@ export default class Profile extends React.Component {
     this.getBucketData = this.getBucketData.bind(this);
     this.getRecommendData = this.getRecommendData.bind(this);
     this.getPostList = this.getPostList.bind(this);
+    this.handleDeleteDialog = this.handleDeleteDialog.bind(this);
+    this.handleDeletePost = this.handleDeletePost.bind(this);
     this.handleLogOut = this.handleLogOut.bind(this);
   }
 
@@ -139,6 +145,26 @@ export default class Profile extends React.Component {
         this.setState({
           postList: response.data
         })
+      })
+      .catch(error => { console.log(error) })
+  }
+
+  handleDeleteDialog() { this.setState({ showDeleteDialog: false }) }
+
+  handleDeletePost(id) {
+    let url = 'https://vidura.rashil2000.me/post/' + id + '/delete';
+    const axiosOptions = {
+      'method': 'DELETE',
+      'url': url,
+      headers: {
+        'Authorization': localStorage.getItem("access_token")
+      }
+    }
+
+    axios(axiosOptions)
+      .then(response => {
+        console.log(response.data);
+        window.location.pathname = `/profile`;
       })
       .catch(error => { console.log(error) })
   }
@@ -287,15 +313,33 @@ export default class Profile extends React.Component {
           {this.state.postList.map(post => {
             return (
               <div className="postlist-item" key={post.id}>
-                <Link to={'/post/' + post.id}>
-                  <div {...classes.acrylic60}>
-                    <div className="postlist-title">{post.title}</div>
-                    <div className="postlist-details">
+                <div {...classes.acrylic60}>
+                  <Link to={'/post/' + post.id}><div className="postlist-title">{post.title}</div></Link>
+                  <div className="postlist-details">
+                    <div style={{ float: "left" }}>
                       <div style={{ display: 'inline-block', marginRight: "20px" }}><span className="sdl2asset">&#xF70F;</span>&nbsp; {post.numComments} </div>
                       <div style={{ display: 'inline-block' }}><span className="sdl2asset">&#xE3AF;</span>&nbsp; {post.upvotes - post.downvotes}</div>
                     </div>
+                    <div style={{ float: "right" }}>
+                      <Button
+                        style={{ margin: "0px", padding: "5px 5px 4px 0px", ...buttonStyle }}
+                        icon={<span className="sdl2asset">&#xE74D;&nbsp;</span>}
+                        onClick={() => { this.setState({ showDeleteDialog: true }) }}
+                      >
+                        Delete
+                      </Button>
+                      <ContentDialog
+                        style={buttonStyle}
+                        title="Confirm"
+                        content="This action cannot be undone. Are you sure?"
+                        defaultShow={this.state.showDeleteDialog}
+                        primaryButtonAction={() => { this.handleDeletePost(post.id) }}
+                        onCloseDialog={() => { this.setState({ showDeleteDialog: false }) }}
+                      />
+                    </div>
+                    <div style={{ clear: "both" }}></div>
                   </div>
-                </Link>
+                </div>
               </div>
             );
           })}
