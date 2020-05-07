@@ -47,7 +47,7 @@ export default class Post extends React.Component {
         this.setState({
           post_id: response.data.id,
           title: response.data.title,
-          author: response.data.author,
+          author: response.data.author_username,
           author_id: response.data.author_id,
           body: response.data.body,
           post_movie: response.data.post_movie,

@@ -156,6 +156,7 @@ export default class CreatePost extends React.Component {
               placeholder="Tags"
               onChange={e => { this.setState({ tags: e.target.value }) }}
             />
+            <span>*These tags help people search your post by looking for keywords.</span>
             <br />
             <br />
             <span onClick={this.handleSubmit}>
