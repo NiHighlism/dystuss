@@ -37,7 +37,7 @@ export default class Search extends React.Component {
 
       axios(axiosOptions)
         .then(response => {
-          this.setState({ postSearchResults: response.data });
+          this.setState({ postSearchResults: response.data, errMessagePost: "" });
         })
         .catch(error => {
           this.setState({ errMessagePost: "Not found." })
@@ -62,7 +62,7 @@ export default class Search extends React.Component {
 
       axios(axiosOptions)
         .then(response => {
-          this.setState({ movieSearchResults: response.data });
+          this.setState({ movieSearchResults: response.data, errMessageMovie: "" });
         })
         .catch(error => {
           this.setState({ errMessageMovie: "Not found." });
