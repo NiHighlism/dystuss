@@ -1,6 +1,7 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
 import axios from 'axios';
+import createAuthRefreshInterceptor from 'axios-auth-refresh';
 
 import AppBarButton from "react-uwp/AppBarButton";
 import Button from "react-uwp/Button";
@@ -33,6 +34,27 @@ export default class Movie extends React.Component {
     this.getData = this.getData.bind(this);
     this.handleAddSeen = this.handleAddSeen.bind(this);
     this.handleAddBucket = this.handleAddBucket.bind(this);
+    this.refreshToken = this.refreshToken.bind(this);
+  }
+
+  refreshToken() {
+    const refreshOptions = {
+      'method': 'POST',
+      'url': "https://minerva.metamehta.me/auth/refreshToken",
+      'headers': {
+        'Authorization': localStorage.getItem("refresh_token")
+      }
+    }
+    
+    const refreshAuthLogic = failedRequest => axios(refreshOptions)
+      .then(tokenRefreshResponse => {
+        localStorage.setItem('access_token', tokenRefreshResponse.data.access_token);
+        localStorage.setItem('refresh_token', tokenRefreshResponse.data.refresh_token);
+        failedRequest.response.config.headers['Authorization'] = tokenRefreshResponse.data.access_token;
+      return Promise.resolve();
+    });
+
+    return refreshAuthLogic;
   }
 
   getData(){
@@ -98,6 +120,8 @@ export default class Movie extends React.Component {
         }
       }
 
+      createAuthRefreshInterceptor(axios, this.refreshToken);
+
       axios(axiosOptions)
       .then(response => {
         this.setState({
@@ -126,6 +150,8 @@ export default class Movie extends React.Component {
           'title' : this.state.title
         }
       }
+
+      createAuthRefreshInterceptor(axios, this.refreshToken);
 
       axios(axiosOptions)
       .then(response => {

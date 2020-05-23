@@ -2,6 +2,7 @@ import * as React from "react";
 import * as PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import axios from 'axios'
+import createAuthRefreshInterceptor from 'axios-auth-refresh';
 
 import AppBarButton from "react-uwp/AppBarButton";
 import Button from "react-uwp/Button";
@@ -35,7 +36,29 @@ export default class Profile extends React.Component {
     this.handleDeleteDialog = this.handleDeleteDialog.bind(this);
     this.handleDeletePost = this.handleDeletePost.bind(this);
     this.handleLogOut = this.handleLogOut.bind(this);
+    this.refreshToken = this.refreshToken.bind(this);
   }
+  
+  refreshToken() {
+    const refreshOptions = {
+      'method': 'POST',
+      'url': "https://minerva.metamehta.me/auth/refreshToken",
+      'headers': {
+        'Authorization': localStorage.getItem("refresh_token")
+      }
+    }
+    
+    const refreshAuthLogic = failedRequest => axios(refreshOptions)
+      .then(tokenRefreshResponse => {
+        localStorage.setItem('access_token', tokenRefreshResponse.data.access_token);
+        localStorage.setItem('refresh_token', tokenRefreshResponse.data.refresh_token);
+        failedRequest.response.config.headers['Authorization'] = tokenRefreshResponse.data.access_token;
+      return Promise.resolve();
+    });
+
+    return refreshAuthLogic;
+  }
+
 
   getData() {
     let username = localStorage.getItem("username");
@@ -177,6 +200,8 @@ export default class Profile extends React.Component {
         'Authorization': localStorage.getItem("access_token")
       }
     }
+
+    createAuthRefreshInterceptor(axios, this.refreshToken);
 
     axios(axiosOptions)
       .then(response => {

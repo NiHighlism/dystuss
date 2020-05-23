@@ -3,6 +3,7 @@ import * as PropTypes from "prop-types";
 import TextBox from "react-uwp/TextBox";
 import AppBarButton from "react-uwp/AppBarButton";
 import axios from "axios";
+import createAuthRefreshInterceptor from 'axios-auth-refresh';
 
 export default class CreatePost extends React.Component {
 
@@ -24,6 +25,27 @@ export default class CreatePost extends React.Component {
     };
     this.handleMovieSearch = this.handleMovieSearch.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.refreshToken = this.refreshToken.bind(this);
+  }
+
+  refreshToken() {
+    const refreshOptions = {
+      'method': 'POST',
+      'url': "https://minerva.metamehta.me/auth/refreshToken",
+      'headers': {
+        'Authorization': localStorage.getItem("refresh_token")
+      }
+    }
+    
+    const refreshAuthLogic = failedRequest => axios(refreshOptions)
+      .then(tokenRefreshResponse => {
+        localStorage.setItem('access_token', tokenRefreshResponse.data.access_token);
+        localStorage.setItem('refresh_token', tokenRefreshResponse.data.refresh_token);
+        failedRequest.response.config.headers['Authorization'] = tokenRefreshResponse.data.access_token;
+      return Promise.resolve();
+    });
+
+    return refreshAuthLogic;
   }
 
   handleMovieSearch(event) {
@@ -72,6 +94,9 @@ export default class CreatePost extends React.Component {
           'Authorization': localStorage.getItem("access_token")
         }
       }
+
+      createAuthRefreshInterceptor(axios, this.refreshToken);
+
       axios(axiosOptions)
         .then(response => {
           window.location.pathname = `/post/${response.data.id}`;
