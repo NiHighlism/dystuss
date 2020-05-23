@@ -255,7 +255,7 @@ export default class Profile extends React.Component {
               <ul style={{ margin: "20px", listStyleType: "disc" }}>
                 {this.state.seenList.map(item => (<li style={{ marginBottom: "10px" }} key={item.movie.imdb_ID}>
                   <p style={{ float: "left" }}>{item.movie.movie}</p>
-                  <p style={{ float: "right" }}><span className="sdl2asset">&#xE711;</span></p>
+                  <p style={{ float: "right" }}><span className="sdl2asset" style={{ cursor: "pointer" }}>&#xE711;</span></p>
                   <div style={{ clear: "both" }}></div>
                 </li>))}
               </ul>
@@ -264,7 +264,7 @@ export default class Profile extends React.Component {
               <ul style={{ margin: "20px", listStyleType: "disc" }}>
                 {this.state.bucketList.map(item => (<li style={{ marginBottom: "10px" }} key={item.movie.imdb_ID}>
                   <p style={{ float: "left" }}>{item.movie.movie}</p>
-                  <p style={{ float: "right" }}><span className="sdl2asset">&#xE711;</span></p>
+                  <p style={{ float: "right" }}><span className="sdl2asset" style={{ cursor: "pointer" }}>&#xE711;</span></p>
                   <div style={{ clear: "both" }}></div>
                 </li>))}
               </ul>

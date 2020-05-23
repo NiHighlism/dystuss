@@ -1,6 +1,7 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
 import axios from 'axios';
+import { Link } from "react-router-dom";
 
 import TextBox from "react-uwp/TextBox";
 import AppBarButton from "react-uwp/AppBarButton";
@@ -22,11 +23,19 @@ export default class Post extends React.Component {
       commentCount: '',
       comments: [],
       createCommentBody: '',
-      errMessage: ''
+      errMessage: '',
+
+      metaTitle: '',
+      metaActorsList: [],
+      metaGenreList: [],
+      metaDirectorList: [],
+      metaYear: '',
+      metaPoster_url: ''
     };
 
     this.getData = this.getData.bind(this);
     this.getComments = this.getComments.bind(this);
+    this.getMetaData = this.getMetaData.bind(this);
     this.handlePostUpvote = this.handlePostUpvote.bind(this);
     this.handlePostDownvote = this.handlePostUpvote.bind(this);
     this.handleCreateComment = this.handleCreateComment.bind(this);
@@ -76,129 +85,150 @@ export default class Post extends React.Component {
       .catch(error => { console.log(error) })
   }
 
-  handlePostUpvote(){
+  getMetaData() {
+    let url = 'https://vidura.rashil2000.me/movie/' + this.state.post_movie;
+    const axiosOptions = {
+      'method': 'GET',
+      'url': url
+    }
+
+    axios(axiosOptions)
+      .then(response => {
+        this.setState({
+          metaTitle: response.data.title,
+          metaActorsList: response.data.actors.actorsList,
+          metaGenreList: response.data.genre.genreList,
+          metaDirectorList: response.data.director.directorList,
+          metaYear: response.data.year,
+          metaPoster_url: response.data.poster_url,
+        })
+      })
+      .catch(error => { console.log(error) })
+  }
+
+  handlePostUpvote() {
     let post_id = window.location.pathname.split("/")[2];
     const axiosOptions = {
-      'method' : 'POST',
-      'url' : 'https://vidura.rashil2000.me/post/' + post_id + '/upvote',
-      'headers' : {
-        'Authorization' : localStorage.getItem("access_token")
+      'method': 'POST',
+      'url': 'https://vidura.rashil2000.me/post/' + post_id + '/upvote',
+      'headers': {
+        'Authorization': localStorage.getItem("access_token")
       }
     }
 
     axios(axiosOptions)
-    .then(response => {
-      this.setState({
-        appeal : this.state.appeal + 1
-      });
+      .then(response => {
+        this.setState({
+          appeal: this.state.appeal + 1
+        });
 
-    })
-    .catch(error => {
-      this.setState({
-        errMessage : "You've already reacted to this post. "
-      });
-      console.log(error.response)
-    })
+      })
+      .catch(error => {
+        this.setState({
+          errMessage: "You've already reacted to this post. "
+        });
+        console.log(error.response)
+      })
 
   }
 
-  handlePostDownvote(){
+  handlePostDownvote() {
     let post_id = window.location.pathname.split("/")[2];
     const axiosOptions = {
-      'method' : 'POST',
-      'url' : 'https://vidura.rashil2000.me/post' + post_id + '/downvote',
-      'headers' : {
-        'Authorization' : localStorage.getItem("access_token")
+      'method': 'POST',
+      'url': 'https://vidura.rashil2000.me/post' + post_id + '/downvote',
+      'headers': {
+        'Authorization': localStorage.getItem("access_token")
       }
     }
 
     axios(axiosOptions)
-    .then(response => {
-      this.setState({
-        appeal : this.state.appeal - 1
-      });
+      .then(response => {
+        this.setState({
+          appeal: this.state.appeal - 1
+        });
 
-    })
-    .catch(error => {
-      this.setState({
-        errMessage : "You've already reacted to this post. "
-      });
-    })
+      })
+      .catch(error => {
+        this.setState({
+          errMessage: "You've already reacted to this post. "
+        });
+      })
 
   }
 
-  handleCreateComment(){
+  handleCreateComment() {
     let post_id = window.location.pathname.split("/")[2];
     const axiosOptions = {
-      'method' : 'POST',
-      'url' : 'https://vidura.rashil2000.me/comment/create/' + post_id,
-      'headers' : {
-        'Authorization' : localStorage.getItem("access_token")
+      'method': 'POST',
+      'url': 'https://vidura.rashil2000.me/comment/create/' + post_id,
+      'headers': {
+        'Authorization': localStorage.getItem("access_token")
       },
-      'data' : {
-        'body' : this.state.createCommentBody
+      'data': {
+        'body': this.state.createCommentBody
       }
     }
     console.log(axiosOptions);
 
     axios(axiosOptions)
-    .then(response => {
-      console.log(response);
-      console.log(response.data);
-    })
-    .catch(error => {
-      console.log(error);
-      console.log(error.response);
-    })
+      .then(response => {
+        console.log(response);
+        console.log(response.data);
+      })
+      .catch(error => {
+        console.log(error);
+        console.log(error.response);
+      })
 
   }
 
-  handleCommentUpvote(value){
+  handleCommentUpvote(value) {
     console.log(value);
     const axiosOptions = {
-      'method' : 'POST',
-      'url' : 'https://vidura.rashil2000.me/post' + value + '/downvote',
-      'headers' : {
-        'Authorization' : localStorage.getItem("access_token")
+      'method': 'POST',
+      'url': 'https://vidura.rashil2000.me/post' + value + '/downvote',
+      'headers': {
+        'Authorization': localStorage.getItem("access_token")
       }
     }
 
     axios(axiosOptions)
-    .then(response => {
-      this.setState({
-        appeal : this.state.appeal - 1
-      });
+      .then(response => {
+        this.setState({
+          appeal: this.state.appeal - 1
+        });
 
-    })
-    .catch(error => {
-      this.setState({
-        errMessage : "You've already reacted to this post. "
-      });
-    })
+      })
+      .catch(error => {
+        this.setState({
+          errMessage: "You've already reacted to this post. "
+        });
+      })
 
   }
 
-  handleCommentDownvote(value){
+  handleCommentDownvote(value) {
     const axiosOptions = {
-      'method' : 'POST',
-      'url' : 'https://vidura.rashil2000.me/comment' + value + '/downvote',
-      'headers' : {
-        'Authorization' : localStorage.getItem("access_token")
+      'method': 'POST',
+      'url': 'https://vidura.rashil2000.me/comment' + value + '/downvote',
+      'headers': {
+        'Authorization': localStorage.getItem("access_token")
       }
     }
 
     axios(axiosOptions)
-    .then(response => {
-      this.setState({
-        appeal : this.state.appeal - 1
-      });
+      .then(response => {
+        this.setState({
+          appeal: this.state.appeal - 1
+        });
 
-    })
-    .catch(error => {
-      this.setState({
-        errMessage : "You've already reacted to this post. "
-      });
-    })
+      })
+      .catch(error => {
+        this.setState({
+          errMessage: "You've already reacted to this post. "
+        });
+      })
 
   }
 
@@ -208,8 +238,9 @@ export default class Post extends React.Component {
     this.getComments();
   }
 
-  componentWillReceiveProps(){
+  componentWillReceiveProps() {
     document.title = `${this.state.title} - DYSTuss`;
+    this.getMetaData()
   }
 
   static contextTypes = { theme: PropTypes.object };
@@ -218,7 +249,8 @@ export default class Post extends React.Component {
   render() {
     const { theme } = this.context;
 
-    const itemStyle: React.CSSProperties = {
+    const buttonStyle: React.CSSProperties = { background: theme.useFluentDesign ? theme.listLow : theme.chromeLow, cursor: "pointer" };
+    const itemStyle = {
       fontWeight: "lighter",
       width: '100%',
       padding: '20px',
@@ -226,7 +258,7 @@ export default class Post extends React.Component {
     const styles = {
       root: theme.prefixStyle({
         display: "flex",
-        flexDirection: "row-reverse",
+        flexDirection: "row",
         alignItems: "right",
         justifyContent: "right",
         flexWrap: "wrap",
@@ -240,34 +272,68 @@ export default class Post extends React.Component {
     };
     const classes = theme.prepareStyles({ styles });
 
+    const doesMetaExist = this.state.post_movie.length ? "profile-details" : "";
+
     return (
       <div className="content">
         <div {...classes.acrylic40} style={{ boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)' }}>
           <p style={{ fontSize: 30, float: "left" }}>{this.state.title}</p>
-          <p style={{ fontSize: 15, float: "right" }}><span className="sdl2asset">&#xEFD3;</span>&nbsp; {this.state.author}</p>
-          <div style={{ clear: "both" }}></div>
-        </div>
-        <div {...classes.acrylic60} style={{ fontSize: "18px", boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)', marginTop: "20px" }}>
-          <MarkdownRender text={this.state.body} />
-        </div>
-        <div {...classes.acrylic80} style={{ fontSize: 16, boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)' }}>
-          <p style={{ float: "left", paddingTop: "15px" }}><span className="sdl2asset">&#xF70F;</span>&nbsp; {this.state.commentCount} &nbsp;&nbsp;<span className="sdl2asset">&#xE3AF;</span>&nbsp; {this.state.appeal}</p>
-          <p style={{ float: "right" }}>
-            <AppBarButton style={{ display: "inline-block" }} labelPosition="collapsed" icon={<span className="sdl2asset">&#xE8E1;</span>} onClick={this.handlePostUpvote} />
-            <AppBarButton style={{ display: "inline-block" }} labelPosition="collapsed" icon={<span className="sdl2asset">&#xE8E0;</span>} onClick={this.handlePostDownvote}/>
-            <p>{this.state.errMessage}</p>
+          <p style={{ fontSize: 15, float: "right" }}>
+            <Link to={`/movie/${this.state.post_movie}`} target="__blank">
+              <AppBarButton
+                style={buttonStyle}
+                icon={<span className="sdl2asset">&#xE946;</span>}
+                label="Meta Page"
+                labelPosition="right"
+              />
+            </Link>
           </p>
           <div style={{ clear: "both" }}></div>
         </div>
+        <div {...classes.root}>
+          <div className={doesMetaExist}>
+            <div {...classes.acrylic60} style={{ fontSize: "18px", boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)' }}>
+              <MarkdownRender text={this.state.body} />
+            </div>
+            <div {...classes.acrylic80} style={{ fontSize: 16, boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)' }}>
+              <p style={{ float: "left", paddingTop: "15px" }}><span className="sdl2asset">&#xEFD3;</span>&nbsp; {this.state.author} &nbsp;&nbsp;<span className="sdl2asset">&#xF70F;</span>&nbsp; {this.state.commentCount} &nbsp;&nbsp;<span className="sdl2asset">&#xE3AF;</span>&nbsp; {this.state.appeal}</p>
+              <p style={{ float: "right" }}>
+                <AppBarButton style={{ display: "inline-block" }} labelPosition="collapsed" icon={<span className="sdl2asset">&#xE8E1;</span>} onClick={this.handlePostUpvote} />
+                <AppBarButton style={{ display: "inline-block" }} labelPosition="collapsed" icon={<span className="sdl2asset">&#xE8E0;</span>} onClick={this.handlePostDownvote} />
+                <p>{this.state.errMessage}</p>
+              </p>
+              <div style={{ clear: "both" }}></div>
+            </div>
+          </div>
+          {this.state.post_movie.length
+            ?
+            <div className="profile-meta">
+              <div {...classes.acrylic80} style={{ boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)' }}>
+                <img src={this.state.metaPoster_url} alt="poster" style={{ padding: "20px" }}></img>
+                <br />
+                <p style={{ fontSize: 18 }}>{this.state.metaTitle} ({this.state.metaYear})</p>
+                <br /><hr /><br />
+                <p>Genre(s): >{this.state.metaGenreList.join(' >')}</p>
+                <br /><hr /><br />
+                <p>Director(s): {this.state.metaDirectorList.join(', ')}</p>
+                <br />
+                <p>Actor(s): {this.state.metaActorsList.join(', ')}</p>
+                <br />
+              </div>
+            </div>
+            :
+            <span></span>
+          }
+        </div>
         <div {...classes.root} id="commentbox">
-          <div {...classes.acrylic100} style={{ fontSize: 14, boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)', marginTop: "10px", width: "100%" }}>
+          <div {...classes.acrylic100} style={{ fontSize: 14, boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)', marginTop: "20px", width: "100%" }}>
             <p style={{ fontSize: 16 }}>Comment what you feel: </p>
             <TextBox
               style={{ margin: "10px auto", width: "100%" }}
               background="none"
               placeholder="Click on the icon when done..."
               onChange={e => this.setState({ createCommentBody: e.target.value })}
-              rightNode={<span className="sdl2asset" onClick={this.handleCreateComment}>&#xF2B3;&nbsp;&nbsp;</span>}
+              rightNode={<span className="sdl2asset" style={{ cursor: "pointer" }} onClick={this.handleCreateComment}>&#xF2B3;&nbsp;&nbsp;</span>}
             />
           </div>
         </div>
@@ -275,7 +341,7 @@ export default class Post extends React.Component {
           {this.state.comments.map(comment =>
             <div key={comment.id} {...classes.acrylic100} style={{ fontSize: 14, boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)', marginTop: "10px", width: "100%" }}>
               <p style={{ fontSize: 15 }}>{comment.author_username}</p>
-              <br/>
+              <br />
               <p>{comment.body}</p>
               <p style={{ float: "left", paddingTop: "15px" }}><span className="sdl2asset">&#xE3AF;</span>&nbsp; {comment.upvotes - comment.downvotes}</p>
               <p style={{ float: "right" }}>

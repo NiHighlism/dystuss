@@ -8,15 +8,47 @@ export default class CreatePost extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { title: '', content: '', meta: '', tags: '', errMessage: '', errHref: '' };
-    this.handleChange = this.handleChange.bind(this);
+    this.state = {
+      title: '',
+      content: '',
+      meta: '',
+      tags: '',
+
+      movieSearchQuery: '',
+      movieSearchResults: [],
+      errMessageMovie: '',
+      errHrefMovie: '',
+
+      errMessage: '',
+      errHref: ''
+    };
+    this.handleMovieSearch = this.handleMovieSearch.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleChange(event) {
-    this.setState({
-      [event.target.name]: event.target.value
-    });
+  handleMovieSearch(event) {
+    this.setState({ movieSearchQuery: event.target.value });
+
+    if (this.state.movieSearchQuery.trim() === "") {
+      this.setState({ errMessageMovie: "Insert a space after query." })
+    }
+    else {
+      const axiosOptions = {
+        'method': 'GET',
+        'url': 'https://vidura.rashil2000.me/movie/search',
+        'params': {
+          'q': this.state.movieSearchQuery
+        }
+      }
+
+      axios(axiosOptions)
+        .then(response => {
+          this.setState({ movieSearchResults: response.data, errMessageMovie: "" });
+        })
+        .catch(error => {
+          this.setState({ errMessageMovie: "Not found." });
+        })
+    }
   }
 
   handleSubmit(event) {
@@ -40,7 +72,6 @@ export default class CreatePost extends React.Component {
           'Authorization': localStorage.getItem("access_token")
         }
       }
-
       axios(axiosOptions)
         .then(response => {
           window.location.pathname = `/post/${response.data.id}`;
@@ -72,12 +103,16 @@ export default class CreatePost extends React.Component {
   render() {
     const { theme } = this.context;
 
-    const buttonStyle: React.CSSProperties = { background: theme.useFluentDesign ? theme.listLow : theme.chromeLow, margin: "10px auto", cursor: "pointer" };
-    const textStyle: React.CSSProperties = {
+    const buttonStyle = {
+      background: theme.useFluentDesign ? theme.listLow : theme.chromeLow,
+      margin: "10px auto",
+      cursor: "pointer"
+    };
+    const textStyle = {
       margin: "10px auto",
       width: "auto"
     };
-    const itemStyle: React.CSSProperties = {
+    const itemStyle = {
       fontWeight: "lighter",
       width: '100%',
       padding: '20px',
@@ -139,14 +174,40 @@ export default class CreatePost extends React.Component {
             <span>*This field supports Markdown! Go <a href="https://guides.github.com/features/mastering-markdown/" style={{ color: theme.accent }}>here</a> to know how to use it.</span>
             <br />
             <br />
-            <div style={{ fontSize: 20 }}>If applicable, mention name of movie/show/series: </div>
+            <div style={{ fontSize: 20 }}>If applicable, search and mention name of movie/show/series: </div>
             <br />
             <TextBox
               name="meta"
+              className="meta"
               style={textStyle}
-              placeholder="Meta"
-              onChange={e => { this.setState({ meta: e.target.value }) }}
+              placeholder="Name"
+              rightNode={<span className="sdl2asset" style={{ marginRight: "10px" }}>&#xF3F1;</span>}
+              onChange={this.handleMovieSearch}
             />
+            <span>{this.state.errMessageMovie}</span>
+            <br />
+            <div>
+              {this.state.movieSearchResults.map(movie => {
+                return (
+                  <button
+                    key={movie.imdb_ID}
+                    onClick={() => {
+                      this.setState({ meta: movie.imdb_ID });
+                      document.querySelector('.meta').value = `${movie.title} (${movie.year})`;
+                    }}
+                    style={{
+                      boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
+                      padding: "10px",
+                      margin: "5px",
+                      cursor: "pointer",
+                      backgroundColor: "transparent",
+                      color: (theme.themeName === "dark") ? "white" : "black"
+                    }}>
+                    {movie.title} ({movie.year})
+                  </button>
+                );
+              })}
+            </div>
             <br />
             <div style={{ fontSize: 18 }}>Give a comma-separated list of associated tags: </div>
             <br />
