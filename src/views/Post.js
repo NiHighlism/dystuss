@@ -138,7 +138,9 @@ export default class Post extends React.Component {
       }
     }
 
-    createAuthRefreshInterceptor(axios, this.refreshToken);
+    const refreshAuthLogic = this.refreshToken();
+
+    createAuthRefreshInterceptor(axios, refreshAuthLogic);
 
     axios(axiosOptions)
       .then(response => {
@@ -166,7 +168,9 @@ export default class Post extends React.Component {
       }
     }
 
-    createAuthRefreshInterceptor(axios, this.refreshToken);
+    const refreshAuthLogic = this.refreshToken();
+
+    createAuthRefreshInterceptor(axios, refreshAuthLogic);
 
     axios(axiosOptions)
       .then(response => {
@@ -195,9 +199,11 @@ export default class Post extends React.Component {
         'body': this.state.createCommentBody
       }
     }
-    console.log(axiosOptions);
     
-    createAuthRefreshInterceptor(axios, this.refreshToken);
+    const refreshAuthLogic = this.refreshToken();
+
+    createAuthRefreshInterceptor(axios, refreshAuthLogic);
+    
 
     axios(axiosOptions)
       .then(response => {
@@ -221,7 +227,9 @@ export default class Post extends React.Component {
       }
     }
 
-    createAuthRefreshInterceptor(axios, this.refreshToken);
+    const refreshAuthLogic = this.refreshToken();
+
+    createAuthRefreshInterceptor(axios, refreshAuthLogic);
 
     axios(axiosOptions)
       .then(response => {
@@ -247,7 +255,9 @@ export default class Post extends React.Component {
       }
     }
 
-    createAuthRefreshInterceptor(axios, this.refreshToken);
+    const refreshAuthLogic = this.refreshToken();
+
+    createAuthRefreshInterceptor(axios, refreshAuthLogic);
 
     axios(axiosOptions)
       .then(response => {

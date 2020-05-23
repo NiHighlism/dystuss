@@ -201,7 +201,9 @@ export default class Profile extends React.Component {
       }
     }
 
-    createAuthRefreshInterceptor(axios, this.refreshToken);
+    const refreshAuthLogic = this.refreshToken();
+
+    createAuthRefreshInterceptor(axios, refreshAuthLogic);
 
     axios(axiosOptions)
       .then(response => {
