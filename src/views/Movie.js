@@ -45,9 +45,8 @@ export default class Movie extends React.Component {
 
     axios(axiosOptions)
     .then(response => {
-      console.log(response.data)
       this.setState({
-        imdb_id : response.data.imdb_id,
+        imdb_id : response.data.imdb_ID,
         title: response.data.title,
         actorsList: response.data.actors.actorsList,
         genreList : response.data.genre.genreList,
@@ -146,7 +145,7 @@ export default class Movie extends React.Component {
 
     const { theme } = this.context;
 
-    const buttonStyle: React.CSSProperties = { background: theme.useFluentDesign ? theme.listLow : theme.chromeLow };
+    const buttonStyle: React.CSSProperties = { background: theme.useFluentDesign ? theme.listLow : theme.chromeLow, cursor: "pointer" };
     const itemStyle: React.CSSProperties = {
       fontWeight: "lighter",
       width: '100%',
@@ -214,17 +213,17 @@ export default class Movie extends React.Component {
               <br />
               <div style={{ fontSize: 20 }}>Directed by: </div>
               <ul style={{ margin: "20px", listStyleType: "disc" }}>
-                {this.state.directorList.map(item => (<li style={{ marginBottom: "10px" }}>{item}</li>))}
+                {this.state.directorList.map(item => (<li style={{ marginBottom: "10px" }} key={item}>{item}</li>))}
               </ul>
               <br />
               <div style={{ fontSize: 20 }}>Cast: </div>
               <ul style={{ margin: "20px", listStyleType: "disc" }}>
-                {this.state.actorsList.map(item => (<li style={{ marginBottom: "10px" }}>{item}</li>))}
+                {this.state.actorsList.map(item => (<li style={{ marginBottom: "10px" }} key={item}>{item}</li>))}
               </ul>
               <br />
               <div style={{ fontSize: 20 }}>Genres: </div>
               <ul style={{ margin: "20px", listStyleType: "disc" }}>
-                {this.state.genreList.map(item => (<li style={{ margin: "10px", display: "inline-block" }}>> {item}</li>))}
+                {this.state.genreList.map(item => (<li style={{ margin: "10px", display: "inline-block" }} key={item}>> {item}</li>))}
               </ul>
               <br />
               <Button style={{margin: "10px", ...buttonStyle}} icon={<span className="sdl2asset">&#xE73A;&nbsp;</span>} onClick={this.handleAddSeen}> Add to Seen List</Button>

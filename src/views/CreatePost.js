@@ -72,7 +72,7 @@ export default class CreatePost extends React.Component {
   render() {
     const { theme } = this.context;
 
-    const buttonStyle: React.CSSProperties = { background: theme.useFluentDesign ? theme.listLow : theme.chromeLow, margin: "10px auto" };
+    const buttonStyle: React.CSSProperties = { background: theme.useFluentDesign ? theme.listLow : theme.chromeLow, margin: "10px auto", cursor: "pointer" };
     const textStyle: React.CSSProperties = {
       margin: "10px auto",
       width: "auto"

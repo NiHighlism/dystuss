@@ -84,7 +84,7 @@ export default class SignIn extends React.Component {
 
     const resp = (window.innerWidth >= 600) ? "400px" : "auto";
 
-    const buttonStyle: React.CSSProperties = { background: theme.useFluentDesign ? theme.listLow : theme.chromeLow };
+    const buttonStyle: React.CSSProperties = { background: theme.useFluentDesign ? theme.listLow : theme.chromeLow, cursor: "pointer" };
     const textStyle: React.CSSProperties = {
       margin: "10px auto",
       width: resp

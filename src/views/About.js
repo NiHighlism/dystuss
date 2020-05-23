@@ -17,7 +17,7 @@ export default class About extends React.Component {
   render() {
     const { theme } = this.context;
 
-    const buttonStyle: React.CSSProperties = { background: theme.useFluentDesign ? theme.listLow : theme.chromeLow, padding: "0px" };
+    const buttonStyle: React.CSSProperties = { background: theme.useFluentDesign ? theme.listLow : theme.chromeLow, padding: "0px", cursor: "pointer" };
     const linkStyle: React.CSSProperties = {
       fontSize: 18,
       textDecoration: "none",

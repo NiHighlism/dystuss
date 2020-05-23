@@ -14,7 +14,7 @@ export default class Error404 extends React.Component {
   render() {
     const { theme } = this.context;
 
-    const buttonStyle: React.CSSProperties = { background: theme.useFluentDesign ? theme.listLow : theme.chromeLow, padding: "0px" };
+    const buttonStyle: React.CSSProperties = { background: theme.useFluentDesign ? theme.listLow : theme.chromeLow, padding: "0px", cursor: "pointer" };
     const itemStyle: React.CSSProperties = {
       fontWeight: "lighter",
       width: '100%',

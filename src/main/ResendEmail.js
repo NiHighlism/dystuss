@@ -54,7 +54,7 @@ export default class ResendEmail extends React.Component {
   render() {
     const { theme } = this.context;
 
-    const buttonStyle: React.CSSProperties = { background: theme.useFluentDesign ? theme.listLow : theme.chromeLow };
+    const buttonStyle: React.CSSProperties = { background: theme.useFluentDesign ? theme.listLow : theme.chromeLow, cursor: "pointer" };
     const textStyle: React.CSSProperties = {
       margin: "10px auto"
     };

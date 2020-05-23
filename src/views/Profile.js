@@ -209,7 +209,7 @@ export default class Profile extends React.Component {
   render() {
     const { theme } = this.context;
 
-    const buttonStyle: React.CSSProperties = { background: theme.useFluentDesign ? theme.listLow : theme.chromeLow };
+    const buttonStyle: React.CSSProperties = { background: theme.useFluentDesign ? theme.listLow : theme.chromeLow, cursor: "pointer" };
     const itemStyle: React.CSSProperties = {
       fontWeight: "lighter",
       width: '100%',
