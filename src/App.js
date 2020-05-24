@@ -1,6 +1,6 @@
 import * as React from "react";
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import { Theme as UWPThemeProvider, getTheme } from "react-uwp/Theme";
+import { Theme, getTheme } from "react-uwp/Theme";
 import Navigation from "./main/Navigation";
 import SignIn from "./main/SignIn";
 import SignUp from "./main/SignUp";
@@ -13,6 +13,8 @@ import CreatePost from "./views/CreatePost";
 import Profile from "./views/Profile";
 import About from "./views/About";
 import Movie from "./views/Movie";
+import Error404 from "./main/Error404";
+import PrivateRoute from './main/PrivateRoute.js';
 
 export default class App extends React.Component {
   render() {
@@ -48,7 +50,7 @@ export default class App extends React.Component {
     return (
       <BrowserRouter>
         <div className="App">
-          <UWPThemeProvider
+          <Theme
             theme={getTheme({
               themeName: name,
               accent: color,
@@ -58,19 +60,20 @@ export default class App extends React.Component {
           >
             <Switch>
               <Route exact path="/" component={Feed} />
-              <Route path="/post/:id" component={Post} />
+              <Route path="/post/:imdb_id" component={Post} />
               <Route path="/signin" component={SignIn} />
               <Route path="/signup" component={SignUp} />
               <Route path="/search" component={Search} />
-              <Route path="/movie/:id" component={Movie} />
-              <Route path="/create" component={CreatePost} />
-              <Route path="/profile" component={Profile} />
+              <Route path="/movie/:imdb_id" component={Movie} />
               <Route path="/about" component={About} />
-              <Route path="/forgotpassword" component={ForgotPassword} />
-              <Route path="/resendemail" component={ResendEmail} />
+              <Route path="/forgotPassword" component={ForgotPassword} />
+              <Route path="/resendVerification" component={ResendEmail} />
+              <PrivateRoute path="/create" component={CreatePost} />
+              <PrivateRoute path="/profile" component={Profile} />
+              <Route path="*" component={Error404} />
             </Switch>
             <Navigation />
-          </UWPThemeProvider>
+          </Theme>
         </div>
       </BrowserRouter>
     )

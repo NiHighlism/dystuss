@@ -1,16 +1,184 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
+import axios from 'axios';
+import createAuthRefreshInterceptor from 'axios-auth-refresh';
+
 import AppBarButton from "react-uwp/AppBarButton";
+import Button from "react-uwp/Button";
 
 export default class Movie extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      imdb_id: '',
+      title: '',
+      actorsList: [],
+      genreList: [],
+      directorList: [],
+      imdb_rating: '',
+      plot: '',
+      languageList: [],
+      year: '',
+      runtime: '',
+      release_date: '',
+      poster_url: '',
+      writerList: [],
+      awards: '',
+      rotten_tomatoes: '',
+      metascore: '',
+
+      errMessage: ''
+    };
+
+    this.getData = this.getData.bind(this);
+    this.handleAddSeen = this.handleAddSeen.bind(this);
+    this.handleAddBucket = this.handleAddBucket.bind(this);
+    this.refreshToken = this.refreshToken.bind(this);
+  }
+
+  refreshToken() {
+    const refreshOptions = {
+      'method': 'POST',
+      'url': "https://minerva.metamehta.me/auth/refreshToken",
+      'headers': {
+        'Authorization': localStorage.getItem("refresh_token")
+      }
+    }
+
+    const refreshAuthLogic = failedRequest => axios(refreshOptions)
+      .then(tokenRefreshResponse => {
+        localStorage.setItem('access_token', tokenRefreshResponse.data.access_token);
+        localStorage.setItem('refresh_token', tokenRefreshResponse.data.refresh_token);
+        failedRequest.response.config.headers['Authorization'] = tokenRefreshResponse.data.access_token;
+        return Promise.resolve();
+      });
+
+    return refreshAuthLogic;
+  }
+
+  getData() {
+    let imdb_id = window.location.pathname.split("/")[2];
+    let url = 'https://vidura.rashil2000.me/movie/' + imdb_id;
+    const axiosOptions = {
+      'method': 'GET',
+      'url': url
+    }
+
+    axios(axiosOptions)
+      .then(response => {
+        this.setState({
+          imdb_id: response.data.imdb_ID,
+          title: response.data.title,
+          actorsList: response.data.actors.actorsList,
+          genreList: response.data.genre.genreList,
+          directorList: response.data.director.directorList,
+          imdb_rating: response.data.imdb_rating,
+          plot: response.data.plot,
+          year: response.data.year,
+          runtime: response.data.runtime,
+          release_date: response.data.release_date,
+          poster_url: response.data.poster_url,
+          writerList: response.data.writer.writerList,
+          languageList: response.data.language.languageList,
+          rotten_tomatoes: response.data.rotten_tomatoes,
+          metascore: response.data.metascore,
+          awards: response.data.awards
+        })
+      })
+      .catch(error => {
+        console.log(error);
+        window.location.pathname = "/error404";
+      })
+  }
+
+  componentDidMount() {
+    this.setState({ imdb_id: window.location.pathname.split("/")[2] })
+    this.getData();
+  }
+
+  isLoggedIn() {
+    return localStorage.getItem("access_token") !== null && localStorage.getItem("access_token") !== "undefined";
+  }
+
+  componentDidUpdate() {
+    document.title = `Movie - ${this.state.title} - DYSTuss`;
+  }
+
+  handleAddSeen() {
+    if (!this.isLoggedIn()) {
+      window.location.pathname = "/signin";
+    }
+    else {
+
+      const axiosOptions = {
+        'method': 'POST',
+        'url': 'https://vidura.rashil2000.me/user/add/seenList',
+        headers: {
+          'Authorization': localStorage.getItem("access_token")
+        },
+        'data': {
+          'imdb_ID_list': window.location.pathname.split("/")[2],
+          'title': this.state.title
+        }
+      }
+
+      const refreshAuthLogic = this.refreshToken();
+
+      createAuthRefreshInterceptor(axios, refreshAuthLogic);
+
+      axios(axiosOptions)
+        .then(response => {
+          this.setState({
+            'errMessage': "Added Successfully!"
+          })
+        })
+        .catch(error => console.log(error.response))
+
+    }
+  }
+
+  handleAddBucket() {
+    if (!this.isLoggedIn()) {
+      window.location.pathname = "/signin";
+    }
+    else {
+
+      const axiosOptions = {
+        'method': 'POST',
+        'url': 'https://vidura.rashil2000.me/user/add/bucketList',
+        headers: {
+          'Authorization': localStorage.getItem("access_token")
+        },
+        'data': {
+          'imdb_ID_list': window.location.pathname.split("/")[2],
+          'title': this.state.title
+        }
+      }
+
+      const refreshAuthLogic = this.refreshToken();
+
+      createAuthRefreshInterceptor(axios, refreshAuthLogic);
+
+      axios(axiosOptions)
+        .then(response => {
+          this.setState({
+            'errMessage': "Added Successfully!"
+          })
+        })
+        .catch(error => console.log(error.response))
+
+    }
+  }
+
   static contextTypes = { theme: PropTypes.object };
-  context: { theme: ReactUWP.ThemeType };
 
   render() {
+
     const { theme } = this.context;
 
-    const buttonStyle: React.CSSProperties = { background: theme.useFluentDesign ? theme.listLow : theme.chromeLow };
-    const itemStyle: React.CSSProperties = {
+    const buttonStyle = { background: theme.useFluentDesign ? theme.listLow : theme.chromeLow, cursor: "pointer" };
+    const itemStyle = {
       fontWeight: "lighter",
       width: '100%',
       padding: '20px',
@@ -31,66 +199,12 @@ export default class Movie extends React.Component {
     };
     const classes = theme.prepareStyles({ styles });
 
-    const movieMeta = {
-      "total_pages": 1,
-      "imdb_ID": "tt1596363",
-      "title": "The Big Short",
-      "year": 2015,
-      "runtime": "130 min",
-      "release_date": "23 Dec 2015",
-      "plot": "In 2006-2007 a group of investors bet against the US mortgage market. In their research they discover how flawed and corrupt the market is.",
-      "genre": {
-        "genreList": [
-          "Biography",
-          "Comedy",
-          "Drama",
-          "History"
-        ]
-      },
-      "director": {
-        "directorList": [
-          "Adam McKay"
-        ]
-      },
-      "writer": {
-        "writerList": [
-          "Charles Randolph (screenplay by)",
-          "Adam McKay (screenplay by)",
-          "Michael Lewis (based upon the book by)"
-        ]
-      },
-      "actors": {
-        "actorsList": [
-          "Ryan Gosling",
-          "Rudy Eisenzopf",
-          "Casey Groves",
-          "Charlie Talbert"
-        ]
-      },
-      "language": {
-        "languageList": [
-          "English"
-        ]
-      },
-      "country": {
-        "countryList": [
-          "USA"
-        ]
-      },
-      "awards": "Won 1 Oscar. Another 37 wins & 80 nominations.",
-      "imdb_rating": "7.8/10",
-      "rotten_tomatoes": "88%",
-      "metascore": "81/100",
-      "poster_url": "https://m.media-amazon.com/images/M/MV5BNDc4MThhN2EtZjMzNC00ZDJmLThiZTgtNThlY2UxZWMzNjdkXkEyXkFqcGdeQXVyNDk3NzU2MTQ@._V1_SX300.jpg",
-      "box_office": "N/A"
-    };
-
     return (
       <div className="content">
         <div {...classes.acrylic40} style={{ boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)' }}>
-          <p style={{ fontSize: 30, float: "left" }}>{movieMeta.title} ({movieMeta.year})</p>
+          <p style={{ fontSize: 30, float: "left" }}>{this.state.title} ({this.state.year})</p>
           <p style={{ fontSize: 15, float: "right" }}>
-            <a href={`https://imdb.com/title/${movieMeta.imdb_ID}`} target="__blank">
+            <a href={`https://imdb.com/title/${this.state.imdb_id}`} target="__blank">
               <AppBarButton
                 style={buttonStyle}
                 icon={<span className="sdl2asset">&#xF35F;</span>}
@@ -104,43 +218,50 @@ export default class Movie extends React.Component {
         <div {...classes.root}>
           <div className="movie-meta">
             <div {...classes.acrylic80}>
-              <img src={movieMeta.poster_url} alt="poster" style={{ padding: "20px" }}></img>
+              <img src={this.state.poster_url} alt="poster" style={{ padding: "20px" }}></img>
               <br />
               <br /><hr /><br />
-              <p><span className="sdl2asset">&#xF059;</span>&nbsp; Released on: {movieMeta.release_date}</p>
+              <p><span className="sdl2asset">&#xF059;</span>&nbsp; Released on: {this.state.release_date}</p>
               <br />
-              <p><span className="sdl2asset">&#xE91E;</span>&nbsp; Runtime: {movieMeta.runtime}</p>
+              <p><span className="sdl2asset">&#xE91E;</span>&nbsp; Runtime: {this.state.runtime}</p>
+              <br />
+              <p><span className="sdl2asset">&#xF2B7;</span>&nbsp; Languages: {this.state.languageList.join(" | ")}</p>
               <br /><hr /><br />
               <p><span className="sdl2asset">&#xE734;</span>&nbsp; Ratings: </p>
               <br />
-              <p>IMDb: {movieMeta.imdb_rating}</p>
+              <p>IMDb: {this.state.imdb_rating}</p>
               <br />
-              <p>Rotten Tomatoes: {movieMeta.rotten_tomatoes}</p>
+              <p>Rotten Tomatoes: {this.state.rotten_tomatoes}</p>
               <br />
-              <p>Metascore: {movieMeta.metascore}</p>
+              <p>Metascore: {this.state.metascore}</p>
               <br />
             </div>
           </div>
           <div className="movie-details">
             <div {...classes.acrylic60}>
-              <div style={{ fontSize: 20 }}>{movieMeta.plot}</div>
+              <div style={{ fontSize: 20, marginTop: "15px" }}>{this.state.plot}</div>
               <br />
-              <div style={{ fontSize: 18 }}>Awards: {movieMeta.awards}</div>
+              <div style={{ fontSize: 18 }}>Awards: {this.state.awards}</div>
               <br />
               <div style={{ fontSize: 20 }}>Directed by: </div>
               <ul style={{ margin: "20px", listStyleType: "disc" }}>
-                {movieMeta.director.directorList.map(item => (<li style={{ marginBottom: "10px" }}>{item}</li>))}
+                {this.state.directorList.map(item => (<li style={{ marginBottom: "10px" }} key={item}>{item}</li>))}
               </ul>
               <br />
               <div style={{ fontSize: 20 }}>Cast: </div>
               <ul style={{ margin: "20px", listStyleType: "disc" }}>
-                {movieMeta.actors.actorsList.map(item => (<li style={{ marginBottom: "10px" }}>{item}</li>))}
+                {this.state.actorsList.map(item => (<li style={{ marginBottom: "10px" }} key={item}>{item}</li>))}
               </ul>
               <br />
               <div style={{ fontSize: 20 }}>Genres: </div>
               <ul style={{ margin: "20px", listStyleType: "disc" }}>
-                {movieMeta.genre.genreList.map(item => (<li style={{ margin: "10px", display: "inline-block" }}>> {item}</li>))}
+                {this.state.genreList.map(item => (<li style={{ margin: "10px", display: "inline-block" }} key={item}>> {item}</li>))}
               </ul>
+              <br />
+              <Button style={{ margin: "10px", ...buttonStyle }} icon={<span className="sdl2asset">&#xE73A;&nbsp;</span>} onClick={this.handleAddSeen}> Add to Seen List</Button>
+              <Button style={{ margin: "10px", ...buttonStyle }} icon={<span className="sdl2asset">&#xECDE;&nbsp;</span>} onClick={this.handleAddBucket}> Add to Bucket List</Button>
+              <br />
+              <span>{this.state.errMessage}</span>
             </div>
           </div>
         </div>

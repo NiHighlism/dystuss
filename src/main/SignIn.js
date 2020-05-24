@@ -1,24 +1,94 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
 import { NavLink } from "react-router-dom";
+import axios from 'axios';
+
 import TextBox from "react-uwp/TextBox";
 import AppBarButton from "react-uwp/AppBarButton";
 import PasswordBox from "react-uwp/PasswordBox";
 import CheckBox from "react-uwp/CheckBox";
 
-
 export default class SignIn extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = { username: '', password: '', errMessage: '', errHref: '', remember: 'false' };
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  isLoggedIn() {
+    return localStorage.getItem("access_token") !== null && localStorage.getItem("access_token") !== "undefined";
+  }
+
+  handleChange(event) {
+    this.setState({
+      [event.target.name]: event.target.value
+    });
+  }
+
+  handleSubmit(event) {
+
+    const axiosOptions = {
+      'method': 'POST',
+      'url': 'https://vidura.rashil2000.me/auth/login',
+      'data': {
+        'username': this.state.username,
+        'password': this.state.password,
+        'remember': this.state.remember
+      }
+    }
+
+    console.log(axiosOptions.data)
+
+    axios(axiosOptions)
+      .then(response => {
+        localStorage.setItem('access_token', response.data.access_token);
+        localStorage.setItem('refresh_token', response.data.refresh_token);
+        localStorage.setItem('userID', response.data.id);
+        localStorage.setItem('username', response.data.username);
+        window.location.pathname = "/profile";
+      })
+      .catch(error => {
+        let status = error.response.status;
+        if (status === 401) {
+          this.setState({ errMessage: "Couldn't verify. Please check credentials!" });
+        }
+
+        if (status === 402) {
+          this.setState({ errMessage: "Please verify your email before signing in. ", errHref: "/resendVerification" });
+        }
+
+        if (status === 403) {
+          this.setState({ errMessage: "Account not found. ", errHref: "/signup" });
+        }
+      })
+
+  }
+
+  componentDidMount() {
+    document.title = "Sign In - DYSTuss"
+  }
+
   static contextTypes = { theme: PropTypes.object };
-  context: { theme: ReactUWP.ThemeType };
 
   render() {
+
+    const auth = this.isLoggedIn();
+    if (auth) {
+      window.location.pathname = "/profile";
+    }
+
     const { theme } = this.context;
 
-    const buttonStyle: React.CSSProperties = { background: theme.useFluentDesign ? theme.listLow : theme.chromeLow };
-    const textStyle: React.CSSProperties = {
-      margin: "10px auto"
+    const resp = (window.innerWidth >= 600) ? "400px" : "auto";
+
+    const buttonStyle = { background: theme.useFluentDesign ? theme.listLow : theme.chromeLow, cursor: "pointer" };
+    const textStyle = {
+      margin: "10px auto",
+      width: resp
     };
-    const itemStyle: React.CSSProperties = {
+    const itemStyle = {
       fontWeight: "lighter",
       width: '100%',
       padding: '20px',
@@ -63,29 +133,39 @@ export default class SignIn extends React.Component {
             <div style={{ fontSize: 22 }}>Username: </div>
             <br />
             <TextBox
+              name="username"
               style={textStyle}
               placeholder="Username"
+              onChange={e => {
+                this.setState({ username: e.target.value })
+              }}
             />
             <br />
             <div style={{ fontSize: 22 }}>Password: </div>
             <br />
             <PasswordBox
+              name="password"
               style={textStyle}
               placeholder="Password"
+              onChangeValue={(event) => this.setState({ password: event })}
             />
             <br />
             <CheckBox
               defaultChecked={false}
               label="Keep me signed in"
+              onCheck={(event) => this.setState({ remember: 'true' })}
             />
             <br />
             <br />
-            <AppBarButton
-              style={{ margin: "10px auto", ...buttonStyle }}
-              icon={<span className="sdl2asset">&#xF286;</span>}
-              label="Sign In"
-              labelPosition="right"
-            />
+            <a href={this.state.errHref}><span>{this.state.errMessage}</span></a>
+            <span onClick={this.handleSubmit}>
+              <AppBarButton
+                style={{ margin: "10px auto", ...buttonStyle }}
+                icon={<span className="sdl2asset">&#xF286;</span>}
+                label="Sign In"
+                labelPosition="right"
+              />
+            </span>
           </div>
         </div>
       </div>
