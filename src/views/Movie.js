@@ -86,7 +86,10 @@ export default class Movie extends React.Component {
           awards: response.data.awards
         })
       })
-      .catch(error => { console.log(error) })
+      .catch(error => {
+        console.log(error);
+        window.location.pathname = "/error404";
+      })
   }
 
   componentDidMount() {

@@ -87,7 +87,10 @@ export default class Post extends React.Component {
           commentCount: response.data.numComments
         })
       })
-      .catch(error => { console.log(error) })
+      .catch(error => {
+        console.log(error);
+        window.location.pathname = "/error404";
+      })
   }
 
   getComments() {
