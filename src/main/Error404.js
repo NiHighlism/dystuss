@@ -5,7 +5,6 @@ import AppBarButton from "react-uwp/AppBarButton";
 
 export default class Error404 extends React.Component {
   static contextTypes = { theme: PropTypes.object };
-  context: { theme: ReactUWP.ThemeType };
 
   componentDidMount() {
     document.title = "Four, Oh Four!"
@@ -14,8 +13,8 @@ export default class Error404 extends React.Component {
   render() {
     const { theme } = this.context;
 
-    const buttonStyle: React.CSSProperties = { background: theme.useFluentDesign ? theme.listLow : theme.chromeLow, padding: "0px", cursor: "pointer" };
-    const itemStyle: React.CSSProperties = {
+    const buttonStyle = { background: theme.useFluentDesign ? theme.listLow : theme.chromeLow, padding: "0px", cursor: "pointer" };
+    const itemStyle = {
       fontWeight: "lighter",
       width: '100%',
       padding: '20px',
@@ -59,6 +58,8 @@ export default class Error404 extends React.Component {
             <p style={{ fontSize: "24px" }}>You seem to have fallen on a broken link. Not your fault though.</p>
             <br />
             <p style={{ fontSize: "18px" }}>Go back using the back button or go to the home page on the top right.</p>
+            <br />
+            <img src="/assets/four.gif" alt="followme" style={{ padding: "20px" }}></img>
             <br />
             <p style={{ fontSize: "16px" }}>Or go <Link to="/movie/tt1840309" style={{ color: theme.accent }}>here</Link> to know more about the mysterious character Four, who sits on the title of this page.</p>
           </div>

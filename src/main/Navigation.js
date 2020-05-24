@@ -6,10 +6,9 @@ import SplitViewCommand from "react-uwp/SplitViewCommand";
 
 class Navigation extends React.Component {
   static contextTypes = { theme: PropTypes.object };
-  context: { theme: ReactUWP.ThemeType };
 
   render() {
-    const baseStyle: React.CSSProperties = {
+    const baseStyle = {
       height: '100vh',
       position: 'fixed',
       top: '0px',

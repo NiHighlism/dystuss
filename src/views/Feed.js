@@ -39,11 +39,10 @@ export default class Feed extends React.Component {
 
 
   static contextTypes = { theme: PropTypes.object };
-  context: { theme: ReactUWP.ThemeType };
 
   render() {
     const { theme } = this.context;
-    const itemStyle: React.CSSProperties = {
+    const itemStyle = {
       fontWeight: "lighter",
       width: '100%',
       padding: '20px',

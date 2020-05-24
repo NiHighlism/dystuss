@@ -75,16 +75,15 @@ export default class Search extends React.Component {
   }
 
   static contextTypes = { theme: PropTypes.object };
-  context: { theme: ReactUWP.ThemeType };
 
   render() {
     const { theme } = this.context;
 
-    const textStyle: React.CSSProperties = {
+    const textStyle = {
       margin: "10px",
       width: "auto"
     };
-    const itemStyle: React.CSSProperties = {
+    const itemStyle = {
       fontWeight: "lighter",
       width: '100%',
       padding: '20px',

@@ -11,37 +11,37 @@ export default class ForgotPassword extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { email: '', errMessage : ''};
+    this.state = { email: '', errMessage: '' };
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleSubmit(event) {
 
     const axiosOptions = {
-      'method' : 'POST',
-      'url' : 'https://vidura.rashil2000.me/auth/reset/request',
-      'data' : {
-        'email' : this.state.email,
+      'method': 'POST',
+      'url': 'https://vidura.rashil2000.me/auth/reset/request',
+      'data': {
+        'email': this.state.email,
       }
     }
 
     axios(axiosOptions)
-    .then(response => {
-      this.setState({errMessage: "Ah, Dementia. Verification mail sent!"});
-    })
-    .catch(error => {
-      let status = error.response.status
+      .then(response => {
+        this.setState({ errMessage: "Ah, Dementia. Verification mail sent!" });
+      })
+      .catch(error => {
+        let status = error.response.status
 
-      if (status === 401){
-        this.setState({
-          errMessage : "User is not registered. Please sign up first.",
-          errHref : "/signup"
+        if (status === 401) {
+          this.setState({
+            errMessage: "User is not registered. Please sign up first.",
+            errHref: "/signup"
           });
-      }
-      else{
-        this.setState({errMessage: "It's not you, it's us. Try again later."})
-      }
-    })
+        }
+        else {
+          this.setState({ errMessage: "It's not you, it's us. Try again later." })
+        }
+      })
   }
 
   componentDidMount() {
@@ -49,16 +49,15 @@ export default class ForgotPassword extends React.Component {
   }
 
   static contextTypes = { theme: PropTypes.object };
-  context: { theme: ReactUWP.ThemeType };
 
   render() {
     const { theme } = this.context;
 
-    const buttonStyle: React.CSSProperties = { background: theme.useFluentDesign ? theme.listLow : theme.chromeLow, cursor: "pointer" };
-    const textStyle: React.CSSProperties = {
+    const buttonStyle = { background: theme.useFluentDesign ? theme.listLow : theme.chromeLow, cursor: "pointer" };
+    const textStyle = {
       margin: "10px auto"
     };
-    const itemStyle: React.CSSProperties = {
+    const itemStyle = {
       fontWeight: "lighter",
       width: '100%',
       padding: '20px',
@@ -106,19 +105,19 @@ export default class ForgotPassword extends React.Component {
               name="email"
               style={textStyle}
               placeholder="Email"
-              onChange={ e => {
-                this.setState({email: e.target.value})
+              onChange={e => {
+                this.setState({ email: e.target.value })
               }}
             />
             <br />
             <span onClick={this.handleSubmit}>
-            <a href={this.state.errHref}><span>{this.state.errMessage}</span></a>
-            <AppBarButton
-              style={{ margin: "10px auto", ...buttonStyle }}
-              icon={<span className="sdl2asset">&#xF286;</span>}
-              label="Send Mail!"
-              labelPosition="right"
-            />
+              <a href={this.state.errHref}><span>{this.state.errMessage}</span></a>
+              <AppBarButton
+                style={{ margin: "10px auto", ...buttonStyle }}
+                icon={<span className="sdl2asset">&#xF286;</span>}
+                label="Send Mail!"
+                labelPosition="right"
+              />
             </span>
           </div>
         </div>

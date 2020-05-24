@@ -36,14 +36,14 @@ export default class CreatePost extends React.Component {
         'Authorization': localStorage.getItem("refresh_token")
       }
     }
-    
+
     const refreshAuthLogic = failedRequest => axios(refreshOptions)
       .then(tokenRefreshResponse => {
         localStorage.setItem('access_token', tokenRefreshResponse.data.access_token);
         localStorage.setItem('refresh_token', tokenRefreshResponse.data.refresh_token);
         failedRequest.response.config.headers['Authorization'] = tokenRefreshResponse.data.access_token;
-      return Promise.resolve();
-    });
+        return Promise.resolve();
+      });
 
     return refreshAuthLogic;
   }
@@ -96,7 +96,7 @@ export default class CreatePost extends React.Component {
       }
 
       const refreshAuthLogic = this.refreshToken();
-      
+
       createAuthRefreshInterceptor(axios, refreshAuthLogic);
 
       axios(axiosOptions)
@@ -125,7 +125,6 @@ export default class CreatePost extends React.Component {
   }
 
   static contextTypes = { theme: PropTypes.object };
-  context: { theme: ReactUWP.ThemeType };
 
   render() {
     const { theme } = this.context;

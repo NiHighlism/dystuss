@@ -71,7 +71,6 @@ export default class SignUp extends React.Component {
   }
 
   static contextTypes = { theme: PropTypes.object };
-  context: { theme: ReactUWP.ThemeType };
 
   render() {
 
@@ -84,12 +83,12 @@ export default class SignUp extends React.Component {
 
     const resp = (window.innerWidth >= 600) ? "400px" : "auto";
 
-    const buttonStyle: React.CSSProperties = { background: theme.useFluentDesign ? theme.listLow : theme.chromeLow, cursor: "pointer" };
-    const textStyle: React.CSSProperties = {
+    const buttonStyle = { background: theme.useFluentDesign ? theme.listLow : theme.chromeLow, cursor: "pointer" };
+    const textStyle = {
       margin: "10px auto",
       width: resp
     };
-    const itemStyle: React.CSSProperties = {
+    const itemStyle = {
       fontWeight: "lighter",
       width: '100%',
       padding: '20px',

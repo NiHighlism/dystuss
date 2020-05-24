@@ -38,7 +38,7 @@ export default class Profile extends React.Component {
     this.handleLogOut = this.handleLogOut.bind(this);
     this.refreshToken = this.refreshToken.bind(this);
   }
-  
+
   refreshToken() {
     const refreshOptions = {
       'method': 'POST',
@@ -47,14 +47,14 @@ export default class Profile extends React.Component {
         'Authorization': localStorage.getItem("refresh_token")
       }
     }
-    
+
     const refreshAuthLogic = failedRequest => axios(refreshOptions)
       .then(tokenRefreshResponse => {
         localStorage.setItem('access_token', tokenRefreshResponse.data.access_token);
         localStorage.setItem('refresh_token', tokenRefreshResponse.data.refresh_token);
         failedRequest.response.config.headers['Authorization'] = tokenRefreshResponse.data.access_token;
-      return Promise.resolve();
-    });
+        return Promise.resolve();
+      });
 
     return refreshAuthLogic;
   }
@@ -226,18 +226,17 @@ export default class Profile extends React.Component {
     this.getPostList();
   }
 
-  componentWillReceiveProps() {
+  componentDidUpdate() {
     document.title = `Profile - ${this.state.username} - DYSTuss`;
   }
 
   static contextTypes = { theme: PropTypes.object };
-  context: { theme: ReactUWP.ThemeType };
 
   render() {
     const { theme } = this.context;
 
-    const buttonStyle: React.CSSProperties = { background: theme.useFluentDesign ? theme.listLow : theme.chromeLow, cursor: "pointer" };
-    const itemStyle: React.CSSProperties = {
+    const buttonStyle = { background: theme.useFluentDesign ? theme.listLow : theme.chromeLow, cursor: "pointer" };
+    const itemStyle = {
       fontWeight: "lighter",
       width: '100%',
       padding: '20px',

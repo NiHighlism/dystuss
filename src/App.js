@@ -14,8 +14,7 @@ import Profile from "./views/Profile";
 import About from "./views/About";
 import Movie from "./views/Movie";
 import Error404 from "./main/Error404";
-
-import PrivateRoute from './main/PrivateRoute.js'
+import PrivateRoute from './main/PrivateRoute.js';
 
 export default class App extends React.Component {
   render() {
@@ -69,9 +68,9 @@ export default class App extends React.Component {
               <Route path="/about" component={About} />
               <Route path="/forgotPassword" component={ForgotPassword} />
               <Route path="/resendVerification" component={ResendEmail} />
-              <Route path="/error404" component={Error404} />
               <PrivateRoute path="/create" component={CreatePost} />
               <PrivateRoute path="/profile" component={Profile} />
+              <Route path="*" component={Error404} />
             </Switch>
             <Navigation />
           </Theme>

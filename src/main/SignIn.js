@@ -6,19 +6,19 @@ import axios from 'axios';
 import TextBox from "react-uwp/TextBox";
 import AppBarButton from "react-uwp/AppBarButton";
 import PasswordBox from "react-uwp/PasswordBox";
-//import CheckBox from "react-uwp/CheckBox";
+import CheckBox from "react-uwp/CheckBox";
 
 export default class SignIn extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { username: '' , password: '', errMessage : '', errHref : '', remember: 'false'};
+    this.state = { username: '', password: '', errMessage: '', errHref: '', remember: 'false' };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   isLoggedIn() {
-    return localStorage.getItem("access_token")!==null && localStorage.getItem("access_token")!=="undefined";
+    return localStorage.getItem("access_token") !== null && localStorage.getItem("access_token") !== "undefined";
   }
 
   handleChange(event) {
@@ -30,12 +30,12 @@ export default class SignIn extends React.Component {
   handleSubmit(event) {
 
     const axiosOptions = {
-      'method' : 'POST',
-      'url' : 'https://vidura.rashil2000.me/auth/login',
-      'data' : {
-        'username' : this.state.username,
-        'password' : this.state.password,
-        'remember' : this.state.remember
+      'method': 'POST',
+      'url': 'https://vidura.rashil2000.me/auth/login',
+      'data': {
+        'username': this.state.username,
+        'password': this.state.password,
+        'remember': this.state.remember
       }
     }
 
@@ -71,12 +71,11 @@ export default class SignIn extends React.Component {
   }
 
   static contextTypes = { theme: PropTypes.object };
-  context: { theme: ReactUWP.ThemeType };
 
   render() {
 
     const auth = this.isLoggedIn();
-    if (auth){
+    if (auth) {
       window.location.pathname = "/profile";
     }
 
@@ -84,12 +83,12 @@ export default class SignIn extends React.Component {
 
     const resp = (window.innerWidth >= 600) ? "400px" : "auto";
 
-    const buttonStyle: React.CSSProperties = { background: theme.useFluentDesign ? theme.listLow : theme.chromeLow, cursor: "pointer" };
-    const textStyle: React.CSSProperties = {
+    const buttonStyle = { background: theme.useFluentDesign ? theme.listLow : theme.chromeLow, cursor: "pointer" };
+    const textStyle = {
       margin: "10px auto",
       width: resp
     };
-    const itemStyle: React.CSSProperties = {
+    const itemStyle = {
       fontWeight: "lighter",
       width: '100%',
       padding: '20px',
@@ -151,13 +150,13 @@ export default class SignIn extends React.Component {
               onChangeValue={(event) => this.setState({ password: event })}
             />
             <br />
-            {/* <CheckBox
+            <CheckBox
               defaultChecked={false}
               label="Keep me signed in"
-              onCheck={(event) => this.setState({remember : 'true'})}
+              onCheck={(event) => this.setState({ remember: 'true' })}
             />
             <br />
-            <br /> */}
+            <br />
             <a href={this.state.errHref}><span>{this.state.errMessage}</span></a>
             <span onClick={this.handleSubmit}>
               <AppBarButton

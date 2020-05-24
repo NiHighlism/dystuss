@@ -19,7 +19,7 @@ export default class Movie extends React.Component {
       imdb_rating: '',
       plot: '',
       languageList: [],
-      year : '',
+      year: '',
       runtime: '',
       release_date: '',
       poster_url: '',
@@ -28,7 +28,7 @@ export default class Movie extends React.Component {
       rotten_tomatoes: '',
       metascore: '',
 
-      errMessage : ''
+      errMessage: ''
     };
 
     this.getData = this.getData.bind(this);
@@ -45,111 +45,78 @@ export default class Movie extends React.Component {
         'Authorization': localStorage.getItem("refresh_token")
       }
     }
-    
+
     const refreshAuthLogic = failedRequest => axios(refreshOptions)
       .then(tokenRefreshResponse => {
         localStorage.setItem('access_token', tokenRefreshResponse.data.access_token);
         localStorage.setItem('refresh_token', tokenRefreshResponse.data.refresh_token);
         failedRequest.response.config.headers['Authorization'] = tokenRefreshResponse.data.access_token;
-      return Promise.resolve();
-    });
+        return Promise.resolve();
+      });
 
     return refreshAuthLogic;
   }
 
-  getData(){
+  getData() {
     let imdb_id = window.location.pathname.split("/")[2];
     let url = 'https://vidura.rashil2000.me/movie/' + imdb_id;
     const axiosOptions = {
-      'method' : 'GET',
-      'url' : url
+      'method': 'GET',
+      'url': url
     }
 
     axios(axiosOptions)
-    .then(response => {
-      this.setState({
-        imdb_id : response.data.imdb_ID,
-        title: response.data.title,
-        actorsList: response.data.actors.actorsList,
-        genreList : response.data.genre.genreList,
-        directorList: response.data.director.directorList,
-        imdb_rating: response.data.imdb_rating,
-        plot : response.data.plot,
-        year: response.data.year,
-        runtime: response.data.runtime,
-        release_date : response.data.release_date,
-        poster_url : response.data.poster_url,
-        writerList : response.data.writer.writerList,
-        languageList : response.data.language.languageList,
-        rotten_tomatoes : response.data.rotten_tomatoes,
-        metascore : response.data.metascore,
-        awards: response.data.awards
+      .then(response => {
+        this.setState({
+          imdb_id: response.data.imdb_ID,
+          title: response.data.title,
+          actorsList: response.data.actors.actorsList,
+          genreList: response.data.genre.genreList,
+          directorList: response.data.director.directorList,
+          imdb_rating: response.data.imdb_rating,
+          plot: response.data.plot,
+          year: response.data.year,
+          runtime: response.data.runtime,
+          release_date: response.data.release_date,
+          poster_url: response.data.poster_url,
+          writerList: response.data.writer.writerList,
+          languageList: response.data.language.languageList,
+          rotten_tomatoes: response.data.rotten_tomatoes,
+          metascore: response.data.metascore,
+          awards: response.data.awards
+        })
       })
-    })
-    .catch(error => { console.log(error)})
+      .catch(error => { console.log(error) })
   }
 
-  componentDidMount(){
-    this.setState({imdb_id: window.location.pathname.split("/")[2]})
+  componentDidMount() {
+    this.setState({ imdb_id: window.location.pathname.split("/")[2] })
     this.getData();
   }
 
   isLoggedIn() {
-    return localStorage.getItem("access_token")!==null && localStorage.getItem("access_token")!=="undefined";
+    return localStorage.getItem("access_token") !== null && localStorage.getItem("access_token") !== "undefined";
   }
 
-  componentWillReceiveProps(){
+  componentDidUpdate() {
     document.title = `Movie - ${this.state.title} - DYSTuss`;
   }
 
-  handleAddSeen(){
-    if(!this.isLoggedIn()){
+  handleAddSeen() {
+    if (!this.isLoggedIn()) {
       window.location.pathname = "/signin";
     }
-    else{
+    else {
 
       const axiosOptions = {
-        'method' : 'POST',
-        'url' : 'https://vidura.rashil2000.me/user/add/seenList',
-        headers : {
-          'Authorization' : localStorage.getItem("access_token")
+        'method': 'POST',
+        'url': 'https://vidura.rashil2000.me/user/add/seenList',
+        headers: {
+          'Authorization': localStorage.getItem("access_token")
         },
-        'data' : {
-          'imdb_ID_list' : window.location.pathname.split("/")[2],
-          'title' : this.state.title
-        }
-      }
-
-      const refreshAuthLogic = this.refreshToken();
-      
-      createAuthRefreshInterceptor(axios, refreshAuthLogic);
-
-      axios(axiosOptions)
-      .then(response => {
-        this.setState({
-          'errMessage' : "Added Successfully!"
-        })
-      })
-      .catch(error => console.log(error.response))
-
-    }
-  }
-
-  handleAddBucket(){
-    if(!this.isLoggedIn()){
-      window.location.pathname = "/signin";
-    }
-    else{
-
-      const axiosOptions = {
-        'method' : 'POST',
-        'url' : 'https://vidura.rashil2000.me/user/add/bucketList',
-        headers : {
-          'Authorization' : localStorage.getItem("access_token")
-        },
-        'data' : {
-          'imdb_ID_list' : window.location.pathname.split("/")[2],
-          'title' : this.state.title
+        'data': {
+          'imdb_ID_list': window.location.pathname.split("/")[2],
+          'title': this.state.title
         }
       }
 
@@ -158,25 +125,57 @@ export default class Movie extends React.Component {
       createAuthRefreshInterceptor(axios, refreshAuthLogic);
 
       axios(axiosOptions)
-      .then(response => {
-        this.setState({
-          'errMessage' : "Added Successfully!"
+        .then(response => {
+          this.setState({
+            'errMessage': "Added Successfully!"
+          })
         })
-      })
-      .catch(error => console.log(error.response))
+        .catch(error => console.log(error.response))
 
     }
   }
 
-  static contextTypes = { theme: PropTypes.object};
-  context: { theme: ReactUWP.ThemeType};
+  handleAddBucket() {
+    if (!this.isLoggedIn()) {
+      window.location.pathname = "/signin";
+    }
+    else {
+
+      const axiosOptions = {
+        'method': 'POST',
+        'url': 'https://vidura.rashil2000.me/user/add/bucketList',
+        headers: {
+          'Authorization': localStorage.getItem("access_token")
+        },
+        'data': {
+          'imdb_ID_list': window.location.pathname.split("/")[2],
+          'title': this.state.title
+        }
+      }
+
+      const refreshAuthLogic = this.refreshToken();
+
+      createAuthRefreshInterceptor(axios, refreshAuthLogic);
+
+      axios(axiosOptions)
+        .then(response => {
+          this.setState({
+            'errMessage': "Added Successfully!"
+          })
+        })
+        .catch(error => console.log(error.response))
+
+    }
+  }
+
+  static contextTypes = { theme: PropTypes.object };
 
   render() {
 
     const { theme } = this.context;
 
-    const buttonStyle: React.CSSProperties = { background: theme.useFluentDesign ? theme.listLow : theme.chromeLow, cursor: "pointer" };
-    const itemStyle: React.CSSProperties = {
+    const buttonStyle = { background: theme.useFluentDesign ? theme.listLow : theme.chromeLow, cursor: "pointer" };
+    const itemStyle = {
       fontWeight: "lighter",
       width: '100%',
       padding: '20px',
@@ -256,10 +255,10 @@ export default class Movie extends React.Component {
                 {this.state.genreList.map(item => (<li style={{ margin: "10px", display: "inline-block" }} key={item}>> {item}</li>))}
               </ul>
               <br />
-              <Button style={{margin: "10px", ...buttonStyle}} icon={<span className="sdl2asset">&#xE73A;&nbsp;</span>} onClick={this.handleAddSeen}> Add to Seen List</Button>
-              <Button style={{margin: "10px", ...buttonStyle}} icon={<span className="sdl2asset">&#xECDE;&nbsp;</span>} onClick={this.handleAddBucket}> Add to Bucket List</Button>
-            <br />
-            <span>{this.state.errMessage}</span>
+              <Button style={{ margin: "10px", ...buttonStyle }} icon={<span className="sdl2asset">&#xE73A;&nbsp;</span>} onClick={this.handleAddSeen}> Add to Seen List</Button>
+              <Button style={{ margin: "10px", ...buttonStyle }} icon={<span className="sdl2asset">&#xECDE;&nbsp;</span>} onClick={this.handleAddBucket}> Add to Bucket List</Button>
+              <br />
+              <span>{this.state.errMessage}</span>
             </div>
           </div>
         </div>

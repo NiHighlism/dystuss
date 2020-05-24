@@ -53,14 +53,14 @@ export default class Post extends React.Component {
         'Authorization': localStorage.getItem("refresh_token")
       }
     }
-    
+
     const refreshAuthLogic = failedRequest => axios(refreshOptions)
       .then(tokenRefreshResponse => {
         localStorage.setItem('access_token', tokenRefreshResponse.data.access_token);
         localStorage.setItem('refresh_token', tokenRefreshResponse.data.refresh_token);
         failedRequest.response.config.headers['Authorization'] = tokenRefreshResponse.data.access_token;
-      return Promise.resolve();
-    });
+        return Promise.resolve();
+      });
 
     return refreshAuthLogic;
   }
@@ -199,11 +199,11 @@ export default class Post extends React.Component {
         'body': this.state.createCommentBody
       }
     }
-    
+
     const refreshAuthLogic = this.refreshToken();
 
     createAuthRefreshInterceptor(axios, refreshAuthLogic);
-    
+
 
     axios(axiosOptions)
       .then(response => {
@@ -280,18 +280,17 @@ export default class Post extends React.Component {
     this.getComments();
   }
 
-  componentWillReceiveProps() {
+  componentDidUpdate() {
     document.title = `${this.state.title} - DYSTuss`;
-    this.getMetaData()
+    this.getMetaData();
   }
 
   static contextTypes = { theme: PropTypes.object };
-  context: { theme: ReactUWP.ThemeType };
 
   render() {
     const { theme } = this.context;
 
-    const buttonStyle: React.CSSProperties = { background: theme.useFluentDesign ? theme.listLow : theme.chromeLow, cursor: "pointer" };
+    const buttonStyle = { background: theme.useFluentDesign ? theme.listLow : theme.chromeLow, cursor: "pointer" };
     const itemStyle = {
       fontWeight: "lighter",
       width: '100%',
