@@ -118,7 +118,7 @@ export default class About extends React.Component {
             <br /><hr /><br />
             <p>DYSTuss was created as a part of the Software Engineering Laboratory (CS29006), a second year undergraduate course offered in the spring semester at the <HyperLink style={linkStyle} href="http://iitkgp.ac.in/" target="__blank">Indian Institute of Technology Kharagpur</HyperLink>.</p>
             <p>The website implements the Fluent Design language and Fabric UI assets using React. On the back it is powered by Flask-RESTPlus API.</p>
-            <p>The source code can be seen in the GitHub <HyperLink style={linkStyle} href="https://github.com/rashil2000/dystuss" target="__blank">repository</HyperLink>.</p>
+            <p>The source code and requirement specifications can be seen in the GitHub <HyperLink style={linkStyle} href="https://github.com/rashil2000/dystuss" target="__blank">repository</HyperLink>.</p>
             <br /><hr /><br />
             <p>Made with &nbsp;<span className="sdl2asset" style={{ color: "red" }}>&#xEB52;</span>&nbsp; by Rashil Gandhi (18CS30036).</p>
             <p>To know more, go to my website on the top right.</p>

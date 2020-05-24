@@ -316,11 +316,12 @@ export default class Post extends React.Component {
     };
     const classes = theme.prepareStyles({ styles });
 
-    const doesMetaExist = this.state.post_movie.length ? "profile-details" : "";
+    const doesMetaExistClass = this.state.post_movie.length ? "profile-details" : "";
+    const doesMetaExistMargin = this.state.post_movie.length ? "0px" : "20px";
 
     return (
       <div className="content">
-        <div {...classes.acrylic40} style={{ boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)' }}>
+        <div {...classes.acrylic40} style={{ boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)', marginBottom: doesMetaExistMargin }}>
           <p style={{ fontSize: 30, float: "left" }}>{this.state.title}</p>
           <p style={{ fontSize: 15, float: "right" }}>
             <Link to={`/movie/${this.state.post_movie}`} target="__blank">
@@ -335,7 +336,7 @@ export default class Post extends React.Component {
           <div style={{ clear: "both" }}></div>
         </div>
         <div {...classes.root}>
-          <div className={doesMetaExist}>
+          <div className={doesMetaExistClass}>
             <div {...classes.acrylic60} style={{ fontSize: "18px", boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)' }}>
               <MarkdownRender text={this.state.body} />
             </div>
