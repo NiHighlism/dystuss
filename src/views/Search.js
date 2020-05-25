@@ -14,7 +14,7 @@ export default class Search extends React.Component {
       movieSearchQuery: '',
       movieSearchResults: [],
 
-      errMessagePost: '',
+      errMessagePost: 'Insert a space after query.',
       errHrefPost: '',
       errMessageMovie: '',
       errHrefMovie: ''
@@ -27,12 +27,15 @@ export default class Search extends React.Component {
     this.setState({ postSearchQuery: event.target.value });
 
     if (this.state.postSearchQuery.trim() === "") {
-      this.setState({ errMessagePost: "Specify non-empty query." })
+      this.setState({ errMessagePost: "Insert a space after query." })
     }
     else {
       const axiosOptions = {
         'method': 'GET',
         'url': 'https://vidura.rashil2000.me/post/getAll',
+        'params': {
+          'q': this.state.postSearchQuery
+        }
       }
 
       axios(axiosOptions)
@@ -40,7 +43,7 @@ export default class Search extends React.Component {
           this.setState({ postSearchResults: response.data, errMessagePost: "" });
         })
         .catch(error => {
-          this.setState({ errMessagePost: "Not found." })
+          this.setState({ postSearchResults: [], errMessagePost: "Not found." })
         })
     }
   }
@@ -65,7 +68,7 @@ export default class Search extends React.Component {
           this.setState({ movieSearchResults: response.data, errMessageMovie: "" });
         })
         .catch(error => {
-          this.setState({ errMessageMovie: "Not found." });
+          this.setState({ movieSearchResults: [], errMessageMovie: "Not found." });
         })
     }
   }
