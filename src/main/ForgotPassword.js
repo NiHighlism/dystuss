@@ -27,7 +27,7 @@ export default class ForgotPassword extends React.Component {
 
     axios(axiosOptions)
       .then(response => {
-        this.setState({ errMessage: "Ah, Dementia. Verification mail sent!" });
+        this.setState({ errMessage: "Ah, Dementia. Reset mail sent!" });
       })
       .catch(error => {
         let status = error.response.status

@@ -2,7 +2,7 @@ import * as React from "react";
 import * as PropTypes from "prop-types";
 import axios from 'axios';
 
-import { NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 import TextBox from "react-uwp/TextBox";
 import AppBarButton from "react-uwp/AppBarButton";
 import PasswordBox from "react-uwp/PasswordBox";
@@ -191,6 +191,8 @@ export default class SignUp extends React.Component {
                 labelPosition="right"
               />
             </span>
+            <br />
+            <Link to="/resendVerification" style={{ color: theme.accent }}>Didn't receive confirmation mail?</Link>
           </div>
         </div>
       </div>

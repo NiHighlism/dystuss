@@ -1,12 +1,11 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
-import { NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 import axios from 'axios';
 
 import TextBox from "react-uwp/TextBox";
 import AppBarButton from "react-uwp/AppBarButton";
 import PasswordBox from "react-uwp/PasswordBox";
-import CheckBox from "react-uwp/CheckBox";
 
 export default class SignIn extends React.Component {
 
@@ -150,11 +149,16 @@ export default class SignIn extends React.Component {
               onChangeValue={(event) => this.setState({ password: event })}
             />
             <br />
-            <CheckBox
-              defaultChecked={false}
-              label="Keep me signed in"
-              onCheck={(event) => this.setState({ remember: 'true' })}
-            />
+            <input
+              type="checkbox"
+              id="signcheck"
+              onChange={() => {
+                if (document.querySelector('#signcheck').checked === true)
+                  this.setState({ remember: 'true' });
+                else if (document.querySelector('#signcheck').checked === false)
+                  this.setState({ remember: 'false' });
+              }} />
+            <label for="signcheck">&nbsp; Keep me signed in</label>
             <br />
             <br />
             <a href={this.state.errHref}><span>{this.state.errMessage}</span></a>
@@ -166,6 +170,8 @@ export default class SignIn extends React.Component {
                 labelPosition="right"
               />
             </span>
+            <br />
+            <Link to="/forgotpassword" style={{ color: theme.accent }}>Forgot Password?</Link>
           </div>
         </div>
       </div>
