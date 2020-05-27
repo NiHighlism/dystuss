@@ -324,7 +324,7 @@ export default class Post extends React.Component {
         <div {...classes.acrylic40} style={{ boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)', marginBottom: doesMetaExistMargin }}>
           <p style={{ fontSize: 30, float: "left" }}>{this.state.title}</p>
           <p style={{ fontSize: 15, float: "right" }}>
-            <Link to={`/movie/${this.state.post_movie}`} target="__blank">
+            <Link to={`/movie/${this.state.post_movie}`}>
               <AppBarButton
                 style={buttonStyle}
                 icon={<span className="sdl2asset">&#xE946;</span>}

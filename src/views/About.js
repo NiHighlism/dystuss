@@ -66,8 +66,12 @@ export default class About extends React.Component {
           <DropDownMenu
             values={[
               <span className="sdl2asset">&#xE790;</span>,
+              "Midnight",
+              "Dawn",
               "Morning",
-              "Noon",
+              "Midmorning",
+              "Afternoon",
+              "Dusk",
               "Evening",
               "Night"
             ]}
@@ -76,25 +80,45 @@ export default class About extends React.Component {
             onChangeValue={value => {
               let name, color, backimg;
               switch (value) {
+                case "Midnight":
+                  name = "dark";
+                  color = "#afbda6";
+                  backimg = "/assets/firewatch_1.jpg";
+                  break;
+                case "Dawn":
+                  name = "dark";
+                  color = "#f2c548";
+                  backimg = "/assets/firewatch_2.jpg";
+                  break;
                 case "Morning":
                   name = "light";
-                  color = "#3c6e8f";
-                  backimg = "/assets/morning.jpg";
-                  break;
-                case "Noon":
-                  name = "light";
                   color = "#306458";
-                  backimg = "/assets/noon.jpg";
+                  backimg = "/assets/firewatch_3.jpg";
+                  break;
+                case "Midmorning":
+                  name = "light";
+                  color = "#3c6e8f";
+                  backimg = "/assets/firewatch_4.jpg";
+                  break;
+                case "Afternoon":
+                  name = "light";
+                  color = "#9a5126";
+                  backimg = "/assets/firewatch_5.jpg";
+                  break;
+                case "Dusk":
+                  name = "dark";
+                  color = "#f5ba54";
+                  backimg = "/assets/firewatch_6.jpg";
                   break;
                 case "Evening":
                   name = "dark";
-                  color = "#f5ba54";
-                  backimg = "/assets/evening.jpg";
+                  color = "#95d1e9";
+                  backimg = "/assets/firewatch_7.jpg";
                   break;
                 case "Night":
                   name = "dark";
-                  color = "#afbda6";
-                  backimg = "/assets/night.jpg";
+                  color = "#a0a5ab";
+                  backimg = "/assets/firewatch_8.jpg";
                   break;
                 default:
                   name = theme.themeName;
