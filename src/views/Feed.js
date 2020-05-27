@@ -29,7 +29,7 @@ export default class Feed extends React.Component {
           post_list: response.data,
         })
       })
-      .catch(error => { console.log(error) })
+      .catch(error => { /* console.log(error) */ })
   }
 
   componentDidMount() {

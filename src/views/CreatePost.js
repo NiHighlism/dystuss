@@ -105,7 +105,7 @@ export default class CreatePost extends React.Component {
         })
         .catch(error => {
           let status = error.response.status
-          console.log(error.response);
+          //console.log(error.response);
 
           if (status === 401) {
             this.setState({ errMessage: "This title already exists." });

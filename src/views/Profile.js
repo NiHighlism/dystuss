@@ -83,7 +83,7 @@ export default class Profile extends React.Component {
           create_date: response.data.create_date
         })
       })
-      .catch(error => { console.log(error) })
+      .catch(error => { /* console.log(error) */ })
   }
 
   getSeenData() {
@@ -106,7 +106,7 @@ export default class Profile extends React.Component {
           seenList: arr
         })
       })
-      .catch(error => { console.log(error) })
+      .catch(error => { /* console.log(error) */ })
   }
 
   getBucketData() {
@@ -129,7 +129,7 @@ export default class Profile extends React.Component {
           bucketList: arr
         })
       })
-      .catch(error => { console.log(error) })
+      .catch(error => { /* console.log(error) */ })
   }
 
   getRecommendData() {
@@ -152,7 +152,7 @@ export default class Profile extends React.Component {
           recommendList: arr
         })
       })
-      .catch(error => { console.log(error) })
+      .catch(error => { /* console.log(error) */ })
   }
 
   getPostList() {
@@ -169,7 +169,7 @@ export default class Profile extends React.Component {
           postList: response.data
         })
       })
-      .catch(error => { console.log(error) })
+      .catch(error => { /* console.log(error) */ })
   }
 
   handleDeleteDialog() { this.setState({ showDeleteDialog: false }) }
@@ -186,10 +186,10 @@ export default class Profile extends React.Component {
 
     axios(axiosOptions)
       .then(response => {
-        console.log(response.data);
+        //console.log(response.data);
         window.location.pathname = `/profile`;
       })
-      .catch(error => { console.log(error) })
+      .catch(error => { /* console.log(error) */ })
   }
 
   handleLogOut() {
@@ -215,7 +215,7 @@ export default class Profile extends React.Component {
         localStorage.clear();
         window.location.pathname = "/";
       })
-      .catch(error => console.log(error))
+      .catch(error => { /* console.log(error) */ })
   }
 
   componentDidMount() {

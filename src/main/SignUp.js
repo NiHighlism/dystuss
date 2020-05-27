@@ -50,7 +50,7 @@ export default class SignUp extends React.Component {
         })
         .catch(error => {
           let status = error.response.status
-          console.log(error.response);
+          //console.log(error.response);
 
           if (status === 402) {
             this.setState({ errMessage: "Username is taken" });

@@ -88,7 +88,7 @@ export default class Post extends React.Component {
         })
       })
       .catch(error => {
-        console.log(error);
+        //console.log(error);
         window.location.pathname = "/error404";
       })
   }
@@ -107,7 +107,7 @@ export default class Post extends React.Component {
           comments: response.data
         })
       })
-      .catch(error => { console.log(error) })
+      .catch(error => { /* console.log(error) */ })
   }
 
   getMetaData() {
@@ -128,7 +128,7 @@ export default class Post extends React.Component {
           metaPoster_url: response.data.poster_url,
         })
       })
-      .catch(error => { console.log(error) })
+      .catch(error => { /* console.log(error) */ })
   }
 
   handlePostUpvote() {
@@ -156,7 +156,7 @@ export default class Post extends React.Component {
         this.setState({
           errMessage: "You've already reacted to this post. "
         });
-        console.log(error.response)
+        //console.log(error.response)
       })
 
   }
@@ -210,18 +210,18 @@ export default class Post extends React.Component {
 
     axios(axiosOptions)
       .then(response => {
-        console.log(response);
-        console.log(response.data);
+        //console.log(response);
+        //console.log(response.data);
       })
       .catch(error => {
-        console.log(error);
-        console.log(error.response);
+        //console.log(error);
+        //console.log(error.response);
       })
 
   }
 
   handleCommentUpvote(value) {
-    console.log(value);
+    //console.log(value);
     const axiosOptions = {
       'method': 'POST',
       'url': 'https://vidura.rashil2000.me/post' + value + '/downvote',

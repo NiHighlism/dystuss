@@ -87,7 +87,7 @@ export default class Movie extends React.Component {
         })
       })
       .catch(error => {
-        console.log(error);
+        //console.log(error);
         window.location.pathname = "/error404";
       })
   }
@@ -133,7 +133,7 @@ export default class Movie extends React.Component {
             'errMessage': "Added Successfully!"
           })
         })
-        .catch(error => console.log(error.response))
+        .catch(error => { /* console.log(error.response) */ })
 
     }
   }
@@ -166,7 +166,7 @@ export default class Movie extends React.Component {
             'errMessage': "Added Successfully!"
           })
         })
-        .catch(error => console.log(error.response))
+        .catch(error => { /* console.log(error.response) */ })
 
     }
   }

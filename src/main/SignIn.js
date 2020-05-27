@@ -38,8 +38,6 @@ export default class SignIn extends React.Component {
       }
     }
 
-    console.log(axiosOptions.data)
-
     axios(axiosOptions)
       .then(response => {
         localStorage.setItem('access_token', response.data.access_token);
