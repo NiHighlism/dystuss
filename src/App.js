@@ -1,5 +1,5 @@
 import * as React from "react";
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { Theme, getTheme } from "react-uwp/Theme";
 import Navigation from "./main/Navigation";
 import SignIn from "./main/SignIn";
@@ -14,11 +14,10 @@ import Profile from "./views/Profile";
 import About from "./views/About";
 import Movie from "./views/Movie";
 import Error404 from "./main/Error404";
-import PrivateRoute from './main/PrivateRoute.js';
+import PrivateRoute from "./main/PrivateRoute.js";
 
 export default class App extends React.Component {
   render() {
-
     let name, color, backimg, value, hr;
     hr = new Date().getHours();
     if (hr >= 1 && hr < 4) value = "Midnight";
@@ -84,22 +83,22 @@ export default class App extends React.Component {
           >
             <Switch>
               <Route exact path="/" component={Feed} />
-              <Route path="/post/:imdb_id" component={Post} />
-              <Route path="/signin" component={SignIn} />
-              <Route path="/signup" component={SignUp} />
-              <Route path="/search" component={Search} />
-              <Route path="/movie/:imdb_id" component={Movie} />
-              <Route path="/about" component={About} />
-              <Route path="/forgotPassword" component={ForgotPassword} />
-              <Route path="/resendVerification" component={ResendEmail} />
-              <PrivateRoute path="/create" component={CreatePost} />
-              <PrivateRoute path="/profile" component={Profile} />
+              <Route exact path="/post/:imdb_id" component={Post} />
+              <Route exact path="/signin" component={SignIn} />
+              <Route exact path="/signup" component={SignUp} />
+              <Route exact path="/search" component={Search} />
+              <Route exact path="/movie/:imdb_id" component={Movie} />
+              <Route exact path="/about" component={About} />
+              <Route exact path="/forgotPassword" component={ForgotPassword} />
+              <Route exact path="/resendVerification" component={ResendEmail} />
+              <PrivateRoute exact path="/create" component={CreatePost} />
+              <PrivateRoute exact path="/profile" component={Profile} />
               <Route path="*" component={Error404} />
             </Switch>
             <Navigation />
           </Theme>
         </div>
       </BrowserRouter>
-    )
+    );
   }
 }
