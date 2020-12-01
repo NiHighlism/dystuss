@@ -4,6 +4,8 @@
   <img src="https://github.com/rashil2000/dystuss/raw/master/public/logo192.png"></img>
 </p>
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/ff358d36-cf45-4e56-8915-8d1267042352/deploy-status)](https://app.netlify.com/sites/dystuss/deploys)
+
 <hr>
 
 ### `npm install`
