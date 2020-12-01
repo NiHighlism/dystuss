@@ -1,17 +1,23 @@
 # DYSTuss
 
 <p align="center">
-  <img src="https://github.com/rashil2000/dystuss/raw/master/public/logo192.png"></img>
+  <img src="https://github.com/NiHighlism/dystuss/raw/master/public/logo192.png"></img>
 </p>
 
 <hr>
+
+## Contributions
+
+- Feel free to open any new issues for bugs or feature requests.
+- Please read [CONTRIBUTING.md](https://github.com/NiHighlism/dystuss/raw/master/CONTRIBUTING.md) before making a pull request. Include screenshots/screengrabs wherever possible.
+- Communicate on the Slack [workspace](https://join.slack.com/t/nihighlism/shared_invite/zt-jy9w18lc-yWEtG3IY4TuGktTYvWceSQ) if you face any problem.
+
+## Available Scripts
 
 ### `npm install`
 
 You need Node.js to install the scripts and run this app.<br />
 Go to [nodejs.org](https://nodejs.org/en/download/) to install it.
-
-## Available Scripts
 
 In the project directory, you can run:
 

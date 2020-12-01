@@ -19,7 +19,7 @@ export default class ResendEmail extends React.Component {
 
     const axiosOptions = {
       'method': 'POST',
-      'url': 'https://vidura.rashil2000.me/auth/resendVerificationEmail',
+      'url': `${process.env.REACT_APP_DB_HOST}/auth/resendVerificationEmail`,
       'data': {
         'email': this.state.email,
       }

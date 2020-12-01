@@ -30,7 +30,7 @@ export default class SignIn extends React.Component {
 
     const axiosOptions = {
       'method': 'POST',
-      'url': 'https://vidura.rashil2000.me/auth/login',
+      'url': `${process.env.REACT_APP_DB_HOST}/auth/login`,
       'data': {
         'username': this.state.username,
         'password': this.state.password,

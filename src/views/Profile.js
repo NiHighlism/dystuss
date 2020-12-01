@@ -42,7 +42,7 @@ export default class Profile extends React.Component {
   refreshToken() {
     const refreshOptions = {
       'method': 'POST',
-      'url': "https://minerva.metamehta.me/auth/refreshToken",
+      'url': `${process.env.REACT_APP_DB_HOST}/auth/refreshToken`,
       'headers': {
         'Authorization': localStorage.getItem("refresh_token")
       }
@@ -62,7 +62,7 @@ export default class Profile extends React.Component {
 
   getData() {
     let username = localStorage.getItem("username");
-    let url = 'https://vidura.rashil2000.me/user/' + username;
+    let url = `${process.env.REACT_APP_DB_HOST}/user/` + username;
     const axiosOptions = {
       'method': 'GET',
       'url': url,
@@ -88,7 +88,7 @@ export default class Profile extends React.Component {
 
   getSeenData() {
     let username = localStorage.getItem("username");
-    let url = 'https://vidura.rashil2000.me/user/' + username + '/getSeenList';
+    let url = `${process.env.REACT_APP_DB_HOST}/user/` + username + '/getSeenList';
     const axiosOptions = {
       'method': 'GET',
       'url': url,
@@ -111,7 +111,7 @@ export default class Profile extends React.Component {
 
   getBucketData() {
     let username = localStorage.getItem("username");
-    let url = 'https://vidura.rashil2000.me/user/' + username + '/getBucketList';
+    let url = `${process.env.REACT_APP_DB_HOST}/user/` + username + '/getBucketList';
     const axiosOptions = {
       'method': 'GET',
       'url': url,
@@ -134,7 +134,7 @@ export default class Profile extends React.Component {
 
   getRecommendData() {
     let username = localStorage.getItem("username");
-    let url = 'https://vidura.rashil2000.me/user/' + username + '/getRecommendList';
+    let url = `${process.env.REACT_APP_DB_HOST}/user/` + username + '/getRecommendList';
     const axiosOptions = {
       'method': 'GET',
       'url': url,
@@ -157,7 +157,7 @@ export default class Profile extends React.Component {
 
   getPostList() {
     let username = localStorage.getItem("username");
-    let url = 'https://vidura.rashil2000.me/user/' + username + '/posts';
+    let url = `${process.env.REACT_APP_DB_HOST}/user/` + username + '/posts';
     const axiosOptions = {
       'method': 'GET',
       'url': url
@@ -175,7 +175,7 @@ export default class Profile extends React.Component {
   handleDeleteDialog() { this.setState({ showDeleteDialog: false }) }
 
   handleDeletePost(id) {
-    let url = 'https://vidura.rashil2000.me/post/' + id + '/delete';
+    let url = `${process.env.REACT_APP_DB_HOST}/post/` + id + '/delete';
     const axiosOptions = {
       'method': 'DELETE',
       'url': url,
@@ -195,7 +195,7 @@ export default class Profile extends React.Component {
   handleLogOut() {
     const axiosOptions = {
       'method': 'POST',
-      'url': 'https://vidura.rashil2000.me/auth/logout',
+      'url': `${process.env.REACT_APP_DB_HOST}/auth/logout`,
       headers: {
         'Authorization': localStorage.getItem("access_token")
       }

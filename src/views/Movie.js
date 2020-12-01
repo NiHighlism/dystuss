@@ -40,7 +40,7 @@ export default class Movie extends React.Component {
   refreshToken() {
     const refreshOptions = {
       'method': 'POST',
-      'url': "https://minerva.metamehta.me/auth/refreshToken",
+      'url': `${process.env.REACT_APP_DB_HOST}/auth/refreshToken`,
       'headers': {
         'Authorization': localStorage.getItem("refresh_token")
       }
@@ -59,7 +59,7 @@ export default class Movie extends React.Component {
 
   getData() {
     let imdb_id = window.location.pathname.split("/")[2];
-    let url = 'https://vidura.rashil2000.me/movie/' + imdb_id;
+    let url = `${process.env.REACT_APP_DB_HOST}/movie/` + imdb_id;
     const axiosOptions = {
       'method': 'GET',
       'url': url
@@ -113,7 +113,7 @@ export default class Movie extends React.Component {
 
       const axiosOptions = {
         'method': 'POST',
-        'url': 'https://vidura.rashil2000.me/user/add/seenList',
+        'url': `${process.env.REACT_APP_DB_HOST}/user/add/seenList`,
         headers: {
           'Authorization': localStorage.getItem("access_token")
         },
@@ -146,7 +146,7 @@ export default class Movie extends React.Component {
 
       const axiosOptions = {
         'method': 'POST',
-        'url': 'https://vidura.rashil2000.me/user/add/bucketList',
+        'url': `${process.env.REACT_APP_DB_HOST}/user/add/bucketList`,
         headers: {
           'Authorization': localStorage.getItem("access_token")
         },
@@ -255,7 +255,7 @@ export default class Movie extends React.Component {
               <br />
               <div style={{ fontSize: 20 }}>Genres: </div>
               <ul style={{ margin: "20px", listStyleType: "disc" }}>
-                {this.state.genreList.map(item => (<li style={{ margin: "10px", display: "inline-block" }} key={item}>> {item}</li>))}
+                {this.state.genreList.map(item => (<li style={{ margin: "10px", display: "inline-block" }} key={item}>&gt; {item}</li>))}
               </ul>
               <br />
               <Button style={{ margin: "10px", ...buttonStyle }} icon={<span className="sdl2asset">&#xE73A;&nbsp;</span>} onClick={this.handleAddSeen}> Add to Seen List</Button>

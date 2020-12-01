@@ -32,7 +32,7 @@ export default class Search extends React.Component {
     else {
       const axiosOptions = {
         'method': 'GET',
-        'url': 'https://vidura.rashil2000.me/post/getAll',
+        'url': `${process.env.REACT_APP_DB_HOST}/post/getAll`,
         'params': {
           'q': this.state.postSearchQuery
         }
@@ -57,7 +57,7 @@ export default class Search extends React.Component {
     else {
       const axiosOptions = {
         'method': 'GET',
-        'url': 'https://vidura.rashil2000.me/movie/search',
+        'url': `${process.env.REACT_APP_DB_HOST}/movie/search`,
         'params': {
           'q': this.state.movieSearchQuery
         }

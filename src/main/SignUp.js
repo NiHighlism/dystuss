@@ -35,7 +35,7 @@ export default class SignUp extends React.Component {
     else {
       const axiosOptions = {
         'method': 'POST',
-        'url': 'https://vidura.rashil2000.me/auth/signup',
+        'url': `${process.env.REACT_APP_DB_HOST}/auth/signup`,
         'data': {
           'email': this.state.email,
           'username': this.state.username,

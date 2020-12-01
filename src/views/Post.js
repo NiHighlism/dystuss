@@ -48,7 +48,7 @@ export default class Post extends React.Component {
   refreshToken() {
     const refreshOptions = {
       'method': 'POST',
-      'url': "https://minerva.metamehta.me/auth/refreshToken",
+      'url': `${process.env.REACT_APP_DB_HOST}/auth/refreshToken`,
       'headers': {
         'Authorization': localStorage.getItem("refresh_token")
       }
@@ -67,7 +67,7 @@ export default class Post extends React.Component {
 
   getData() {
     let post_id = window.location.pathname.split("/")[2];
-    let url = 'https://vidura.rashil2000.me/post/' + post_id;
+    let url = `${process.env.REACT_APP_DB_HOST}/post/` + post_id;
     const axiosOptions = {
       'method': 'GET',
       'url': url
@@ -95,7 +95,7 @@ export default class Post extends React.Component {
 
   getComments() {
     let post_id = window.location.pathname.split("/")[2];
-    let url = 'https://vidura.rashil2000.me/post/' + post_id + '/comments';
+    let url = `${process.env.REACT_APP_DB_HOST}/post/` + post_id + '/comments';
     const axiosOptions = {
       'method': 'GET',
       'url': url
@@ -111,7 +111,7 @@ export default class Post extends React.Component {
   }
 
   getMetaData() {
-    let url = 'https://vidura.rashil2000.me/movie/' + this.state.post_movie;
+    let url = `${process.env.REACT_APP_DB_HOST}/movie/` + this.state.post_movie;
     const axiosOptions = {
       'method': 'GET',
       'url': url
@@ -135,7 +135,7 @@ export default class Post extends React.Component {
     let post_id = window.location.pathname.split("/")[2];
     const axiosOptions = {
       'method': 'POST',
-      'url': 'https://vidura.rashil2000.me/post/' + post_id + '/upvote',
+      'url': `${process.env.REACT_APP_DB_HOST}/post/` + post_id + '/upvote',
       'headers': {
         'Authorization': localStorage.getItem("access_token")
       }
@@ -165,7 +165,7 @@ export default class Post extends React.Component {
     let post_id = window.location.pathname.split("/")[2];
     const axiosOptions = {
       'method': 'POST',
-      'url': 'https://vidura.rashil2000.me/post' + post_id + '/downvote',
+      'url': `${process.env.REACT_APP_DB_HOST}/post` + post_id + '/downvote',
       'headers': {
         'Authorization': localStorage.getItem("access_token")
       }
@@ -194,7 +194,7 @@ export default class Post extends React.Component {
     let post_id = window.location.pathname.split("/")[2];
     const axiosOptions = {
       'method': 'POST',
-      'url': 'https://vidura.rashil2000.me/comment/create/' + post_id,
+      'url': `${process.env.REACT_APP_DB_HOST}/comment/create/` + post_id,
       'headers': {
         'Authorization': localStorage.getItem("access_token")
       },
@@ -224,7 +224,7 @@ export default class Post extends React.Component {
     //console.log(value);
     const axiosOptions = {
       'method': 'POST',
-      'url': 'https://vidura.rashil2000.me/post' + value + '/downvote',
+      'url': `${process.env.REACT_APP_DB_HOST}/post` + value + '/downvote',
       'headers': {
         'Authorization': localStorage.getItem("access_token")
       }
@@ -252,7 +252,7 @@ export default class Post extends React.Component {
   handleCommentDownvote(value) {
     const axiosOptions = {
       'method': 'POST',
-      'url': 'https://vidura.rashil2000.me/comment' + value + '/downvote',
+      'url': `${process.env.REACT_APP_DB_HOST}/comment` + value + '/downvote',
       'headers': {
         'Authorization': localStorage.getItem("access_token")
       }
@@ -358,7 +358,7 @@ export default class Post extends React.Component {
                 <br />
                 <p style={{ fontSize: 18 }}>{this.state.metaTitle} ({this.state.metaYear})</p>
                 <br /><hr /><br />
-                <p>Genre(s): >{this.state.metaGenreList.join(' >')}</p>
+                <p>Genre(s): &gt;{this.state.metaGenreList.join(' >')}</p>
                 <br /><hr /><br />
                 <p>Director(s): {this.state.metaDirectorList.join(', ')}</p>
                 <br />

@@ -31,7 +31,7 @@ export default class CreatePost extends React.Component {
   refreshToken() {
     const refreshOptions = {
       'method': 'POST',
-      'url': "https://minerva.metamehta.me/auth/refreshToken",
+      'url': `${process.env.REACT_APP_DB_HOST}/auth/refreshToken`,
       'headers': {
         'Authorization': localStorage.getItem("refresh_token")
       }
@@ -57,7 +57,7 @@ export default class CreatePost extends React.Component {
     else {
       const axiosOptions = {
         'method': 'GET',
-        'url': 'https://vidura.rashil2000.me/movie/search',
+        'url': `${process.env.REACT_APP_DB_HOST}/movie/search`,
         'params': {
           'q': this.state.movieSearchQuery
         }
@@ -81,7 +81,7 @@ export default class CreatePost extends React.Component {
     else {
       const axiosOptions = {
         'method': 'POST',
-        'url': 'https://vidura.rashil2000.me/post/create',
+        'url': `${process.env.REACT_APP_DB_HOST}/post/create`,
         'data': {
           'title': this.state.title,
           'body': this.state.content,

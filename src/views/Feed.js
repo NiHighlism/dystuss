@@ -17,7 +17,7 @@ export default class Feed extends React.Component {
   }
 
   getData() {
-    let url = 'https://vidura.rashil2000.me/post/getAll';
+    let url = `${process.env.REACT_APP_DB_HOST}/post/getAll`;
     const axiosOptions = {
       'method': 'GET',
       'url': url
