@@ -76,8 +76,8 @@ else if (themeDictionary[themeSet] !== undefined) {
   presetTheme = { ...themeDictionary[themeSet] }
 }
 else{
-  // Default theme is set to night and will not be re-written if not be updated
-  presetTheme = { ...themeDictionary["Night"] };
+  // Default theme is set automatically according to the time
+  presetTheme = { ...themeDictionary[timeSlot] };
 }
 
 // Initial State
