@@ -1,12 +1,11 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
+import { connect } from 'react-redux'
 import { getTheme } from "react-uwp/Theme";
 import HyperLink from "react-uwp/HyperLink";
 import DropDownMenu from "react-uwp/DropDownMenu";
 import AppBarButton from "react-uwp/AppBarButton";
-
 import * as actionTypes from '../store/actions'
-import { connect } from 'react-redux'
 
 class About extends React.Component {
 
@@ -112,16 +111,16 @@ class About extends React.Component {
   }
 }
 
-const mapStateToProps = ( state ) => {
+const mapStateToProps = state => {
   return {
-    theme : state.Theme,
-    themeDict : state.themeDict
+    theme: state.Theme,
+    themeDict: state.themeDict
   }
 }
 
-const mapDispatchToProps = ( dispatch ) => {
+const mapDispatchToProps = dispatch => {
   return {
-    setTheme : (theme) => dispatch({ type : actionTypes.SET_THEME , payload : { theme : theme } } )
+    setTheme: (theme) => dispatch({ type: actionTypes.SET_THEME, payload: { theme: theme } })
   }
 }
 

@@ -1,5 +1,6 @@
 import * as React from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { connect } from 'react-redux';
 import { Theme, getTheme } from "react-uwp/Theme";
 import Navigation from "./main/Navigation";
 import SignIn from "./main/SignIn";
@@ -15,18 +16,16 @@ import About from "./views/About";
 import Movie from "./views/Movie";
 import Error404 from "./main/Error404";
 import PrivateRoute from "./main/PrivateRoute.js";
-import { connect } from 'react-redux';
 
 class App extends React.Component {
 
-  shouldComponentUpdate(nextProps, nextState){
-    if(nextProps.theme.color !== this.props.theme.color || nextProps.theme.color === this.props.theme.color ){
+  shouldComponentUpdate = (nextProps, nextState) => {
+    if (nextProps.theme.color !== this.props.theme.color || nextProps.theme.color === this.props.theme.color)
       return false;
-    }
   }
 
   render() {
-    
+
     return (
       <BrowserRouter>
         <div className="App">
@@ -59,12 +58,12 @@ class App extends React.Component {
     );
   }
 }
-const mapStateToProps = ( state ) => {
+const mapStateToProps = state => {
   return {
-    theme : state.Theme
+    theme: state.Theme
   }
 }
 
-const mapDispatchToProps = null
+const mapDispatchToProps = null;
 
-export default connect(mapStateToProps,mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);

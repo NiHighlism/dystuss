@@ -62,20 +62,17 @@ else if (hr >= 20 && hr < 22)
   timeSlot = "Evening";
 else timeSlot = "Night";
 
-themeDictionary["Auto-change"] = {...themeDictionary[timeSlot]}
+themeDictionary["Auto-change"] = { ...themeDictionary[timeSlot] }
 
 // Loading a pre-set theme (if any) from LocalStorage
 
 let presetTheme;
 let themeSet = JSON.parse(localStorage.getItem("themeSet"));
 
-if (themeSet === "Auto-change") {
-  presetTheme = { ...themeDictionary[timeSlot] }
-}
-else if (themeDictionary[themeSet] !== undefined) {
+if (themeDictionary[themeSet] !== undefined) {
   presetTheme = { ...themeDictionary[themeSet] }
 }
-else{
+else {
   // Default theme is set automatically according to the time
   presetTheme = { ...themeDictionary[timeSlot] };
 }
@@ -83,25 +80,23 @@ else{
 // Initial State
 const initialState = {
   Theme: { ...presetTheme },
-  themeDict : themeDictionary
+  themeDict: themeDictionary
 }
 
 function reducer(state = initialState, action) {
   switch (action.type) {
     case actionTypes.SET_THEME:
       localStorage.setItem("themeSet", JSON.stringify(action.payload.theme))
-      if (action.payload.theme === "Auto-change") {
+      if (action.payload.theme === "Auto-change") 
         return {
           ...initialState,
           Theme: { ...themeDictionary[timeSlot] }
         }
-      }
-      else {
+      else 
         return {
           ...initialState,
           Theme: { ...themeDictionary[action.payload.theme] }
         }
-      }
     default:
       return {
         ...state
