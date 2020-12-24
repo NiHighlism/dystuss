@@ -1,11 +1,13 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
+import { connect } from 'react-redux'
 import { getTheme } from "react-uwp/Theme";
 import HyperLink from "react-uwp/HyperLink";
 import DropDownMenu from "react-uwp/DropDownMenu";
 import AppBarButton from "react-uwp/AppBarButton";
+import * as actionTypes from '../store/actions'
 
-export default class About extends React.Component {
+class About extends React.Component {
 
   componentDidMount() {
     document.title = "About - DYSTuss"
@@ -73,67 +75,22 @@ export default class About extends React.Component {
               "Afternoon",
               "Dusk",
               "Evening",
-              "Night"
+              "Night",
+              "Auto-change"
             ]}
             enableFullWidth={resp}
             style={{ background: theme.useFluentDesign ? theme.acrylicTexture80.background : theme.chromeLow }}
             onChangeValue={value => {
-              let name, color, backimg;
-              switch (value) {
-                case "Midnight":
-                  name = "dark";
-                  color = "#afbda6";
-                  backimg = "/assets/firewatch_1.jpg";
-                  break;
-                case "Dawn":
-                  name = "dark";
-                  color = "#f2c548";
-                  backimg = "/assets/firewatch_2.jpg";
-                  break;
-                case "Morning":
-                  name = "light";
-                  color = "#306458";
-                  backimg = "/assets/firewatch_3.jpg";
-                  break;
-                case "Midmorning":
-                  name = "light";
-                  color = "#3c6e8f";
-                  backimg = "/assets/firewatch_4.jpg";
-                  break;
-                case "Afternoon":
-                  name = "light";
-                  color = "#9a5126";
-                  backimg = "/assets/firewatch_5.jpg";
-                  break;
-                case "Dusk":
-                  name = "dark";
-                  color = "#f5ba54";
-                  backimg = "/assets/firewatch_6.jpg";
-                  break;
-                case "Evening":
-                  name = "dark";
-                  color = "#95d1e9";
-                  backimg = "/assets/firewatch_7.jpg";
-                  break;
-                case "Night":
-                  name = "dark";
-                  color = "#a0a5ab";
-                  backimg = "/assets/firewatch_8.jpg";
-                  break;
-                default:
-                  name = theme.themeName;
-                  color = theme.accent;
-                  backimg = theme.desktopBackgroundImage;
-              }
+              this.props.setTheme(value);
               theme.updateTheme(getTheme({
-                themeName: name,
-                accent: color,
+                themeName: this.props.themeDict[value].name,
+                accent: this.props.themeDict[value].color,
                 useFluentDesign: theme.useFluentDesign,
-                desktopBackgroundImage: backimg
+                desktopBackgroundImage: this.props.themeDict[value].backimg
               }));
             }}
           />
-          <p style={{ fontSize: "14px", marginTop: "10px" }}>*Theme changes automatically based on time of day.</p>
+          <p style={{ fontSize: "14px", marginTop: "10px" }}>* Auto-change: Theme changes automatically based on time of day.</p>
         </div>
         <div {...classes.acrylic60} style={{ fontSize: 18, boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)', marginTop: "20px" }}>
           <div className="about">
@@ -153,3 +110,18 @@ export default class About extends React.Component {
     );
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    theme: state.Theme,
+    themeDict: state.themeDict
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    setTheme: (theme) => dispatch({ type: actionTypes.SET_THEME, payload: { theme: theme } })
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(About);
