@@ -19,11 +19,6 @@ import PrivateRoute from "./main/PrivateRoute.js";
 
 class App extends React.Component {
 
-  shouldComponentUpdate = (nextProps, nextState) => {
-    if (nextProps.theme.color !== this.props.theme.color || nextProps.theme.color === this.props.theme.color)
-      return false;
-  }
-
   render() {
 
     return (
