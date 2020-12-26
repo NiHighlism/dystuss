@@ -5,7 +5,7 @@ import { getTheme } from "react-uwp/Theme";
 import HyperLink from "react-uwp/HyperLink";
 import DropDownMenu from "react-uwp/DropDownMenu";
 import AppBarButton from "react-uwp/AppBarButton";
-import * as actionTypes from '../store/actions'
+import * as actionCreators from '../store/actions/actionCreators'
 
 class About extends React.Component {
 
@@ -120,7 +120,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    setTheme: (theme) => dispatch({ type: actionTypes.SET_THEME, payload: { theme: theme } })
+    setTheme: (theme) => dispatch(actionCreators.setTheme(theme))
   }
 }
 
