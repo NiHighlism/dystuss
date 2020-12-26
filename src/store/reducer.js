@@ -97,35 +97,35 @@ function reducer(state = initialState, action) {
       localStorage.setItem("themeSet", JSON.stringify(action.payload.theme))
       if (action.payload.theme === "Auto-change")
         return {
-          ...initialState,
+          ...state,
           Theme: { ...themeDictionary[timeSlot] }
         }
       else
         return {
-          ...initialState,
+          ...state,
           Theme: { ...themeDictionary[action.payload.theme] }
         }
     case actionTypes.SET_SIGNUP_MESSAGE:
       return {
-        ...initialState,
+        ...state,
         signUpMessage: action.payload.message,
         signUpFollowLink: action.payload.link
       }
     case actionTypes.SET_SIGNIN_MESSAGE:
       return {
-        ...initialState,
+        ...state,
         signInMessage: action.payload.message,
         signInFollowLink: action.payload.link
       }
-    case actionTypes.SET_FORGOTPASS_MESSAGE:
+    case actionTypes.SET_FORGOT_PASS_MESSAGE:
       return {
-        ...initialState,
+        ...state,
         forgotPassMessage: action.payload.message,
         forgotPassFollowLink: action.payload.link
       }
     case actionTypes.SET_RESEND_EMAIL_MESSAGE:
       return {
-        ...initialState,
+        ...state,
         resendEmailMessage: action.payload.message,
         resendEmailFollowLink: action.payload.link
       }

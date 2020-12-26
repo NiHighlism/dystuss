@@ -110,7 +110,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return{
-    resendEmail : email => dispatch(actionCreators(email))
+    resendEmail : email => dispatch(actionCreators.resendEmail(email))
   }
 }
 
