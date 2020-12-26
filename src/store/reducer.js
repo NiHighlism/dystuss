@@ -80,23 +80,55 @@ else {
 // Initial State
 const initialState = {
   Theme: { ...presetTheme },
-  themeDict: themeDictionary
+  themeDict: themeDictionary,
+  signUpMessage: '',
+  signUpFollowLink: '',
+  signInMessage: '',
+  signInFollowLink: '',
+  forgotPassMessage: '',
+  forgotPassFollowLink: '',
+  resendEmailMessage: '',
+  resendEmailFollowLink: ''
 }
 
 function reducer(state = initialState, action) {
   switch (action.type) {
     case actionTypes.SET_THEME:
       localStorage.setItem("themeSet", JSON.stringify(action.payload.theme))
-      if (action.payload.theme === "Auto-change") 
+      if (action.payload.theme === "Auto-change")
         return {
           ...initialState,
           Theme: { ...themeDictionary[timeSlot] }
         }
-      else 
+      else
         return {
           ...initialState,
           Theme: { ...themeDictionary[action.payload.theme] }
         }
+    case actionTypes.SET_SIGNUP_MESSAGE:
+      return {
+        ...initialState,
+        signUpMessage: action.payload.message,
+        signUpFollowLink: action.payload.link
+      }
+    case actionTypes.SET_SIGNIN_MESSAGE:
+      return {
+        ...initialState,
+        signInMessage: action.payload.message,
+        signInFollowLink: action.payload.link
+      }
+    case actionTypes.SET_FORGOTPASS_MESSAGE:
+      return {
+        ...initialState,
+        forgotPassMessage: action.payload.message,
+        forgotPassFollowLink: action.payload.link
+      }
+    case actionTypes.SET_RESEND_EMAIL_MESSAGE:
+      return {
+        ...initialState,
+        resendEmailMessage: action.payload.message,
+        resendEmailFollowLink: action.payload.link
+      }
     default:
       return {
         ...state

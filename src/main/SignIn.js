@@ -1,17 +1,17 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
 import { NavLink, Link } from "react-router-dom";
-import axios from 'axios';
-
+import { connect } from "react-redux";
 import TextBox from "react-uwp/TextBox";
 import AppBarButton from "react-uwp/AppBarButton";
 import PasswordBox from "react-uwp/PasswordBox";
+import * as actionCreators from '../store/actions/actionCreators';
 
-export default class SignIn extends React.Component {
+class SignIn extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { username: '', password: '', errMessage: '', errHref: '', remember: 'false' };
+    this.state = { username: '', password: '', remember: 'false' };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -27,40 +27,7 @@ export default class SignIn extends React.Component {
   }
 
   handleSubmit(event) {
-
-    const axiosOptions = {
-      'method': 'POST',
-      'url': `${process.env.REACT_APP_DB_HOST}/auth/login`,
-      'data': {
-        'username': this.state.username,
-        'password': this.state.password,
-        'remember': this.state.remember
-      }
-    }
-
-    axios(axiosOptions)
-      .then(response => {
-        localStorage.setItem('access_token', response.data.access_token);
-        localStorage.setItem('refresh_token', response.data.refresh_token);
-        localStorage.setItem('userID', response.data.id);
-        localStorage.setItem('username', response.data.username);
-        window.location.pathname = "/profile";
-      })
-      .catch(error => {
-        let status = error.response.status;
-        if (status === 401) {
-          this.setState({ errMessage: "Couldn't verify. Please check credentials!" });
-        }
-
-        if (status === 402) {
-          this.setState({ errMessage: "Please verify your email before signing in. ", errHref: "/resendVerification" });
-        }
-
-        if (status === 403) {
-          this.setState({ errMessage: "Account not found. ", errHref: "/signup" });
-        }
-      })
-
+    this.props.signIn(this.state.username, this.state.password, this.state.remember);
   }
 
   componentDidMount() {
@@ -159,7 +126,7 @@ export default class SignIn extends React.Component {
             <label for="signcheck">&nbsp; Keep me signed in</label>
             <br />
             <br />
-            <a href={this.state.errHref}><span>{this.state.errMessage}</span></a>
+            <a href={this.props.followLink}><span>{this.props.message}</span></a>
             <span onClick={this.handleSubmit}>
               <AppBarButton
                 style={{ margin: "10px auto", ...buttonStyle }}
@@ -176,3 +143,18 @@ export default class SignIn extends React.Component {
     );
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    message: state.signInMessage,
+    followLink: state.signInFollowLink
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    signIn: (username, password, remember) => dispatch(actionCreators.signIn(username, password, remember))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignIn);
