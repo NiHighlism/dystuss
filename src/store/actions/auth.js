@@ -1,4 +1,5 @@
 import axios from 'axios';
+import createAuthRefreshInterceptor from 'axios-auth-refresh';
 import * as actionTypes from './actionTypes';
 
 // Synchronous action creator for setting sign up message
@@ -158,7 +159,7 @@ export const setResendEmailMessage = (message, link) => {
 // Asynchronous action creator for resend email handler
 export const resendEmail = email => {
 	return dispatch => {
-		
+
 		const axiosOptions = {
 			'method': 'POST',
 			'url': `${process.env.REACT_APP_DB_HOST}/auth/resendVerificationEmail`,
@@ -182,4 +183,53 @@ export const resendEmail = email => {
 				}
 			})
 	}
+}
+
+// Asynchronous action creator for registering to refresh auth-token
+export const registerRefreshToken = (axiosInstance) => {
+
+	const refreshOptions = {
+		'method': 'POST',
+		'url': `${process.env.REACT_APP_DB_HOST}/auth/refreshToken`,
+		'headers': {
+			'Authorization': localStorage.getItem("refresh_token")
+		}
+	}
+
+	const refreshAuthLogic = failedRequest => axios(refreshOptions)
+		.then(tokenRefreshResponse => {
+			localStorage.setItem('access_token', tokenRefreshResponse.data.access_token);
+			localStorage.setItem('refresh_token', tokenRefreshResponse.data.refresh_token);
+			failedRequest.response.config.headers['Authorization'] = tokenRefreshResponse.data.access_token;
+			return Promise.resolve();
+		});
+
+	// return refreshAuthLogic;
+	createAuthRefreshInterceptor(axiosInstance, refreshAuthLogic);
+}
+
+// Asynchronous action creator for logout
+export const logout = () => {
+
+	const axiosOptions = {
+		'method': 'POST',
+		'url': `${process.env.REACT_APP_DB_HOST}/auth/logout`,
+		headers: {
+			'Authorization': localStorage.getItem("access_token")
+		}
+	}
+
+	registerRefreshToken(axios);
+
+	axios(axiosOptions)
+		.then(response => {
+			//console.log(response.data);
+			localStorage.removeItem("username");
+			localStorage.removeItem("userID");
+			localStorage.removeItem("access_token");
+			localStorage.removeItem("refresh_token");
+			// localStorage.clear(); Else it removes the saved theme also
+			window.location.pathname = "/";
+		})
+		.catch(error => { /* console.log(error) */ })
 }

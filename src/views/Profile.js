@@ -1,15 +1,15 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-import axios from 'axios'
-import createAuthRefreshInterceptor from 'axios-auth-refresh';
-
+import axios from 'axios';
+import { connect } from "react-redux";
 import AppBarButton from "react-uwp/AppBarButton";
 import Button from "react-uwp/Button";
 import ContentDialog from "react-uwp/ContentDialog";
+import * as actionCreators from '../store/actions/actionCreators';
 
 
-export default class Profile extends React.Component {
+class Profile extends React.Component {
 
   constructor(props) {
     super(props);
@@ -35,30 +35,7 @@ export default class Profile extends React.Component {
     this.getPostList = this.getPostList.bind(this);
     this.handleDeleteDialog = this.handleDeleteDialog.bind(this);
     this.handleDeletePost = this.handleDeletePost.bind(this);
-    this.handleLogOut = this.handleLogOut.bind(this);
-    this.refreshToken = this.refreshToken.bind(this);
   }
-
-  refreshToken() {
-    const refreshOptions = {
-      'method': 'POST',
-      'url': `${process.env.REACT_APP_DB_HOST}/auth/refreshToken`,
-      'headers': {
-        'Authorization': localStorage.getItem("refresh_token")
-      }
-    }
-
-    const refreshAuthLogic = failedRequest => axios(refreshOptions)
-      .then(tokenRefreshResponse => {
-        localStorage.setItem('access_token', tokenRefreshResponse.data.access_token);
-        localStorage.setItem('refresh_token', tokenRefreshResponse.data.refresh_token);
-        failedRequest.response.config.headers['Authorization'] = tokenRefreshResponse.data.access_token;
-        return Promise.resolve();
-      });
-
-    return refreshAuthLogic;
-  }
-
 
   getData() {
     let username = localStorage.getItem("username");
@@ -192,32 +169,6 @@ export default class Profile extends React.Component {
       .catch(error => { /* console.log(error) */ })
   }
 
-  handleLogOut() {
-    const axiosOptions = {
-      'method': 'POST',
-      'url': `${process.env.REACT_APP_DB_HOST}/auth/logout`,
-      headers: {
-        'Authorization': localStorage.getItem("access_token")
-      }
-    }
-
-    const refreshAuthLogic = this.refreshToken();
-
-    createAuthRefreshInterceptor(axios, refreshAuthLogic);
-
-    axios(axiosOptions)
-      .then(response => {
-        //console.log(response.data);
-        localStorage.removeItem("username");
-        localStorage.removeItem("userID");
-        localStorage.removeItem("access_token");
-        localStorage.removeItem("refresh_token");
-        localStorage.clear();
-        window.location.pathname = "/";
-      })
-      .catch(error => { /* console.log(error) */ })
-  }
-
   componentDidMount() {
     this.getData();
     this.getSeenData();
@@ -267,7 +218,7 @@ export default class Profile extends React.Component {
               icon={<span className="sdl2asset">&#xF3B1;</span>}
               label="Sign Out"
               labelPosition="right"
-              onClick={this.handleLogOut}
+              onClick={() => this.props.logout()}
             />
           </p>
           <div style={{ clear: "both" }}></div>
@@ -374,3 +325,17 @@ export default class Profile extends React.Component {
     );
   }
 }
+
+const mapStateToProps = null/*state => {
+  return {
+
+  }
+}*/
+
+const mapDispatchToProps = dispatch => {
+  return {
+    logout: () => dispatch(actionCreators.logout())
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Profile);

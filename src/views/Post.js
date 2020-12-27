@@ -1,14 +1,14 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
 import axios from 'axios';
-import createAuthRefreshInterceptor from 'axios-auth-refresh';
 import { Link } from "react-router-dom";
-
+import { connect } from 'react-redux';
 import TextBox from "react-uwp/TextBox";
 import AppBarButton from "react-uwp/AppBarButton";
 import MarkdownRender from "react-uwp/MarkdownRender";
+import * as actionCreators from '../store/actions/actionCreators';
 
-export default class Post extends React.Component {
+class Post extends React.Component {
 
   constructor(props) {
     super(props);
@@ -42,27 +42,6 @@ export default class Post extends React.Component {
     this.handleCreateComment = this.handleCreateComment.bind(this);
     this.handleCommentUpvote = this.handleCommentUpvote.bind(this);
     this.handleCommentDownvote = this.handleCommentDownvote.bind(this);
-    this.refreshToken = this.refreshToken.bind(this);
-  }
-
-  refreshToken() {
-    const refreshOptions = {
-      'method': 'POST',
-      'url': `${process.env.REACT_APP_DB_HOST}/auth/refreshToken`,
-      'headers': {
-        'Authorization': localStorage.getItem("refresh_token")
-      }
-    }
-
-    const refreshAuthLogic = failedRequest => axios(refreshOptions)
-      .then(tokenRefreshResponse => {
-        localStorage.setItem('access_token', tokenRefreshResponse.data.access_token);
-        localStorage.setItem('refresh_token', tokenRefreshResponse.data.refresh_token);
-        failedRequest.response.config.headers['Authorization'] = tokenRefreshResponse.data.access_token;
-        return Promise.resolve();
-      });
-
-    return refreshAuthLogic;
   }
 
   getData() {
@@ -141,9 +120,7 @@ export default class Post extends React.Component {
       }
     }
 
-    const refreshAuthLogic = this.refreshToken();
-
-    createAuthRefreshInterceptor(axios, refreshAuthLogic);
+    this.props.registerRefreshToken();
 
     axios(axiosOptions)
       .then(response => {
@@ -171,9 +148,7 @@ export default class Post extends React.Component {
       }
     }
 
-    const refreshAuthLogic = this.refreshToken();
-
-    createAuthRefreshInterceptor(axios, refreshAuthLogic);
+    this.props.registerRefreshToken();
 
     axios(axiosOptions)
       .then(response => {
@@ -203,9 +178,7 @@ export default class Post extends React.Component {
       }
     }
 
-    const refreshAuthLogic = this.refreshToken();
-
-    createAuthRefreshInterceptor(axios, refreshAuthLogic);
+    this.props.registerRefreshToken();
 
 
     axios(axiosOptions)
@@ -230,9 +203,7 @@ export default class Post extends React.Component {
       }
     }
 
-    const refreshAuthLogic = this.refreshToken();
-
-    createAuthRefreshInterceptor(axios, refreshAuthLogic);
+    this.props.registerRefreshToken();
 
     axios(axiosOptions)
       .then(response => {
@@ -258,9 +229,7 @@ export default class Post extends React.Component {
       }
     }
 
-    const refreshAuthLogic = this.refreshToken();
-
-    createAuthRefreshInterceptor(axios, refreshAuthLogic);
+    this.props.registerRefreshToken();
 
     axios(axiosOptions)
       .then(response => {
@@ -401,3 +370,17 @@ export default class Post extends React.Component {
     );
   }
 }
+
+const mapStateToProps = null/*state => {
+  return {
+
+  }
+}*/
+
+const mapDispatchToProps = dispatch => {
+  return {
+    registerRefreshToken: (axiosInstance) => dispatch(actionCreators.registerRefreshToken(axiosInstance))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Post);

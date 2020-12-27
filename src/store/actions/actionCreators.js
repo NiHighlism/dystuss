@@ -1,7 +1,9 @@
 export { setTheme } from './theme';
-export { 
+export {
 	signUp,
 	signIn,
 	submitForgotPass,
-	resendEmail
+	resendEmail,
+	registerRefreshToken,
+	logout
 } from './auth';
