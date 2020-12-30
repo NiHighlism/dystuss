@@ -186,7 +186,7 @@ export const resendEmail = email => {
 }
 
 // Asynchronous action creator for registering to refresh auth-token
-export const registerRefreshToken = (axiosInstance) => {
+export const registerRefreshToken = axiosInstance => {
 
 	const refreshOptions = {
 		'method': 'POST',

@@ -253,7 +253,7 @@ const mapStateToProps = null/*state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    registerRefreshToken: (axiosInstance) => dispatch(actionCreators.registerRefreshToken(axiosInstance))
+    registerRefreshToken: axiosInstance => dispatch(actionCreators.registerRefreshToken(axiosInstance))
   }
 }
 
