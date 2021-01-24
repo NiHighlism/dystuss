@@ -1,47 +1,22 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
-import axios from 'axios'
-
 import { NavLink } from "react-router-dom";
+import { connect } from "react-redux";
 import TextBox from "react-uwp/TextBox";
 import AppBarButton from "react-uwp/AppBarButton";
+import * as actionCreators from '../store/actions/actionCreators';
 
 
-export default class ResendEmail extends React.Component {
+class ResendEmail extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { email: '', errMessage: '' };
+    this.state = { email: ''};
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleSubmit(event) {
-
-    const axiosOptions = {
-      'method': 'POST',
-      'url': `${process.env.REACT_APP_DB_HOST}/auth/resendVerificationEmail`,
-      'data': {
-        'email': this.state.email,
-      }
-    }
-
-    axios(axiosOptions)
-      .then(response => {
-        this.setState({ errMessage: "Verification mail sent!" });
-      })
-      .catch(error => {
-        let status = error.response.status
-
-        if (status === 401) {
-          this.setState({
-            errMessage: "User is not registered. Please sign up first.",
-            errHref: "/signup"
-          });
-        }
-        else {
-          this.setState({ errMessage: "It's not you, it's us. Try again later." })
-        }
-      })
+    this.props.resendEmail(this.state.email);
   }
 
   componentDidMount() {
@@ -111,7 +86,7 @@ export default class ResendEmail extends React.Component {
             />
             <br />
             <span onClick={this.handleSubmit}>
-              <a href={this.state.errHref}><span>{this.state.errMessage}</span></a>
+              <a href={this.props.followLink}><span>{this.props.message}</span></a>
               <AppBarButton
                 style={{ margin: "10px auto", ...buttonStyle }}
                 icon={<span className="sdl2asset">&#xE8FA;</span>}
@@ -125,3 +100,18 @@ export default class ResendEmail extends React.Component {
     );
   }
 }
+
+const mapStateToProps = state => {
+  return{
+    message : state.resendEmailMessage,
+    followLink: state.resendEmailFollowLink
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return{
+    resendEmail : email => dispatch(actionCreators.resendEmail(email))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ResendEmail);

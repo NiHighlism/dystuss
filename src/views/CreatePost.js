@@ -1,11 +1,12 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
+import axios from "axios";
+import { connect } from 'react-redux';
 import TextBox from "react-uwp/TextBox";
 import AppBarButton from "react-uwp/AppBarButton";
-import axios from "axios";
-import createAuthRefreshInterceptor from 'axios-auth-refresh';
+import * as actionCreators from '../store/actions/actionCreators';
 
-export default class CreatePost extends React.Component {
+class CreatePost extends React.Component {
 
   constructor(props) {
     super(props);
@@ -25,27 +26,6 @@ export default class CreatePost extends React.Component {
     };
     this.handleMovieSearch = this.handleMovieSearch.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.refreshToken = this.refreshToken.bind(this);
-  }
-
-  refreshToken() {
-    const refreshOptions = {
-      'method': 'POST',
-      'url': `${process.env.REACT_APP_DB_HOST}/auth/refreshToken`,
-      'headers': {
-        'Authorization': localStorage.getItem("refresh_token")
-      }
-    }
-
-    const refreshAuthLogic = failedRequest => axios(refreshOptions)
-      .then(tokenRefreshResponse => {
-        localStorage.setItem('access_token', tokenRefreshResponse.data.access_token);
-        localStorage.setItem('refresh_token', tokenRefreshResponse.data.refresh_token);
-        failedRequest.response.config.headers['Authorization'] = tokenRefreshResponse.data.access_token;
-        return Promise.resolve();
-      });
-
-    return refreshAuthLogic;
   }
 
   handleMovieSearch(event) {
@@ -95,9 +75,7 @@ export default class CreatePost extends React.Component {
         }
       }
 
-      const refreshAuthLogic = this.refreshToken();
-
-      createAuthRefreshInterceptor(axios, refreshAuthLogic);
+      this.props.registerRefreshToken(axios);
 
       axios(axiosOptions)
         .then(response => {
@@ -261,3 +239,17 @@ export default class CreatePost extends React.Component {
     );
   }
 }
+
+const mapStateToProps = null/*state => {
+  return {
+
+  }
+}*/
+
+const mapDispatchToProps = dispatch => {
+  return {
+    registerRefreshToken: axiosInstance => dispatch(actionCreators.registerRefreshToken(axiosInstance))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CreatePost);

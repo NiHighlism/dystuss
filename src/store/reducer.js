@@ -1,4 +1,4 @@
-import * as actionTypes from './actions'
+import * as actionTypes from './actions/actionTypes'
 
 const themeDictionary = {
   Midnight: {
@@ -79,24 +79,68 @@ else {
 
 // Initial State
 const initialState = {
+
   Theme: { ...presetTheme },
-  themeDict: themeDictionary
+  themeDict: themeDictionary,
+
+  signUpMessage: '',
+  signUpFollowLink: '',
+
+  signInMessage: '',
+  signInFollowLink: '',
+
+  forgotPassMessage: '',
+  forgotPassFollowLink: '',
+
+  resendEmailMessage: '',
+  resendEmailFollowLink: ''
+
 }
 
 function reducer(state = initialState, action) {
   switch (action.type) {
+
     case actionTypes.SET_THEME:
       localStorage.setItem("themeSet", JSON.stringify(action.payload.theme))
-      if (action.payload.theme === "Auto-change") 
+      if (action.payload.theme === "Auto-change")
         return {
-          ...initialState,
+          ...state,
           Theme: { ...themeDictionary[timeSlot] }
         }
-      else 
+      else
         return {
-          ...initialState,
+          ...state,
           Theme: { ...themeDictionary[action.payload.theme] }
         }
+
+    case actionTypes.SET_SIGNUP_MESSAGE:
+      return {
+        ...state,
+        signUpMessage: action.payload.message,
+        signUpFollowLink: action.payload.link
+      }
+
+    case actionTypes.SET_SIGNIN_MESSAGE:
+      return {
+        ...state,
+        signInMessage: action.payload.message,
+        signInFollowLink: action.payload.link
+      }
+
+    case actionTypes.SET_FORGOT_PASS_MESSAGE:
+      return {
+        ...state,
+        forgotPassMessage: action.payload.message,
+        forgotPassFollowLink: action.payload.link
+      }
+
+    case actionTypes.SET_RESEND_EMAIL_MESSAGE:
+      return {
+        ...state,
+        resendEmailMessage: action.payload.message,
+        resendEmailFollowLink: action.payload.link
+      }
+
     default:
       return {
         ...state
